@@ -1,30 +1,40 @@
-import { useState } from 'react';
+import styled from 'styled-components';
 
-export default function ServiceProvider({ firstName, lastName, skills, needs, email, phone }) {
 
-  const [showContactInfo, setShowContactInfo] = useState(false);
+const Header = styled.header`
+  background-color: #f0f0f0;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+`;
 
-  const toggleContactInfo = () => {
-    setShowContactInfo(!showContactInfo);
-  };
+const BackLink = styled.h1`
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  &:hover {
+    opacity: 0.8;
+  }
+`;
 
-  return (
-    <div className="service-provider">
-      <h2>{firstName} {lastName}</h2>
-      <p><strong>Skills:</strong> {skills}</p>
-      <p><strong>Needs:</strong> {needs}</p>
+const CardWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+`;
 
-      {showContactInfo ? (
-        <div>
-          <p><strong>Email:</strong> {email}</p>
-          <p><strong>Phone:</strong> {phone}</p>
-        </div>
-      ) : null}
+const Card = styled.div`
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  width: 300px;
+  transition: box-shadow 0.3s ease;
 
-      <button onClick={toggleContactInfo}>
-        {showContactInfo ? 'Hide Contact' : 'Show Contact'}
-      </button>
-    </div>
-  );
-};
-
+  &:hover {
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+  }
+`;
+  

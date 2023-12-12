@@ -2,6 +2,8 @@ import Link from 'next/link';
 import ServiceCard from './ServiceCard';
 import styled from 'styled-components';
 import { serviceProviders } from '@/lib/data.js';
+import ServiceCategorie from './ServiceCategorie';
+
 
 const Header = styled.header`
   background-color: #f0f0f0;
@@ -69,3 +71,4 @@ export default function serviceCards() {
     </>
   );
 };
+
