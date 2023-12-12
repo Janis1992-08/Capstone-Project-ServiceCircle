@@ -11,4 +11,9 @@ export default createGlobalStyle`
     margin: 0;
     font-family: system-ui;
   }
+  /* mobile iPhone SE */
+  @media (max-width: 375px) and (max-height: 667px) {
+    width: calc(100% - 40px); 
+    margin: 10px;
+  }
 `;
