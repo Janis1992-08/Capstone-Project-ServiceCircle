@@ -46,7 +46,7 @@ export default function serviceCards() {
     <>
       <Header>
         <Link href="/subcategories">
-            <h1> &larr; Web Development</h1>
+            <BackLink>&larr; Web Development</BackLink>
         </Link>
       </Header>
 
