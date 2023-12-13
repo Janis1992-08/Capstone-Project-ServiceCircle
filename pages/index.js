@@ -1,74 +1,92 @@
-import Link from 'next/link';
-import ServiceCard from './ServiceCard';
-import styled from 'styled-components';
-import { serviceProviders } from '@/lib/data.js';
-import ServiceCategorie from './ServiceCategorie';
+import React, { useState } from "react";
+import Link from "next/link";
 
+const categories = [
+  {
+    name: "Technology & IT",
+    subcategories: ["Web Development", "Graphic Design", "Coding Assistance"],
+  },
+  {
+    name: "Home Services",
+    subcategories: ["Plumbing", "Electrical", "Cleaning"],
+  },
+  {
+    name: "Language Exchange",
+    subcategories: ["English", "Spanish", "French"],
+  },
+];
 
-const Header = styled.header`
-  background-color: #f0f0f0;
-  padding: 20px;
-  text-align: center;
-  border-bottom: 1px solid #ccc;
-`;
+const buttonStyle = {
+  backgroundColor: "#3498db",
+  color: "white",
+  padding: "10px",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
+  width: "100%",
+  textAlign: "left",
+};
 
-const BackLink = styled.h1`
-  color: #333;
-  text-decoration: none;
-  font-weight: bold;
-  &:hover {
-    opacity: 0.8;
-  }
-`;
+const selectedButtonStyle = {
+  ...buttonStyle,
+  backgroundColor: "#4CAF50",
+};
 
-const CardWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
-`;
+const subcategoryStyle = {
+  backgroundColor: "#f2f2f2",
+  padding: "8px",
+  margin: "5px 0",
+  borderRadius: "5px",
+};
 
-const Card = styled.div`
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  width: 300px;
-  transition: box-shadow 0.3s ease;
+const App = () => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  &:hover {
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
-  }
-`;
-  
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category === selectedCategory ? null : category);
+  };
 
-export default function serviceCards() {
   return (
-    <>
-      <Header>
-        <Link href="/subcategories">
-            <BackLink>&larr; Web Development</BackLink>
-        </Link>
-      </Header>
-
-      <main>
-        <CardWrapper> 
-        {serviceProviders.map(provider => (
-          <Card key={provider.id}> 
-          <ServiceCard
-            firstName={provider.firstName}
-            lastName={provider.lastName}
-            skills={provider.skills}
-            needs={provider.needs}
-            email={provider.email}
-            phone={provider.phone}
-          />
-          </Card>
+    <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
+      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+        ServiceCircle
+      </h1>
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+        Finde your perfect Service-Match
+      </h2>
+      <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
+        {categories.map((category) => (
+          <li key={category.name} style={{ marginBottom: "10px" }}>
+            <button
+              onClick={() => handleCategoryClick(category)}
+              style={
+                selectedCategory === category
+                  ? selectedButtonStyle
+                  : buttonStyle
+              }
+            >
+              {category.name}
+            </button>
+            {selectedCategory === category && (
+              <ul
+                style={{
+                  listStyleType: "none",
+                  paddingLeft: "20px",
+                  margin: 0,
+                }}
+              >
+                {category.subcategories.map((providerCards) => (
+                  <li key={providerCards.name} style={subcategoryStyle}>
+                    <Link href={`/ProviderCards`}>{providerCards}</Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
         ))}
-        </CardWrapper>
-      </main>
-    </>
+      </ul>
+    </div>
   );
 };
 
+export default App;
