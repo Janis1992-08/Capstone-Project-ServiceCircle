@@ -1,9 +1,8 @@
 import Link from "next/link";
-import ServiceProvider from "../../components/ServiceCards";
 import styled from "styled-components";
 import { categories } from "../../lib/data.js";
 import { useRouter } from "next/router";
-import { serviceProviders } from "../../lib/data.js";
+
 
 const Header = styled.header`
   background-color: #f0f0f0;
@@ -62,23 +61,6 @@ const SubcategoryPage = () => {
           <BackLink> &larr;{foundSubcategory.name}</BackLink>
         </Link>
       </Header>
-
-      <main>
-        <CardWrapper>
-          {serviceProviders.map((provider) => (
-            <Card key={provider.id}>
-              <ServiceProvider
-                firstName={provider.firstName}
-                lastName={provider.lastName}
-                skills={provider.skills}
-                needs={provider.needs}
-                email={provider.email}
-                phone={provider.phone}
-              />
-            </Card>
-          ))}
-        </CardWrapper>
-      </main>
     </>
   );
 };
