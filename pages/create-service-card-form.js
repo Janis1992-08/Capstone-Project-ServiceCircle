@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid'; 
 import { categories } from '@/lib/data';
 import ServiceProvider from '../components/ServiceCard/index';
+import Link from 'next/link';
 
 const FormWrapper = styled.form`
   display: flex;
@@ -32,6 +33,22 @@ const Button = styled.button`
   color: #fff;
   cursor: pointer;
 `;
+
+const BackLink = styled.a`
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
 
 export default function CreateServiceCardForm() {
   
@@ -70,8 +87,13 @@ export default function CreateServiceCardForm() {
 
 
   return (
+    <>
+    <Link href="/">
+        <BackLink>&larr; Back to Categories</BackLink>
+      </Link>
+      
     <FormWrapper onSubmit={handleSubmit}>
-      <div>
+      
         <label htmlFor="firstName">First Name: </label>
         <InputField
           type="text"
@@ -81,8 +103,6 @@ export default function CreateServiceCardForm() {
           onChange={handleChange}
           required
         />
-      </div>
-      <div>
         <label htmlFor="lastName">Last Name: </label>
         <InputField
           type="text"
@@ -92,8 +112,6 @@ export default function CreateServiceCardForm() {
           onChange={handleChange}
           required
         />
-      </div>
-      <div>
         <label htmlFor="skills">Skills: </label>
         <InputField
           type="text"
@@ -103,8 +121,8 @@ export default function CreateServiceCardForm() {
           onChange={handleChange}
           required
         />
-      </div>
-      <div>
+      
+  
         <label htmlFor="needs">Needs: </label>
         <InputField
           type="text"
@@ -114,8 +132,7 @@ export default function CreateServiceCardForm() {
           onChange={handleChange}
           required
         />
-      </div>
-      <div>
+      
         <label htmlFor="email">Email: </label>
         <InputField
           type="email"
@@ -125,8 +142,7 @@ export default function CreateServiceCardForm() {
           onChange={handleChange}
           required
         />
-      </div>
-      <div>
+      
         <label htmlFor="phone">Phone: </label>
         <InputField
           type="tel"
@@ -136,7 +152,7 @@ export default function CreateServiceCardForm() {
           onChange={handleChange}
           required
         />
-      </div>
+      
       <SelectField name="category" onChange={handleChange} required>
         <option value="">Select Category</option>
         {categories.map((category) => (
@@ -171,6 +187,8 @@ export default function CreateServiceCardForm() {
           phone={card.phone}
         />
       ))}
+      
     </FormWrapper>
+    </>
   );
 }
