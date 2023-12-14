@@ -1,20 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-
-const categories = [
-  {
-    name: "Technology & IT",
-    subcategories: ["Web Development", "Graphic Design", "Coding Assistance"],
-  },
-  {
-    name: "Home Services",
-    subcategories: ["Plumbing", "Electrical", "Cleaning"],
-  },
-  {
-    name: "Language Exchange",
-    subcategories: ["English", "Spanish", "French"],
-  },
-];
+import { categories } from "@/lib/data";
 
 const buttonStyle = {
   backgroundColor: "#3498db",
@@ -75,9 +61,11 @@ const App = () => {
                   margin: 0,
                 }}
               >
-                {category.subcategories.map((providerCards) => (
-                  <li key={providerCards.name} style={subcategoryStyle}>
-                    <Link href={`/ProviderCards`}>{providerCards}</Link>
+                {category.subcategories.map((subcategory) => (
+                  <li key={subcategory.id} style={subcategoryStyle}>
+                    <Link href={`/ProviderCards/${subcategory.id}`}>
+                      {subcategory.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
