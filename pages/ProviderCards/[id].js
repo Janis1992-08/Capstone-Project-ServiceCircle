@@ -49,8 +49,14 @@ export default function ServiceCards() {
   }
 
   const { id } = router.query;
+  console.log("id:", id);
+  /* const category = categories.find((category) => category.id === id);
 
-  const subcategory = categories.reduce((foundSubcategory, category) => {
+  const subcategory = category.subcategories.find(
+    (subcategory) => subcategory.id === id
+  ); */
+
+  /*  const subcategory = categories.reduce((foundSubcategory, category) => {
     if (!foundSubcategory) {
       // Check if the category's id matches the provided id
       if (category.id === parseInt(id, 10)) {
@@ -59,21 +65,29 @@ export default function ServiceCards() {
       }
     }
     return foundSubcategory;
-  }, null);
+  }, null); */
 
-  if (subcategory && subcategory.name) {
+  const result = categories.find(
+    (category) => category.name === "Technology & IT"
+  );
+  console.log(result.subcategories);
+  const subcategory2 = result.subcategories.find((item) => item.id === id);
+
+  console.log("Subcategory2:", subcategory2);
+  console.log("result:", result);
+  /*  if (subcategory && subcategory.name) {
     console.log("Subcategory Name:", subcategory.name);
     // Rest of your code
   } else {
     console.log("Subcategory not found or has no name property");
     return null;
-  }
+  } */
 
   return (
     <>
       <Header>
         <Link href="/">
-          <BackLink> &larr; {subcategory.name}</BackLink>
+          <BackLink> &larr; {}</BackLink>
         </Link>
       </Header>
 

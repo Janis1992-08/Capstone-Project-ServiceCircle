@@ -63,9 +63,9 @@ const App = () => {
               >
                 {category.subcategories.map((subcategory) => (
                   <li key={subcategory.id} style={subcategoryStyle}>
-                    <Link href={`/ProviderCards/${subcategory.id}`}>
+                    <Link href={`/ProviderCards/${category.id}`}>
                       {subcategory.name}
-                    </Link>
+                    </Link>{" "}
                   </li>
                 ))}
               </ul>
