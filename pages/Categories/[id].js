@@ -3,6 +3,7 @@ import ServiceProvider from "../../components/ServiceCards";
 import styled from "styled-components";
 import { categories } from "../../lib/data.js";
 import { useRouter } from "next/router";
+import { serviceProviders } from "../../lib/data.js";
 
 const Header = styled.header`
   background-color: #f0f0f0;
@@ -41,32 +42,30 @@ const Card = styled.div`
   }
 `;
 
-export default function ServiceCards() {
+const SubcategoryPage = () => {
   const router = useRouter();
-
-  if (!router.isReady) {
-    return null;
-  }
-
   const { id } = router.query;
 
-  const category = categories.find(
-    (category) => category.name === "Technology & IT"
-  );
+  // Find the subcategory based on the ID in the categories
+  const foundSubcategory = categories
+    .flatMap((category) => category.subcategories)
+    .find((sub) => sub.id === id); // Change 'subcategory' to 'id'
 
-  const subcategory = category.subcategories.find((item) => item.id === id);
+  if (!foundSubcategory) {
+    return <div>Unterkategorie nicht gefunden</div>;
+  }
 
   return (
     <>
       <Header>
         <Link href="/">
-          <BackLink> &larr; {subcategory.name}</BackLink>
+          <BackLink> &larr;{foundSubcategory.name}</BackLink>
         </Link>
       </Header>
 
       <main>
         <CardWrapper>
-          {/*  { {serviceProviders.map((provider) => (
+          {serviceProviders.map((provider) => (
             <Card key={provider.id}>
               <ServiceProvider
                 firstName={provider.firstName}
@@ -75,11 +74,13 @@ export default function ServiceCards() {
                 needs={provider.needs}
                 email={provider.email}
                 phone={provider.phone}
-              />}
+              />
             </Card>
-          ))} */}
+          ))}
         </CardWrapper>
       </main>
     </>
   );
-}
+};
+
+export default SubcategoryPage;
