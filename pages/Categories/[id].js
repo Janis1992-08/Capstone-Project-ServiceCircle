@@ -1,9 +1,8 @@
 import Link from "next/link";
-import ServiceProvider from "../../components/ServiceCards";
 import styled from "styled-components";
 import { categories } from "../../lib/data.js";
 import { useRouter } from "next/router";
-import { serviceProviders } from "../../lib/data.js";
+
 
 const Header = styled.header`
   background-color: #f0f0f0;
@@ -18,27 +17,6 @@ const BackLink = styled.h1`
   font-weight: bold;
   &:hover {
     opacity: 0.8;
-  }
-`;
-
-const CardWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
-`;
-
-const Card = styled.div`
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  width: 300px;
-  transition: box-shadow 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -62,23 +40,6 @@ const SubcategoryPage = () => {
           <BackLink> &larr;{foundSubcategory.name}</BackLink>
         </Link>
       </Header>
-
-      <main>
-        <CardWrapper>
-          {serviceProviders.map((provider) => (
-            <Card key={provider.id}>
-              <ServiceProvider
-                firstName={provider.firstName}
-                lastName={provider.lastName}
-                skills={provider.skills}
-                needs={provider.needs}
-                email={provider.email}
-                phone={provider.phone}
-              />
-            </Card>
-          ))}
-        </CardWrapper>
-      </main>
     </>
   );
 };
