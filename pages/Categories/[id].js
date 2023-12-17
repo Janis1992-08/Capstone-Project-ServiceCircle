@@ -36,6 +36,11 @@ const SubcategoryPage = ({ serviceCards }) => {
     return <div>Unterkategorie nicht gefunden</div>;
   }
 
+  const filteredServiceCards = serviceCards.filter(
+    (card) => card.subcategory === foundSubcategory.name
+  );
+
+
   return (
     <>
       <Header>
@@ -44,7 +49,7 @@ const SubcategoryPage = ({ serviceCards }) => {
         </Link>
       </Header>
 
-      {serviceCards.map((card) => (
+      {filteredServiceCards.map((card) => (
         <ServiceProvider
           key={card.id}
           firstName={card.firstName}
