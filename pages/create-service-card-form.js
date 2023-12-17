@@ -2,8 +2,8 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid'; 
 import { categories } from '@/lib/data';
-import ServiceProvider from '../components/ServiceCard/index';
 import Link from 'next/link';
+import useLocalStorageState from "use-local-storage-state";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -65,7 +65,7 @@ export default function CreateServiceCardForm() {
   };
 
   const [formData, setFormData] = useState({ ...initialFormData }); // Zustand des Formulars ist hiermit leer.
-  const [serviceCards, setServiceCards] = useState([]); // Hier werden die ServiceCards gespeichert. Alte + Neue.
+  const [serviceCards, setServiceCards] = useLocalStorageState("serviceCards", { defaultValue: [] }); // Hier werden die ServiceCards gespeichert. Alte + Neue.
   
 
   const handleChange = (event) => {
@@ -176,18 +176,6 @@ export default function CreateServiceCardForm() {
 
       <Button type="submit"> Create Service Card</Button>
 
-      {serviceCards.map((card) => (
-        <ServiceProvider
-          key={card.id}
-          firstName={card.firstName}
-          lastName={card.lastName}
-          skills={card.skills}
-          needs={card.needs}
-          email={card.email}
-          phone={card.phone}
-        />
-      ))}
-      
     </FormWrapper>
     </>
   );

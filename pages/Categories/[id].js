@@ -2,6 +2,8 @@ import Link from "next/link";
 import styled from "styled-components";
 import { categories } from "../../lib/data.js";
 import { useRouter } from "next/router";
+import React from 'react';
+import ServiceProvider from "@/components/ServiceCard/index.js";
 
 
 const Header = styled.header`
@@ -20,7 +22,8 @@ const BackLink = styled.h1`
   }
 `;
 
-const SubcategoryPage = () => {
+const SubcategoryPage = ({ serviceCards }) => {
+
   const router = useRouter();
   const { id } = router.query;
 
@@ -40,6 +43,18 @@ const SubcategoryPage = () => {
           <BackLink> &larr;{foundSubcategory.name}</BackLink>
         </Link>
       </Header>
+
+      {serviceCards.map((card) => (
+        <ServiceProvider
+          key={card.id}
+          firstName={card.firstName}
+          lastName={card.lastName}
+          skills={card.skills}
+          needs={card.needs}
+          email={card.email}
+          phone={card.phone}
+        />
+      ))}
     </>
   );
 };
