@@ -67,10 +67,10 @@ export default function CreateServiceCardForm() {
   const [formData, setFormData] = useState({ ...initialFormData }); // Zustand des Formulars ist hiermit leer.
   const [serviceCards, setServiceCards] = useLocalStorageState("serviceCards", { defaultValue: [] }); // Hier werden die ServiceCards gespeichert. Alte + Neue.
   
-
+// Diese Funktion ermöglicht die Eingabe in den Input Feldern. Die Werte können hierüber aktualisiert werden.
   const handleChange = (event) => {
-    const { name, value } = event.target; // name z.B. firstName und der tatsächlich eingegebene Value wie z.b. Joe werden hier destrukturiert auf das Ereignis "Eingabe".
-    setFormData({ ...formData, [name]: value }); // Kopie der bestehenden Eingaben + neuer Value im nächsten name InputField führt zu dem neuen formData Zustand.
+    const { name, value } = event.target; 
+    setFormData({ ...formData, [name]: value }); 
   };
 
 
