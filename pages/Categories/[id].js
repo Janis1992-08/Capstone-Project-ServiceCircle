@@ -2,7 +2,6 @@ import Link from "next/link";
 import styled from "styled-components";
 import { categories } from "../../lib/data.js";
 import { useRouter } from "next/router";
-import React from 'react';
 import ServiceProvider from "@/components/ServiceCard/index.js";
 
 
