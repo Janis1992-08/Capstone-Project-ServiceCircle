@@ -51,7 +51,7 @@ const BackLink = styled.a`
 `;
 
 
-export default function CreateServiceCardForm({ handleServiceCards }) {
+export default function CreateServiceCardForm({ handleAddServiceCards }) {
 
   const initialFormData = {
     firstName: '',
@@ -76,7 +76,7 @@ export default function CreateServiceCardForm({ handleServiceCards }) {
   event.preventDefault();
 
   const newServiceCard = { ...formData, id: uuidv4() };
-  handleServiceCards(newServiceCard);
+  handleAddServiceCards(newServiceCard);
   
   const toastMessage = `The Service Card is created and you can find it in the assigned subcategory: ${formData.subcategory}`;
   alert(toastMessage);
