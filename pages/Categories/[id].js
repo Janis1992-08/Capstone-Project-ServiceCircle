@@ -62,6 +62,8 @@ const FilterInput = styled.input`
   margin-right: 10px;
 `;
 const SubcategoryPage = ({ serviceCards }) => {
+  const [filterType, setFilterType] = useState("all");
+  const [filterValue, setFilterValue] = useState("");
   const router = useRouter();
   const { id } = router.query;
 
@@ -73,8 +75,6 @@ const SubcategoryPage = ({ serviceCards }) => {
   if (!foundSubcategory) {
     return <div>Unterkategorie nicht gefunden</div>;
   }
-  const [filterType, setFilterType] = useState("all");
-  const [filterValue, setFilterValue] = useState("");
 
   const handleFilterTypeChange = (newFilterType) => {
     setFilterType(newFilterType);
