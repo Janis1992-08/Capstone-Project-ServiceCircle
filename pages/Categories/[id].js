@@ -115,7 +115,7 @@ const SubcategoryPage = ({ serviceCards }) => {
               <option value="needs"> Needs</option>
             </select>
           </FilterLabel>
-          <FilterInput
+          <input
             type="text"
             placeholder={`Enter ${
               filterType === "all"

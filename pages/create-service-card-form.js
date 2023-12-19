@@ -33,7 +33,6 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-// anderen Namen
 const Headline = styled.a`
   display: inline-block;
   padding: 5px 10px;
