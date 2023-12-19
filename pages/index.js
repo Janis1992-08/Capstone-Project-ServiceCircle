@@ -53,7 +53,7 @@ const CenteredLink = styled.span`
   text-decoration: none;
 `;
 
-const App = () => {
+const Homepage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleCategoryClick = (categoryId) => {
@@ -114,4 +114,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Homepage;

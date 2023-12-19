@@ -2,6 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { categories } from "../../lib/data.js";
 import { useRouter } from "next/router";
+import ServiceProvider from "@/components/ServiceCard/index.js";
 
 
 const Header = styled.header`
@@ -11,7 +12,7 @@ const Header = styled.header`
   border-bottom: 1px solid #ccc;
 `;
 
-const BackLink = styled.h1`
+const Headline = styled.h1`
   color: #333;
   text-decoration: none;
   font-weight: bold;
@@ -20,7 +21,8 @@ const BackLink = styled.h1`
   }
 `;
 
-const SubcategoryPage = () => {
+const SubcategoryPage = ({ serviceCards }) => {
+
   const router = useRouter();
   const { id } = router.query;
 
@@ -33,13 +35,30 @@ const SubcategoryPage = () => {
     return <div>Unterkategorie nicht gefunden</div>;
   }
 
+  const filteredServiceCards = serviceCards.filter(
+    (card) => card.subcategory === foundSubcategory.name
+  );
+
+
   return (
     <>
       <Header>
         <Link href="/">
-          <BackLink> &larr;{foundSubcategory.name}</BackLink>
+          <Headline> &larr;{foundSubcategory.name}</Headline>
         </Link>
       </Header>
+
+      {filteredServiceCards.map((card) => (
+        <ServiceProvider
+          key={card.id}
+          firstName={card.firstName}
+          lastName={card.lastName}
+          skills={card.skills}
+          needs={card.needs}
+          email={card.email}
+          phone={card.phone}
+        />
+      ))}
     </>
   );
 };
