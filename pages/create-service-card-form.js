@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { categories } from '@/lib/data';
 import Link from 'next/link';
+import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 
 const FormWrapper = styled.form`
@@ -32,6 +34,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+// anderen Namen
 const BackLink = styled.a`
   display: inline-block;
   padding: 5px 10px;
@@ -48,15 +51,41 @@ const BackLink = styled.a`
 `;
 
 
-export default function CreateServiceCardForm( { handleChange, formData, resetForm }) {
+export default function CreateServiceCardForm({ handleServiceCards }) {
+
+  const initialFormData = {
+    firstName: '',
+    lastName: '',
+    skills: '',
+    needs: '',
+    email: '',
+    phone: '',
+    category: '',
+    subcategory: '',
+  };
+
+  const [formData, setFormData] = useState({ ...initialFormData }); 
+
+  const handleChange = (event) => {
+    const { name, value } = event.target; 
+    setFormData({ ...formData, [name]: value }); 
+  };
 
   const handleSubmit = (event) => {
+    
   event.preventDefault();
+
+  const newServiceCard = { ...formData, id: uuidv4() };
+  handleServiceCards(newServiceCard);
   
   const toastMessage = `The Service Card is created and you can find it in the assigned subcategory: ${formData.subcategory}`;
   alert(toastMessage);
 
   resetForm();
+};
+
+const resetForm = () => {
+  setFormData({ ...initialFormData });
 };
 
 
