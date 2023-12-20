@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { categories } from "@/lib/data";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const buttonStyle = {
   backgroundColor: "#3498db",
@@ -42,8 +42,8 @@ const CenteredButton = styled.button`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #ff7f00; 
-    text-decoration: none; 
+    background-color: #ff7f00;
+    text-decoration: none;
   }
 `;
 
@@ -51,6 +51,26 @@ const CenteredLink = styled.span`
   display: block;
   text-align: center;
   text-decoration: none;
+`;
+
+const ShowFavoritesButton = styled.button`
+  display: block;
+  margin: 20px auto;
+  padding: 15px 30px;
+  border-radius: 25px;
+  background-color: gray;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  text-align: center;
+  outline: none;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #ff7f00;
+    text-decoration: none;
+  }
 `;
 
 const Homepage = () => {
@@ -105,11 +125,15 @@ const Homepage = () => {
       </ul>
 
       <Link href="/create-service-card-form">
-      <CenteredButton>
+        <CenteredButton>
           <CenteredLink>Make a Service Offer</CenteredLink>
         </CenteredButton>
       </Link>
-
+      <Link href="/favoritesPage">
+        <ShowFavoritesButton>
+          <CenteredLink>Show my Favorites</CenteredLink>
+        </ShowFavoritesButton>
+      </Link>
     </div>
   );
 };
