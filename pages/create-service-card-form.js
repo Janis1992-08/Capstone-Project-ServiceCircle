@@ -1,9 +1,8 @@
-import styled from 'styled-components';
-import { categories } from '@/lib/data';
-import Link from 'next/link';
-import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-
+import styled from "styled-components";
+import { categories } from "@/lib/data";
+import Link from "next/link";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -34,8 +33,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-// anderen Namen
-const BackLink = styled.a`
+const Headline = styled.a`
   display: inline-block;
   padding: 5px 10px;
   border-radius: 5px;
@@ -50,53 +48,48 @@ const BackLink = styled.a`
   }
 `;
 
-
 export default function CreateServiceCardForm({ handleAddServiceCards }) {
-
   const initialFormData = {
-    firstName: '',
-    lastName: '',
-    skills: '',
-    needs: '',
-    email: '',
-    phone: '',
-    category: '',
-    subcategory: '',
+    firstName: "",
+    lastName: "",
+    skills: "",
+    needs: "",
+    email: "",
+    phone: "",
+    category: "",
+    subcategory: "",
   };
 
-  const [formData, setFormData] = useState({ ...initialFormData }); 
+  const [formData, setFormData] = useState({ ...initialFormData });
 
   const handleChange = (event) => {
-    const { name, value } = event.target; 
-    setFormData({ ...formData, [name]: value }); 
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (event) => {
-    
-  event.preventDefault();
+    event.preventDefault();
 
-  const newServiceCard = { ...formData, id: uuidv4() };
-  handleAddServiceCards(newServiceCard);
-  
-  const toastMessage = `The Service Card is created and you can find it in the assigned subcategory: ${formData.subcategory}`;
-  alert(toastMessage);
+    const newServiceCard = { ...formData, id: uuidv4() };
+    handleAddServiceCards(newServiceCard);
 
-  resetForm();
-};
+    const toastMessage = `The Service Card is created and you can find it in the assigned subcategory: ${formData.subcategory}`;
+    alert(toastMessage);
 
-const resetForm = () => {
-  setFormData({ ...initialFormData });
-};
+    resetForm();
+  };
 
+  const resetForm = () => {
+    setFormData({ ...initialFormData });
+  };
 
   return (
     <>
-    <Link href="/">
-        <BackLink>&larr; Back to Categories</BackLink>
+      <Link href="/">
+        <Headline>&larr; Back to Categories</Headline>
       </Link>
-      
-    <FormWrapper onSubmit={handleSubmit}>
-      
+
+      <FormWrapper onSubmit={handleSubmit}>
         <label htmlFor="firstName">First Name: </label>
         <InputField
           type="text"
@@ -124,8 +117,7 @@ const resetForm = () => {
           onChange={(event) => handleChange(event)}
           required
         />
-      
-  
+
         <label htmlFor="needs">Needs: </label>
         <InputField
           type="text"
@@ -135,7 +127,7 @@ const resetForm = () => {
           onChange={(event) => handleChange(event)}
           required
         />
-      
+
         <label htmlFor="email">Email: </label>
         <InputField
           type="email"
@@ -145,7 +137,7 @@ const resetForm = () => {
           onChange={(event) => handleChange(event)}
           required
         />
-      
+
         <label htmlFor="phone">Phone: </label>
         <InputField
           type="tel"
@@ -155,31 +147,38 @@ const resetForm = () => {
           onChange={(event) => handleChange(event)}
           required
         />
-      
-      <SelectField name="category" onChange={(event) => handleChange(event)} required>
-        <option value="">Select Category</option>
-        {categories.map((category) => (
-          <option key={category.id} value={category.id}>
-            {category.name}
-          </option>
-        ))}
-      </SelectField>
 
-      <SelectField name="subcategory" onChange={(event) => handleChange(event)} required>
-        <option value="">Select Subcategory</option>
-        {formData.category &&
-          categories
-            .find((cat) => cat.id === parseInt(formData.category))
-            ?.subcategories.map((subcategory) => (
-              <option key={subcategory.id} value={subcategory.name}>
-                {subcategory.name}
-              </option>
-            ))}
-      </SelectField>
+        <SelectField
+          name="category"
+          onChange={(event) => handleChange(event)}
+          required
+        >
+          <option value="">Select Category</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </SelectField>
 
-      <Button type="submit"> Create Service Card</Button>
+        <SelectField
+          name="subcategory"
+          onChange={(event) => handleChange(event)}
+          required
+        >
+          <option value="">Select Subcategory</option>
+          {formData.category &&
+            categories
+              .find((cat) => cat.id === parseInt(formData.category))
+              ?.subcategories.map((subcategory) => (
+                <option key={subcategory.id} value={subcategory.name}>
+                  {subcategory.name}
+                </option>
+              ))}
+        </SelectField>
 
-    </FormWrapper>
+        <Button type="submit"> Create Service Card</Button>
+      </FormWrapper>
     </>
   );
 }
