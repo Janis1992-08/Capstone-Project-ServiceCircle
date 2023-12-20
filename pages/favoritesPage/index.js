@@ -1,10 +1,9 @@
-import React from "react";
 import ServiceProvider from "@/components/ServiceCard";
 import styled from "styled-components";
 import FavoriteButton from "@/components/FavoriteButton";
 import Link from "next/link";
 
-const Headline = styled.p`
+const Headline = styled.h1`
   color: #333;
   text-decoration: none;
   font-weight: bold;
@@ -13,7 +12,7 @@ const Headline = styled.p`
   }
 `;
 
-const CardWrapper = styled.div`
+const CardWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -21,10 +20,11 @@ const CardWrapper = styled.div`
   padding: 20px;
 `;
 
-const Card = styled.div`
+const Card = styled.li`
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
+  list-style: none;
   padding: 20px;
   width: 300px;
   transition: box-shadow 0.3s ease;

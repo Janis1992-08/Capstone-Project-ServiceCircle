@@ -1,10 +1,7 @@
 import styled from "styled-components";
-import React from "react";
-import Dislike from "../../assets/ButtonIconDislike.svg?url";
-import Like from "../../assets/ButtonIconLike.svg?url";
 import Image from "next/image";
 
-const FavButton = styled.button`
+const Button = styled.button`
   background-color: none;
   border: 0;
   border-radius: 25px;
@@ -13,13 +10,17 @@ const FavButton = styled.button`
 
 export default function FavoriteButton({ isFavorite, onClick }) {
   return (
-    <FavButton type="button" onClick={onClick}>
+    <Button type="button" onClick={onClick}>
       <Image
-        src={isFavorite ? Dislike : Like}
+        src={
+          isFavorite
+            ? "/assets/ButtonIconDislike.svg"
+            : "/assets/ButtonIconLike.svg"
+        }
         alt="Favorite Button"
         width={20}
         height={20}
       />
-    </FavButton>
+    </Button>
   );
 }

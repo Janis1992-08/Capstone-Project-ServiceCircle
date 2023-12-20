@@ -58,8 +58,6 @@ const FilterLabel = styled.label`
   margin-right: 10px;
 `;
 
-const FilterInput = styled.input``;
-
 const SubcategoryPage = ({ serviceCards, favorites, onToggleFavorite }) => {
   const [filterType, setFilterType] = useState("all");
   const [filterValue, setFilterValue] = useState("");

@@ -152,6 +152,7 @@ export default function CreateServiceCardForm({ handleAddServiceCards }) {
           name="category"
           onChange={(event) => handleChange(event)}
           required
+          value={formData.category}
         >
           <option value="">Select Category</option>
           {categories.map((category) => (
