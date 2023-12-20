@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { categories } from "@/lib/data";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const buttonStyle = {
   backgroundColor: "#3498db",
@@ -26,7 +26,7 @@ const subcategoryStyle = {
   borderRadius: "5px",
 };
 
-const CenteredButton = styled.button`
+const ServiceOfferElement = styled.div`
   display: block;
   margin: 20px auto;
   padding: 15px 30px;
@@ -39,18 +39,34 @@ const CenteredButton = styled.button`
   text-decoration: none;
   text-align: center;
   outline: none;
+  width: 80%;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #ff7f00; 
-    text-decoration: none; 
+    background-color: #ff7f00;
+    text-decoration: none;
   }
 `;
 
-const CenteredLink = styled.span`
+const ShowFavorites = styled.div`
   display: block;
+  margin: 20px auto;
+  padding: 15px 30px;
+  border-radius: 25px;
+  background-color: gray;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
   text-align: center;
-  text-decoration: none;
+  outline: none;
+  width: 60%;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: green;
+    text-decoration: none;
+  }
 `;
 
 const Homepage = () => {
@@ -105,11 +121,11 @@ const Homepage = () => {
       </ul>
 
       <Link href="/create-service-card-form">
-      <CenteredButton>
-          <CenteredLink>Make a Service Offer</CenteredLink>
-        </CenteredButton>
+        <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
       </Link>
-
+      <Link href="/favoritesPage">
+        <ShowFavorites>Show my Favorites</ShowFavorites>
+      </Link>
     </div>
   );
 };
