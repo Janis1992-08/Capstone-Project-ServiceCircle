@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { categories } from "../../lib/data.js";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import ServiceProvider from "@/components/ServiceCard/index.js";
+import ServiceProvider from "@/components/ServiceProvider/index.js";
 import FavoriteButton from "@/components/FavoriteButton/index.js";
 
 const Header = styled.header`
