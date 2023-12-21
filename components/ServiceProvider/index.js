@@ -22,6 +22,30 @@ const ServiceDetails = styled.div`
   margin-top: 10px;
 `;
 
+// Funktion für die Validierung der Daten
+const validateFormData = (editedCard) => {
+  const { firstName, lastName, skills, needs, email, phone } = editedCard;
+
+  // Überprüfen, ob alle Felder ausgefüllt sind
+  if (!firstName || !lastName || !skills || !needs || !email || !phone) {
+    return 'Alle Felder müssen ausgefüllt sein.';
+  }
+
+  // Überprüfen der E-Mail-Validität
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    return 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+  }
+
+  // Überprüfen, ob die Telefonnummer nur Zahlen enthält
+  const phonePattern = /^\d+$/;
+  if (!phonePattern.test(phone)) {
+    return 'Die Telefonnummer darf nur Zahlen enthalten.';
+  }
+
+  return null; // Null bedeutet, dass die Validierung erfolgreich ist
+};
+
 export default function ServiceProvider({ card, serviceCards, setServiceCards, isOnFavoritesPage }) {
 
   const [showContactInfo, setShowContactInfo] = useState(false);
@@ -41,7 +65,17 @@ export default function ServiceProvider({ card, serviceCards, setServiceCards, i
   const handleEdit = (updatedServiceCard) => {
     setEditedCard(updatedServiceCard);
   };
+  
   const handleSave = () => {
+
+    const validationResult = validateFormData(editedCard);
+
+    // Überprüfen, ob die Validierung fehlgeschlagen ist
+    if (validationResult) {
+      alert(validationResult); // Anzeige der Fehlermeldung
+      return; // Abbruch des Speicherns, wenn die Validierung fehlgeschlagen ist
+    }
+
     handleEditServiceCard(editedCard);
     // Zurücksetzen der Service Card nach dem Speichern!
     setEditedCard(null);
@@ -50,9 +84,9 @@ export default function ServiceProvider({ card, serviceCards, setServiceCards, i
 return (
   <ServiceProviderWrapper key={card.id}>
         {editedCard && editedCard.id === card.id ? (
-          <div>
-            <h2>{card.firstName} {card.lastName}</h2>
-            <label htmlFor="firstName">First Name: </label>
+
+            <form>
+            <label htmlFor="firstName"> First Name: </label>
             <input
               type="text"
               id="firstName"
@@ -61,28 +95,34 @@ return (
               value={editedCard.firstName}
               onChange={(event) => setEditedCard({ ...editedCard, firstName: event.target.value })}
             />
-          
+            <label htmlFor="lastName">Last Name: </label>
             <input
               type="text"
+              id="lastName"
+              name="lastName"
               required
               value={editedCard.lastName}
               onChange={(event) => setEditedCard({ ...editedCard, lastName: event.target.value })}
             />
-          
+            <label htmlFor="skills">Skills: </label>
             <input
               type="text"
+              id="skills"
+              name="skills"
               required
               value={editedCard.skills}
               onChange={(event) => setEditedCard({ ...editedCard, skills: event.target.value })}
             />
-            
+            <label htmlFor="needs">Needs: </label>
             <input
               type="text"
+              id="needs"
+              name="needs"
               required
               value={editedCard.needs}
               onChange={(event) => setEditedCard({ ...editedCard, needs: event.target.value })}
             />
-            
+            <label htmlFor="email">email: </label>
             <input
               type="email"
               id="email"
@@ -91,18 +131,21 @@ return (
               value={editedCard.email}
               onChange={(event) => setEditedCard({ ...editedCard, email: event.target.value })}
               />
-            
+            <label htmlFor="phone">phone: </label>
             <input
               type="tel"
+              id="phone"
+              name="phone"
               required
               value={editedCard.phone}
               onChange={(event) => setEditedCard({ ...editedCard, phone: event.target.value })}
             />
 
-            <ServiceButton type="submit" onClick={handleSave}>
+            <ServiceButton onClick={handleSave}>
               Save
             </ServiceButton>
-          </div>
+            </form>
+          
         ) : (
           <div>
           <h2>{card.firstName} {card.lastName}</h2>
@@ -121,7 +164,7 @@ return (
           </ServiceButton>
           <br></br>
           {!isOnFavoritesPage && (
-            <ServiceButton type="submit" onClick={() => handleEdit(card)}>
+            <ServiceButton onClick={() => handleEdit(card)}>
               Edit
             </ServiceButton>
           )}
