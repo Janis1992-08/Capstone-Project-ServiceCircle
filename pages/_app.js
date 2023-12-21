@@ -31,6 +31,7 @@ export default function MyApp({ Component, pageProps }) {
       <Component
         {...pageProps}
         serviceCards={serviceCards}
+        setServiceCards={setServiceCards}
         handleAddServiceCards={handleAddServiceCards}
         favorites={favorites}
         onToggleFavorite={handleToggleFavorite}

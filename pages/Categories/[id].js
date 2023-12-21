@@ -58,13 +58,13 @@ const FilterLabel = styled.label`
   margin-right: 10px;
 `;
 
-const SubcategoryPage = ({ serviceCards, favorites, onToggleFavorite }) => {
+const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFavorite }) => {
+
   const [filterType, setFilterType] = useState("all");
   const [filterValue, setFilterValue] = useState("");
   const router = useRouter();
   const { id } = router.query;
 
-  // Find the subcategory based on the ID in the categories
   const foundSubcategory = categories
     .flatMap((category) => category.subcategories)
     .find((sub) => sub.id === id);
@@ -136,12 +136,10 @@ const SubcategoryPage = ({ serviceCards, favorites, onToggleFavorite }) => {
                 isFavorite={favorites.includes(card.id)}
               />
               <ServiceProvider
-                firstName={card.firstName}
-                lastName={card.lastName}
-                skills={card.skills}
-                needs={card.needs}
-                email={card.email}
-                phone={card.phone}
+                 key={card.id}
+                 card={card}
+                 serviceCards={serviceCards}
+                 setServiceCards={setServiceCards}
               />
             </Card>
           ))}
