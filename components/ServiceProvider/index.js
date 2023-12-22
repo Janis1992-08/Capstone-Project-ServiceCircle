@@ -23,7 +23,7 @@ const ServiceDetails = styled.div`
 `;
 
 // Funktion für die Validierung der Daten
-const validateFormData = (editedCard) => {
+/*const validateFormData = (editedCard) => {
   const { firstName, lastName, skills, needs, email, phone } = editedCard;
 
   // Überprüfen, ob alle Felder ausgefüllt sind
@@ -44,7 +44,7 @@ const validateFormData = (editedCard) => {
   }
 
   return null; // Null bedeutet, dass die Validierung erfolgreich ist
-};
+};*/
 
 export default function ServiceProvider({ card, serviceCards, setServiceCards, isOnFavoritesPage }) {
 
@@ -66,14 +66,15 @@ export default function ServiceProvider({ card, serviceCards, setServiceCards, i
     setEditedCard(updatedServiceCard);
   };
   
-  const handleSave = () => {
+  const handleSave = (event) => {
+    event.preventDefault()
 
-    const validationResult = validateFormData(editedCard);
+    /*const validationResult = validateFormData(editedCard);
 
     // Überprüfen, ob die Validierung fehlgeschlagen ist
     if (validationResult) {
-      return; // Abbruch des Speicherns, wenn die Validierung fehlgeschlagen ist
-    }
+    return; // Abbruch des Speicherns, wenn die Validierung fehlgeschlagen ist
+    }*/
 
     handleEditServiceCard(editedCard);
     // Zurücksetzen der Service Card nach dem Speichern!
@@ -84,7 +85,7 @@ return (
   <ServiceProviderWrapper key={card.id}>
         {editedCard && editedCard.id === card.id ? (
 
-            <form>
+            <form onClick={handleSave}>
             <label htmlFor="firstName"> First Name: </label>
             <input
               type="text"
@@ -140,7 +141,7 @@ return (
               onChange={(event) => setEditedCard({ ...editedCard, phone: event.target.value })}
             />
 
-            <ServiceButton onClick={handleSave}>
+            <ServiceButton>
               Save
             </ServiceButton>
             </form>
