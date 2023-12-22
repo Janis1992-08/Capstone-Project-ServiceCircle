@@ -72,7 +72,6 @@ export default function ServiceProvider({ card, serviceCards, setServiceCards, i
 
     // Überprüfen, ob die Validierung fehlgeschlagen ist
     if (validationResult) {
-      alert(validationResult); // Anzeige der Fehlermeldung
       return; // Abbruch des Speicherns, wenn die Validierung fehlgeschlagen ist
     }
 
