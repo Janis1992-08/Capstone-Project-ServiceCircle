@@ -58,7 +58,7 @@ const FilterLabel = styled.label`
   margin-right: 10px;
 `;
 
-const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFavorite }) => {
+const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFavorite, handleEditServiceCard }) => {
 
   const [filterType, setFilterType] = useState("all");
   const [filterValue, setFilterValue] = useState("");
@@ -140,6 +140,7 @@ const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFav
                  card={card}
                  serviceCards={serviceCards}
                  setServiceCards={setServiceCards}
+                 handleEditServiceCard={handleEditServiceCard}
               />
             </Card>
           ))}

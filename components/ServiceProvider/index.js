@@ -22,31 +22,8 @@ const ServiceDetails = styled.div`
   margin-top: 10px;
 `;
 
-// Funktion für die Validierung der Daten
-/*const validateFormData = (editedCard) => {
-  const { firstName, lastName, skills, needs, email, phone } = editedCard;
 
-  // Überprüfen, ob alle Felder ausgefüllt sind
-  if (!firstName || !lastName || !skills || !needs || !email || !phone) {
-    return 'Alle Felder müssen ausgefüllt sein.';
-  }
-
-  // Überprüfen der E-Mail-Validität
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email)) {
-    return 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
-  }
-
-  // Überprüfen, ob die Telefonnummer nur Zahlen enthält
-  const phonePattern = /^\d+$/;
-  if (!phonePattern.test(phone)) {
-    return 'Die Telefonnummer darf nur Zahlen enthalten.';
-  }
-
-  return null; // Null bedeutet, dass die Validierung erfolgreich ist
-};*/
-
-export default function ServiceProvider({ card, serviceCards, setServiceCards, isOnFavoritesPage }) {
+export default function ServiceProvider({ card, isOnFavoritesPage, handleEditServiceCard }) {
 
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
@@ -54,27 +31,13 @@ export default function ServiceProvider({ card, serviceCards, setServiceCards, i
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
   };
-
-  function handleEditServiceCard(updatedServiceCard) {
-    const updatedCards = serviceCards.map(card =>
-      card.id === updatedServiceCard.id ? updatedServiceCard : card
-    );
-    setServiceCards(updatedCards);
-  }
-
+ 
   const handleEdit = (updatedServiceCard) => {
     setEditedCard(updatedServiceCard);
   };
   
   const handleSave = (event) => {
     event.preventDefault()
-
-    /*const validationResult = validateFormData(editedCard);
-
-    // Überprüfen, ob die Validierung fehlgeschlagen ist
-    if (validationResult) {
-    return; // Abbruch des Speicherns, wenn die Validierung fehlgeschlagen ist
-    }*/
 
     handleEditServiceCard(editedCard);
     // Zurücksetzen der Service Card nach dem Speichern!
@@ -85,7 +48,7 @@ return (
   <ServiceProviderWrapper key={card.id}>
         {editedCard && editedCard.id === card.id ? (
 
-            <form onClick={handleSave}>
+            <form onSubmit={handleSave}>
             <label htmlFor="firstName"> First Name: </label>
             <input
               type="text"
@@ -141,7 +104,7 @@ return (
               onChange={(event) => setEditedCard({ ...editedCard, phone: event.target.value })}
             />
 
-            <ServiceButton>
+            <ServiceButton type="submit">
               Save
             </ServiceButton>
             </form>
