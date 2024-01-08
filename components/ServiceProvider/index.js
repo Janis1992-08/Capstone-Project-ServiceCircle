@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from "react";
+import styled from "styled-components";
+import StarRating from "../StarRating";
+import useLocalStorageState from "use-local-storage-state";
 
 const ServiceProviderWrapper = styled.div`
   border: 1px solid #ccc;
@@ -22,114 +24,156 @@ const ServiceDetails = styled.div`
   margin-top: 10px;
 `;
 
-
-export default function ServiceProvider({ card, isOnFavoritesPage, handleEditServiceCard }) {
-
+export default function ServiceProvider({
+  card,
+  isOnFavoritesPage,
+  handleEditServiceCard,
+}) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
+  const [isRated, setIsRated] = useLocalStorageState(`isRated-${id}`, {
+    defaultValue: false,
+  });
+  const [rating, setRating] = useLocalStorageState(`rating-${id}`, {
+    defaultValue: 0,
+  });
 
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
   };
- 
+
+  const handleRating = () => {
+    if (!isRated) {
+      setIsRated(true);
+      setRating(rating);
+      alert("You have successfully rated!");
+    } else {
+      alert("You have already rated.");
+    }
+  };
+
   const handleEdit = (updatedServiceCard) => {
     setEditedCard(updatedServiceCard);
   };
-  
+
   const handleSave = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     handleEditServiceCard(editedCard);
     // Zurücksetzen der Service Card nach dem Speichern!
     setEditedCard(null);
   };
 
-return (
-  <ServiceProviderWrapper key={card.id}>
-        {editedCard && editedCard.id === card.id ? (
+  return (
+    <ServiceProviderWrapper key={card.id}>
+      {editedCard && editedCard.id === card.id ? (
+        <form onSubmit={handleSave}>
+          <label htmlFor="firstName"> First Name: </label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            required
+            value={editedCard.firstName}
+            onChange={(event) =>
+              setEditedCard({ ...editedCard, firstName: event.target.value })
+            }
+          />
+          <label htmlFor="lastName">Last Name: </label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            required
+            value={editedCard.lastName}
+            onChange={(event) =>
+              setEditedCard({ ...editedCard, lastName: event.target.value })
+            }
+          />
+          <label htmlFor="skills">Skills: </label>
+          <input
+            type="text"
+            id="skills"
+            name="skills"
+            required
+            value={editedCard.skills}
+            onChange={(event) =>
+              setEditedCard({ ...editedCard, skills: event.target.value })
+            }
+          />
+          <label htmlFor="needs">Needs: </label>
+          <input
+            type="text"
+            id="needs"
+            name="needs"
+            required
+            value={editedCard.needs}
+            onChange={(event) =>
+              setEditedCard({ ...editedCard, needs: event.target.value })
+            }
+          />
+          <label htmlFor="email">email: </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            value={editedCard.email}
+            onChange={(event) =>
+              setEditedCard({ ...editedCard, email: event.target.value })
+            }
+          />
+          <label htmlFor="phone">phone: </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            required
+            value={editedCard.phone}
+            onChange={(event) =>
+              setEditedCard({ ...editedCard, phone: event.target.value })
+            }
+          />
 
-            <form onSubmit={handleSave}>
-            <label htmlFor="firstName"> First Name: </label>
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              required
-              value={editedCard.firstName}
-              onChange={(event) => setEditedCard({ ...editedCard, firstName: event.target.value })}
-            />
-            <label htmlFor="lastName">Last Name: </label>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              required
-              value={editedCard.lastName}
-              onChange={(event) => setEditedCard({ ...editedCard, lastName: event.target.value })}
-            />
-            <label htmlFor="skills">Skills: </label>
-            <input
-              type="text"
-              id="skills"
-              name="skills"
-              required
-              value={editedCard.skills}
-              onChange={(event) => setEditedCard({ ...editedCard, skills: event.target.value })}
-            />
-            <label htmlFor="needs">Needs: </label>
-            <input
-              type="text"
-              id="needs"
-              name="needs"
-              required
-              value={editedCard.needs}
-              onChange={(event) => setEditedCard({ ...editedCard, needs: event.target.value })}
-            />
-            <label htmlFor="email">email: </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              value={editedCard.email}
-              onChange={(event) => setEditedCard({ ...editedCard, email: event.target.value })}
-              />
-            <label htmlFor="phone">phone: </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              required
-              value={editedCard.phone}
-              onChange={(event) => setEditedCard({ ...editedCard, phone: event.target.value })}
-            />
+          <ServiceButton type="submit">Save</ServiceButton>
+        </form>
+      ) : (
+        <div>
+          <h2>
+            {card.firstName} {card.lastName}
+          </h2>
 
-            <ServiceButton type="submit">
-              Save
-            </ServiceButton>
-            </form>
-          
-        ) : (
-          <div>
-          <h2>{card.firstName} {card.lastName}</h2>
-
-          <p><strong>Skills:</strong> {card.skills}</p>
-          <p><strong>Needs:</strong> {card.needs}</p>
+          <p>
+            <strong>Skills:</strong> {card.skills}
+          </p>
+          <p>
+            <strong>Needs:</strong> {card.needs}
+          </p>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <StarRating
+              rating={rating}
+              setRating={setRating}
+              isRated={isRated}
+            />
+            {!isRated && <button onClick={handleRating}>Rate Me</button>}
+          </div>
 
           {showContactInfo && (
             <ServiceDetails>
-              <p><strong>Email:</strong> {card.email}</p>
-              <p><strong>Phone:</strong> {card.phone}</p>
+              <p>
+                <strong>Email:</strong> {card.email}
+              </p>
+              <p>
+                <strong>Phone:</strong> {card.phone}
+              </p>
             </ServiceDetails>
           )}
           <ServiceButton type="button" onClick={toggleContactInfo}>
-            {showContactInfo ? 'Hide Contact' : 'Show Contact'}
+            {showContactInfo ? "Hide Contact" : "Show Contact"}
           </ServiceButton>
           <br></br>
           {!isOnFavoritesPage && (
-            <ServiceButton onClick={() => handleEdit(card)}>
-              Edit
-            </ServiceButton>
+            <ServiceButton onClick={() => handleEdit(card)}>Edit</ServiceButton>
           )}
         </div>
       )}
