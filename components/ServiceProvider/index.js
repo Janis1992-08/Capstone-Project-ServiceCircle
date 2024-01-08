@@ -42,7 +42,8 @@ export default function ServiceProvider({
     setShowContactInfo(!showContactInfo);
   };
 
-  const handleRating = () => {
+  const handleRating = (event) => {
+    event.preventDefault();
     if (!isRated) {
       setIsRated(true);
       setRating(rating);
@@ -65,7 +66,7 @@ export default function ServiceProvider({
 
   return (
     <ServiceProviderWrapper key={card.id}>
-      {editedCard && editedCard.id === card.id ? (
+      {editedCard?.id === card.id ? (
         <form onSubmit={handleSave}>
           <label htmlFor="firstName"> First Name: </label>
           <input
@@ -148,16 +149,6 @@ export default function ServiceProvider({
           <p>
             <strong>Needs:</strong> {card.needs}
           </p>
-          <form>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <StarRating
-                rating={rating}
-                setRating={setRating}
-                isRated={isRated}
-              />
-              {!isRated && <button onClick={handleRating}>Rate Me</button>}
-            </div>
-          </form>
 
           {showContactInfo && (
             <ServiceDetails>
@@ -176,6 +167,24 @@ export default function ServiceProvider({
           {!isOnFavoritesPage && (
             <ServiceButton onClick={() => handleEdit(card)}>Edit</ServiceButton>
           )}
+          <form onSubmit={handleRating}>
+            <fieldset
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                border: "none",
+                marginTop: "10px",
+              }}
+            >
+              <StarRating
+                rating={rating}
+                setRating={setRating}
+                isRated={isRated}
+              />
+              {!isRated && <button type="submit">Rate Me</button>}
+            </fieldset>
+          </form>
         </div>
       )}
     </ServiceProviderWrapper>

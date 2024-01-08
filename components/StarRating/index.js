@@ -11,13 +11,6 @@ const StarWrapper = styled.label`
   }
 `;
 
-const StarField = styled.fieldset`
-  border: none;
-  padding: 0;
-  margin: 0;
-  display: inline-block;
-`;
-
 const StarRating = ({ rating, setRating, isRated }) => {
   const [hoverRating, setHoverRating] = useState(0);
 
@@ -43,7 +36,7 @@ const StarRating = ({ rating, setRating, isRated }) => {
 
   return (
     <>
-      <StarField>
+      <div>
         {stars.map((star) => (
           <StarWrapper
             key={star}
@@ -62,7 +55,7 @@ const StarRating = ({ rating, setRating, isRated }) => {
             {star <= (hoverRating || rating) ? "⭐️" : "☆"}
           </StarWrapper>
         ))}
-      </StarField>
+      </div>
     </>
   );
 };
