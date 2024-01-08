@@ -148,14 +148,16 @@ export default function ServiceProvider({
           <p>
             <strong>Needs:</strong> {card.needs}
           </p>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <StarRating
-              rating={rating}
-              setRating={setRating}
-              isRated={isRated}
-            />
-            {!isRated && <button onClick={handleRating}>Rate Me</button>}
-          </div>
+          <form>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <StarRating
+                rating={rating}
+                setRating={setRating}
+                isRated={isRated}
+              />
+              {!isRated && <button onClick={handleRating}>Rate Me</button>}
+            </div>
+          </form>
 
           {showContactInfo && (
             <ServiceDetails>
