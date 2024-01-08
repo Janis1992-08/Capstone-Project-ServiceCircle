@@ -31,10 +31,10 @@ export default function ServiceProvider({
 }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
-  const [isRated, setIsRated] = useLocalStorageState(`isRated-${id}`, {
+  const [isRated, setIsRated] = useLocalStorageState(`isRated-${card.id}`, {
     defaultValue: false,
   });
-  const [rating, setRating] = useLocalStorageState(`rating-${id}`, {
+  const [rating, setRating] = useLocalStorageState(`rating-${card.id}`, {
     defaultValue: 0,
   });
 
@@ -60,7 +60,6 @@ export default function ServiceProvider({
     event.preventDefault();
 
     handleEditServiceCard(editedCard);
-    // Zurücksetzen der Service Card nach dem Speichern!
     setEditedCard(null);
   };
 
