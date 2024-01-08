@@ -3,6 +3,7 @@ import Link from "next/link";
 import { categories } from "@/lib/data";
 import styled from "styled-components";
 
+
 const buttonStyle = {
   backgroundColor: "#3498db",
   color: "white",
@@ -81,7 +82,7 @@ const Homepage = () => {
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-        ServiceCircle
+        Service Circle
       </h1>
       <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
         Find your perfect Service-Match
@@ -109,7 +110,7 @@ const Homepage = () => {
               >
                 {category.subcategories.map((subcategory) => (
                   <li key={subcategory.id} style={subcategoryStyle}>
-                    <Link href={`/Categories/${subcategory.id}`}>
+                    <Link href={`/categories/${subcategory.id}`}>
                       {subcategory.name}
                     </Link>{" "}
                   </li>
@@ -123,7 +124,7 @@ const Homepage = () => {
       <Link href="/create-service-card-form">
         <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
       </Link>
-      <Link href="/favoritesPage">
+      <Link href="/favorites">
         <ShowFavorites>Show my Favorites</ShowFavorites>
       </Link>
     </div>

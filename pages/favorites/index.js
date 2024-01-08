@@ -1,4 +1,4 @@
-import ServiceProvider from "@/components/ServiceCard";
+import ServiceProvider from "@/components/ServiceProvider";
 import styled from "styled-components";
 import FavoriteButton from "@/components/FavoriteButton";
 import Link from "next/link";
@@ -34,7 +34,7 @@ const Card = styled.li`
   }
 `;
 
-const FavoritesPage = ({ favorites, serviceCards, onToggleFavorite }) => {
+const FavoritesPage = ({ favorites, serviceCards, setServiceCards, onToggleFavorite }) => {
   const favoriteCards = serviceCards.filter((card) =>
     favorites.includes(card.id)
   );
@@ -54,12 +54,11 @@ const FavoritesPage = ({ favorites, serviceCards, onToggleFavorite }) => {
                 isFavorite={favorites.includes(card.id)}
               />
               <ServiceProvider
-                firstName={card.firstName}
-                lastName={card.lastName}
-                skills={card.skills}
-                needs={card.needs}
-                email={card.email}
-                phone={card.phone}
+                 key={card.id}
+                 card={card}
+                 serviceCards={serviceCards}
+                 setServiceCards={setServiceCards}
+                 isOnFavoritesPage={true}
               />
             </Card>
           ))}

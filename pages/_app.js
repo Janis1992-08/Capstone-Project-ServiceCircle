@@ -9,6 +9,13 @@ export default function MyApp({ Component, pageProps }) {
     defaultValue: [],
   });
 
+  function handleEditServiceCard(updatedServiceCard) {
+    const updatedCards = serviceCards.map(card =>
+      card.id === updatedServiceCard.id ? updatedServiceCard : card
+    );
+    setServiceCards(updatedCards);
+  }
+
   function handleAddServiceCards(newServiceCard) {
     setServiceCards((prevServiceCards) => [
       ...prevServiceCards,
@@ -31,6 +38,8 @@ export default function MyApp({ Component, pageProps }) {
       <Component
         {...pageProps}
         serviceCards={serviceCards}
+        setServiceCards={setServiceCards}
+        handleEditServiceCard={handleEditServiceCard}
         handleAddServiceCards={handleAddServiceCards}
         favorites={favorites}
         onToggleFavorite={handleToggleFavorite}

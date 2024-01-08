@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { categories } from "../../lib/data.js";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import ServiceProvider from "@/components/ServiceCard/index.js";
+import ServiceProvider from "@/components/ServiceProvider/index.js";
 import FavoriteButton from "@/components/FavoriteButton/index.js";
 
 const Header = styled.header`
@@ -58,13 +58,13 @@ const FilterLabel = styled.label`
   margin-right: 10px;
 `;
 
-const SubcategoryPage = ({ serviceCards, favorites, onToggleFavorite }) => {
+const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFavorite, handleEditServiceCard }) => {
+
   const [filterType, setFilterType] = useState("all");
   const [filterValue, setFilterValue] = useState("");
   const router = useRouter();
   const { id } = router.query;
 
-  // Find the subcategory based on the ID in the categories
   const foundSubcategory = categories
     .flatMap((category) => category.subcategories)
     .find((sub) => sub.id === id);
@@ -136,12 +136,11 @@ const SubcategoryPage = ({ serviceCards, favorites, onToggleFavorite }) => {
                 isFavorite={favorites.includes(card.id)}
               />
               <ServiceProvider
-                firstName={card.firstName}
-                lastName={card.lastName}
-                skills={card.skills}
-                needs={card.needs}
-                email={card.email}
-                phone={card.phone}
+                 key={card.id}
+                 card={card}
+                 serviceCards={serviceCards}
+                 setServiceCards={setServiceCards}
+                 handleEditServiceCard={handleEditServiceCard}
               />
             </Card>
           ))}
