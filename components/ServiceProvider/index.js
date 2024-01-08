@@ -24,6 +24,14 @@ const ServiceDetails = styled.div`
   margin-top: 10px;
 `;
 
+const StarFieldset = styled.fieldset`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  margin-top: 10px;
+`;
+
 export default function ServiceProvider({
   card,
   isOnFavoritesPage,
@@ -168,22 +176,14 @@ export default function ServiceProvider({
             <ServiceButton onClick={() => handleEdit(card)}>Edit</ServiceButton>
           )}
           <form onSubmit={handleRating}>
-            <fieldset
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                border: "none",
-                marginTop: "10px",
-              }}
-            >
+            <StarFieldset>
               <StarRating
                 rating={rating}
                 setRating={setRating}
                 isRated={isRated}
               />
               {!isRated && <button type="submit">Rate Me</button>}
-            </fieldset>
+            </StarFieldset>
           </form>
         </div>
       )}
