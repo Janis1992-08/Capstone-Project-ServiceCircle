@@ -61,7 +61,7 @@ const StarRating = ({ card, onRating }) => {
         </StarWrapper>
       ))}
       {!card.rating && tempRating > 0 && (
-        <button onClick={handleRate}>Rate</button>
+        <button type="button" onClick={handleRate}>Rate</button>
       )}
     </>
   );
