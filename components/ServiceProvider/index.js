@@ -166,13 +166,11 @@ export default function ServiceProvider({
               <ServiceButton onClick={() => handleEdit(card)}>
                 Edit
               </ServiceButton>
-              <br></br>
               <DeleteButton type="button" onClick={() => handleDelete(card)}>
                 Delete
               </DeleteButton>
             </>
           )}
-          <br></br><br></br> 
           <StarRating card={card} onRating={onRating} />
         </div>
       )}
