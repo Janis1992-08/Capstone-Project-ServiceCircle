@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import ServiceProvider from "@/components/ServiceProvider/index.js";
 import FavoriteButton from "@/components/FavoriteButton/index.js";
+import useSWR from "swr";
 
 const Header = styled.header`
   background-color: #f0f0f0;
@@ -58,12 +59,22 @@ const FilterLabel = styled.label`
   margin-right: 10px;
 `;
 
-const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFavorite, handleEditServiceCard }) => {
-
+const SubcategoryPage = ({
+  fetcher,
+  serviceCards,
+  setServiceCards,
+  favorites,
+  onToggleFavorite,
+  handleEditServiceCard,
+}) => {
   const [filterType, setFilterType] = useState("all");
   const [filterValue, setFilterValue] = useState("");
   const router = useRouter();
   const { id } = router.query;
+  const { isReady } = router;
+  const { data, mutate } = useSWR("/api/providers", fetcher);
+
+  if (!data || !isReady) return <div>Loading...</div>;
 
   const foundSubcategory = categories
     .flatMap((category) => category.subcategories)
@@ -78,7 +89,7 @@ const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFav
     setFilterValue("");
   };
 
-  const filteredServiceCards = serviceCards.filter(
+  const filteredServiceCards = data.filter(
     (card) => card.subcategory === foundSubcategory.name
   );
 
@@ -129,18 +140,18 @@ const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFav
 
       <main>
         <CardWrapper>
-          {filteredProviders.map((card) => (
-            <Card key={card.id}>
+          {filteredProviders.map((provider) => (
+            <Card key={provider._id}>
               <FavoriteButton
-                onClick={() => onToggleFavorite(card.id)}
-                isFavorite={favorites.includes(card.id)}
+                onClick={() => onToggleFavorite(provider._id)}
+                isFavorite={favorites.includes(provider._id)}
               />
               <ServiceProvider
-                 key={card.id}
-                 card={card}
-                 serviceCards={serviceCards}
-                 setServiceCards={setServiceCards}
-                 handleEditServiceCard={handleEditServiceCard}
+                key={provider._id}
+                card={provider}
+                serviceCards={serviceCards}
+                setServiceCards={setServiceCards}
+                handleEditServiceCard={handleEditServiceCard}
               />
             </Card>
           ))}

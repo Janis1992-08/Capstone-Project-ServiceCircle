@@ -63,14 +63,16 @@ export default function ServiceProvider({
     );
 
     if (isConfirmed) {
-      const updatedCards = serviceCards.filter((cards) => cards.id !== card.id);
+      const updatedCards = serviceCards.filter(
+        (cards) => cards.id !== card._id
+      );
       setServiceCards(updatedCards);
     }
   };
 
   return (
-    <ServiceProviderWrapper key={card.id}>
-      {editedCard && editedCard.id === card.id ? (
+    <ServiceProviderWrapper key={card._id}>
+      {editedCard && editedCard.id === card._id ? (
         <form onSubmit={handleSave}>
           <label htmlFor="firstName"> First Name: </label>
           <input
@@ -173,7 +175,10 @@ export default function ServiceProvider({
               <ServiceButton onClick={() => handleEdit(card)}>
                 Edit
               </ServiceButton>
-              <DeleteButton type="button" onClick={() => handleDelete(card.id)}>
+              <DeleteButton
+                type="button"
+                onClick={() => handleDelete(card._id)}
+              >
                 Delete
               </DeleteButton>
             </>
