@@ -147,21 +147,21 @@ export default function ServiceProvider({
             {card.firstName} {card.lastName}
           </h2>
 
-          <p>
+          <h2>
             <strong>Skills:</strong> {card.skills}
-          </p>
-          <p>
+          </h2>
+          <h2>
             <strong>Needs:</strong> {card.needs}
-          </p>
+          </h2>
 
           {showContactInfo && (
             <ServiceDetails>
-              <p>
+              <h2>
                 <strong>Email:</strong> {card.email}
-              </p>
-              <p>
+              </h2>
+              <h2>
                 <strong>Phone:</strong> {card.phone}
-              </p>
+              </h2>
             </ServiceDetails>
           )}
           <ServiceButton type="button" onClick={toggleContactInfo}>
