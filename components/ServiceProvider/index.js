@@ -36,8 +36,8 @@ const DeleteButton = styled.button`
 export default function ServiceProvider({
   card,
   isOnFavoritesPage,
-  handleEditServiceCard,
-  handleDelete,
+  onEditServiceCard,
+  onDeleteServiceCard,
   onRating
 }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
@@ -55,7 +55,7 @@ export default function ServiceProvider({
   const handleSave = (event) => {
     event.preventDefault();
 
-    handleEditServiceCard(editedCard);
+    onEditServiceCard(editedCard);
     setEditedCard(null);
   };
 
@@ -163,10 +163,10 @@ export default function ServiceProvider({
           <br></br>
           {!isOnFavoritesPage && (
             <>
-              <ServiceButton onClick={() => handleEdit(card)}>
+              <ServiceButton type="button" onClick={() => handleEdit(card)}>
                 Edit
               </ServiceButton>
-              <DeleteButton type="button" onClick={() => handleDelete(card)}>
+              <DeleteButton type="button" onClick={() => onDeleteServiceCard(card)}>
                 Delete
               </DeleteButton>
             </>

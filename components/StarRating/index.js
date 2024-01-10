@@ -36,10 +36,6 @@ const StarRating = ({ card, onRating }) => {
     }
   };
 
-  const handleRate = () => {
-    onRating(card.id, tempRating);
-  };
-
   return (
     <>
       {stars.map((star) => (
@@ -61,7 +57,7 @@ const StarRating = ({ card, onRating }) => {
         </StarWrapper>
       ))}
       {!card.rating && tempRating > 0 && (
-        <button type="button" onClick={handleRate}>Rate</button>
+        <button type="button" onClick={() => onRating(card.id, tempRating)}>Rate</button>
       )}
     </>
   );

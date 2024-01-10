@@ -60,9 +60,9 @@ export default function MyApp({ Component, pageProps }) {
         serviceCards={serviceCards}
         setServiceCards={setServiceCards}
         onRating={handleRating}
-        handleDelete={handleDelete}
-        handleEditServiceCard={handleEditServiceCard}
-        handleAddServiceCards={handleAddServiceCards}
+        onDeleteServiceCard={handleDelete}
+        onEditServiceCard={handleEditServiceCard}
+        onAddServiceCard={handleAddServiceCards}
         favorites={favorites}
         onToggleFavorite={handleToggleFavorite}
       />

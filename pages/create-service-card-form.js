@@ -48,7 +48,7 @@ const Headline = styled.a`
   }
 `;
 
-export default function CreateServiceCardForm({ handleAddServiceCards }) {
+export default function CreateServiceCardForm({ onAddServiceCard }) {
   const initialFormData = {
     firstName: "",
     lastName: "",
@@ -71,7 +71,7 @@ export default function CreateServiceCardForm({ handleAddServiceCards }) {
     event.preventDefault();
 
     const newServiceCard = { ...formData, id: uuidv4() };
-    handleAddServiceCards(newServiceCard);
+    onAddServiceCard(newServiceCard);
 
     const toastMessage = `The Service Card is created and you can find it in the assigned subcategory: ${formData.subcategory}`;
     alert(toastMessage);
