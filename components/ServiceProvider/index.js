@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import ReviewForm from "@/components/ReviewForm";
 
 const ServiceProviderWrapper = styled.div`
   border: 1px solid #ccc;
@@ -16,6 +17,20 @@ const ServiceButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   margin-top: 10px;
+`;
+
+const ActionButton = styled.button`
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 10px;
+`;
+
+const ReviewButton = styled(ActionButton)`
+  background-color: #2ecc71;
+  color: white;
 `;
 
 const ServiceDetails = styled.div`
@@ -44,17 +59,39 @@ export default function ServiceProvider({
 
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
-  };
+};
 
+const toggleReviewForm = () => {
+    setShowReviewForm(!showReviewForm);
+};
+
+const [showReviewForm, setShowReviewForm] = useState(false);
+    const [reviews, setReviews] = useState({});
+
+    
   const handleEdit = (updatedServiceCard) => {
     setEditedCard(updatedServiceCard);
   };
+
+  useEffect(() => {
+    const storedReviews = localStorage.getItem(`reviews_${card.id}`);
+    if (storedReviews) {
+      setReviews(JSON.parse(storedReviews));
+    }
+  }, [card.id]);
+
 
   const handleSave = (event) => {
     event.preventDefault();
 
     handleEditServiceCard(editedCard);
     setEditedCard(null);
+  };
+
+  const addReview = (cardId, review) => {
+    const updatedReviews = { ...reviews, [cardId]: review };
+    setReviews(updatedReviews);
+    localStorage.setItem(`reviews_${card.id}`, JSON.stringify(updatedReviews));
   };
 
   const handleDelete = () => {
@@ -178,6 +215,25 @@ export default function ServiceProvider({
               </DeleteButton>
             </>
           )}
+            <ReviewButton onClick={toggleReviewForm}>
+            {showReviewForm ? "Hide Review Form" : "Add Review"}
+          </ReviewButton>
+
+          {showReviewForm && (
+            <ReviewForm
+              cardId={card.id}
+              addReview={addReview}
+              reviewButtonColor={card.reviewButtonColor}
+            />
+          )}
+
+          {reviews[card.id] && (
+            <div>
+              <h3>Reviews:</h3>
+              <p>{reviews[card.id]}</p>
+            </div>
+          )}
+
         </div>
       )}
     </ServiceProviderWrapper>
