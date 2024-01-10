@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { FiSun, FiMoon } from "react-icons/fi"; 
 import useLocalStorageState from "use-local-storage-state";
 
-const SwitchButton = styled.label`
+const SwitchLabel = styled.label`
   position: fixed;
   top: 10px;
   right: 10px;
@@ -96,13 +96,13 @@ export default function MyApp({ Component, pageProps }) {
         favorites={favorites}
         onToggleFavorite={handleToggleFavorite}
       />
-      <SwitchButton onClick={toggleTheme}>
+      <SwitchLabel onClick={toggleTheme}>
         {theme === "light" ? <FiSun /> : <FiMoon />}
         <SwitchInput
           type="checkbox"
           checked={theme === "dark"}
           onChange={toggleTheme}
         />
-      </SwitchButton>
+      </SwitchLabel>
     </ThemeProvider>
   );};
