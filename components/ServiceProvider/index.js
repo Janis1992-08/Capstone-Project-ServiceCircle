@@ -16,7 +16,7 @@ const ServiceButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 10px;
+  margin: 15px;
 `;
 
 const ServiceDetails = styled.div`
@@ -30,7 +30,7 @@ const DeleteButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 10px;
+  margin: 15px;
 `;
 
 export default function ServiceProvider({
