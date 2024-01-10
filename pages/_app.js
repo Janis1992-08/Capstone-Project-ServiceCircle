@@ -8,6 +8,10 @@ export default function MyApp({ Component, pageProps }) {
   const [favorites, setFavorites] = useLocalStorageState("favorites", {
     defaultValue: [],
   });
+  
+
+  
+  
 
   function handleEditServiceCard(updatedServiceCard) {
     const updatedCards = serviceCards.map(card =>

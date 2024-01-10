@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import styled from "styled-components";
 import ReviewForm from "@/components/ReviewForm";
 
@@ -80,7 +80,6 @@ const [showReviewForm, setShowReviewForm] = useState(false);
     }
   }, [card.id]);
 
-
   const handleSave = (event) => {
     event.preventDefault();
 
@@ -88,7 +87,7 @@ const [showReviewForm, setShowReviewForm] = useState(false);
     setEditedCard(null);
   };
 
-  const addReview = (cardId, review) => {
+  const onAddReview = (cardId, review) => {
     const updatedReviews = { ...reviews, [cardId]: review };
     setReviews(updatedReviews);
     localStorage.setItem(`reviews_${card.id}`, JSON.stringify(updatedReviews));
@@ -222,16 +221,16 @@ const [showReviewForm, setShowReviewForm] = useState(false);
           {showReviewForm && (
             <ReviewForm
               cardId={card.id}
-              addReview={addReview}
+              onAddReview={onAddReview}
               reviewButtonColor={card.reviewButtonColor}
             />
           )}
 
           {reviews[card.id] && (
-            <div>
+            <article>
               <h3>Reviews:</h3>
               <p>{reviews[card.id]}</p>
-            </div>
+            </article>
           )}
 
         </div>
