@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import StarRating from "../StarRating";
 
 const ServiceProviderWrapper = styled.div`
   border: 1px solid #ccc;
@@ -36,12 +37,13 @@ export default function ServiceProvider({
   card,
   isOnFavoritesPage,
   handleEditServiceCard,
-  serviceCards,
-  setServiceCards,
+  handleDelete,
+  onRating
 }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
 
+  
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
   };
@@ -57,20 +59,11 @@ export default function ServiceProvider({
     setEditedCard(null);
   };
 
-  const handleDelete = () => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this service provider?"
-    );
 
-    if (isConfirmed) {
-      const updatedCards = serviceCards.filter((cards) => cards.id !== card.id);
-      setServiceCards(updatedCards);
-    }
-  };
 
   return (
     <ServiceProviderWrapper key={card.id}>
-      {editedCard && editedCard.id === card.id ? (
+      {editedCard?.id === card.id ? (
         <form onSubmit={handleSave}>
           <label htmlFor="firstName"> First Name: </label>
           <input
@@ -173,11 +166,14 @@ export default function ServiceProvider({
               <ServiceButton onClick={() => handleEdit(card)}>
                 Edit
               </ServiceButton>
-              <DeleteButton type="button" onClick={() => handleDelete(card.id)}>
+              <br></br>
+              <DeleteButton type="button" onClick={() => handleDelete(card)}>
                 Delete
               </DeleteButton>
             </>
           )}
+          <br></br><br></br> 
+          <StarRating card={card} onRating={onRating} />
         </div>
       )}
     </ServiceProviderWrapper>
