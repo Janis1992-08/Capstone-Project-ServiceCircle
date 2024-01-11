@@ -59,7 +59,7 @@ export default function ServiceProvider({
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const [reviews, setReviews] = useLocalStorageState(`reviews_${card.id}`);
+  const [reviews, setReviews] = useLocalStorageState(`reviews_${card.id}`, {});
 
   const onAddReview = (cardId, review) => {
     const updatedReviews = { ...reviews, [cardId]: review };
@@ -201,23 +201,25 @@ export default function ServiceProvider({
             </>
           )}
           <ReviewButton onClick={toggleReviewForm}>
-            {showReviewForm ? "Hide Review Form" : "Add Review"}
-          </ReviewButton>
-          {showReviewForm && (
-            <ReviewForm
-              cardId={card.id}
-              onAddReview={onAddReview}
-              reviewButtonColor={card.reviewButtonColor}
-            />
-          )}
-          {reviews[card.id] && (
-            <article>
-              <h3>Reviews:</h3>
-              <p>{reviews[card.id]}</p>
-            </article>
-          )}
-        </div>
-      )}
-    </ServiceProviderWrapper>
-  );
-}
+          {showReviewForm ? "Hide Review Form" : "Add Review"}
+        </ReviewButton>
+
+        {showReviewForm && (
+          <ReviewForm
+            cardId={card.id}
+            onAddReview={onAddReview}
+            reviewButtonColor={card.reviewButtonColor}
+          />
+        )}
+
+        {reviews && reviews[card.id] && (
+          <article>
+            <h3>Reviews:</h3>
+            <p>{reviews[card.id]}</p>
+          </article>
+        )}
+      </div>
+    )}
+  </ServiceProviderWrapper>
+);}
+
