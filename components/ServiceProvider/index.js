@@ -94,6 +94,8 @@ export default function ServiceProvider({
             id="firstName"
             name="firstName"
             required
+            minLength={3}
+          maxLength={15}
             value={editedCard.firstName}
             onChange={(event) =>
               setEditedCard({ ...editedCard, firstName: event.target.value })
@@ -105,6 +107,8 @@ export default function ServiceProvider({
             id="lastName"
             name="lastName"
             required
+            minLength={3}
+          maxLength={15}
             value={editedCard.lastName}
             onChange={(event) =>
               setEditedCard({ ...editedCard, lastName: event.target.value })
@@ -116,6 +120,8 @@ export default function ServiceProvider({
             id="skills"
             name="skills"
             required
+            minLength={3}
+          maxLength={15}
             value={editedCard.skills}
             onChange={(event) =>
               setEditedCard({ ...editedCard, skills: event.target.value })
@@ -127,6 +133,8 @@ export default function ServiceProvider({
             id="needs"
             name="needs"
             required
+            minLength={3}
+          maxLength={15}
             value={editedCard.needs}
             onChange={(event) =>
               setEditedCard({ ...editedCard, needs: event.target.value })

@@ -101,6 +101,8 @@ export default function CreateServiceCardForm({ onAddServiceCard }) {
           value={formData.firstName}
           onChange={(event) => handleChange(event)}
           required
+          minLength={3}
+          maxLength={15}
         />
         <label htmlFor="lastName">Last Name: </label>
         <InputField
@@ -110,6 +112,8 @@ export default function CreateServiceCardForm({ onAddServiceCard }) {
           value={formData.lastName}
           onChange={(event) => handleChange(event)}
           required
+          minLength={3}
+          maxLength={15}
         />
         <label htmlFor="skills">Skills: </label>
         <InputField
@@ -119,6 +123,8 @@ export default function CreateServiceCardForm({ onAddServiceCard }) {
           value={formData.skills}
           onChange={(event) => handleChange(event)}
           required
+          minLength={3}
+          maxLength={15}
         />
 
         <label htmlFor="needs">Needs: </label>
@@ -129,6 +135,8 @@ export default function CreateServiceCardForm({ onAddServiceCard }) {
           value={formData.needs}
           onChange={(event) => handleChange(event)}
           required
+          minLength={3}
+          maxLength={15}
         />
 
         <label htmlFor="email">Email: </label>
