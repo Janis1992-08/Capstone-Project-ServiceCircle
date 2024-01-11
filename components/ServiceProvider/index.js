@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from "styled-components";
 import ReviewForm from "@/components/ReviewForm";
+import useLocalStorageState from "use-local-storage-state";
+
 
 const ServiceProviderWrapper = styled.div`
   border: 1px solid #ccc;
@@ -56,50 +58,36 @@ export default function ServiceProvider({
 }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
-
-  const toggleContactInfo = () => {
-    setShowContactInfo(!showContactInfo);
-};
-
-const toggleReviewForm = () => {
-    setShowReviewForm(!showReviewForm);
-};
-
-const [showReviewForm, setShowReviewForm] = useState(false);
-    const [reviews, setReviews] = useState({});
-
-    
-  const handleEdit = (updatedServiceCard) => {
-    setEditedCard(updatedServiceCard);
-  };
-
-  useEffect(() => {
-    const storedReviews = localStorage.getItem(`reviews_${card.id}`);
-    if (storedReviews) {
-      setReviews(JSON.parse(storedReviews));
-    }
-  }, [card.id]);
-
-  const handleSave = (event) => {
-    event.preventDefault();
-
-    handleEditServiceCard(editedCard);
-    setEditedCard(null);
-  };
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviews, setReviews] = useLocalStorageState(`reviews_${card.id}`);
 
   const onAddReview = (cardId, review) => {
     const updatedReviews = { ...reviews, [cardId]: review };
     setReviews(updatedReviews);
-    localStorage.setItem(`reviews_${card.id}`, JSON.stringify(updatedReviews));
+  };
+
+  const toggleContactInfo = () => {
+    setShowContactInfo(!showContactInfo);
+  };
+
+  const toggleReviewForm = () => {
+    setShowReviewForm(!showReviewForm);
+  };
+
+  const handleEdit = (updatedServiceCard) => {
+    setEditedCard(updatedServiceCard);
+  };
+
+  const handleSave = (event) => {
+    event.preventDefault();
+    handleEditServiceCard(editedCard);
+    setEditedCard(null);
   };
 
   const handleDelete = () => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this service provider?"
-    );
-
+    const isConfirmed = window.confirm("Are you sure you want to delete this service provider?");
     if (isConfirmed) {
-      const updatedCards = serviceCards.filter((cards) => cards.id !== card.id);
+      const updatedCards = serviceCards.filter((c) => c.id !== card.id);
       setServiceCards(updatedCards);
     }
   };
@@ -119,7 +107,7 @@ const [showReviewForm, setShowReviewForm] = useState(false);
               setEditedCard({ ...editedCard, firstName: event.target.value })
             }
           />
-          <label htmlFor="lastName">Last Name: </label>
+          <label htmlFor="lastName"> Last Name: </label>
           <input
             type="text"
             id="lastName"
@@ -130,7 +118,7 @@ const [showReviewForm, setShowReviewForm] = useState(false);
               setEditedCard({ ...editedCard, lastName: event.target.value })
             }
           />
-          <label htmlFor="skills">Skills: </label>
+          <label htmlFor="skills"> Skills: </label>
           <input
             type="text"
             id="skills"
@@ -141,7 +129,7 @@ const [showReviewForm, setShowReviewForm] = useState(false);
               setEditedCard({ ...editedCard, skills: event.target.value })
             }
           />
-          <label htmlFor="needs">Needs: </label>
+          <label htmlFor="needs"> Needs: </label>
           <input
             type="text"
             id="needs"
@@ -152,7 +140,7 @@ const [showReviewForm, setShowReviewForm] = useState(false);
               setEditedCard({ ...editedCard, needs: event.target.value })
             }
           />
-          <label htmlFor="email">email: </label>
+          <label htmlFor="email"> Email: </label>
           <input
             type="email"
             id="email"
@@ -162,8 +150,9 @@ const [showReviewForm, setShowReviewForm] = useState(false);
             onChange={(event) =>
               setEditedCard({ ...editedCard, email: event.target.value })
             }
-          />
-          <label htmlFor="phone">phone: </label>
+         
+            />
+          <label htmlFor="phone"> Phone: </label>
           <input
             type="tel"
             id="phone"
@@ -174,7 +163,6 @@ const [showReviewForm, setShowReviewForm] = useState(false);
               setEditedCard({ ...editedCard, phone: event.target.value })
             }
           />
-
           <ServiceButton type="submit">Save</ServiceButton>
         </form>
       ) : (
@@ -182,14 +170,12 @@ const [showReviewForm, setShowReviewForm] = useState(false);
           <h2>
             {card.firstName} {card.lastName}
           </h2>
-
           <p>
             <strong>Skills:</strong> {card.skills}
           </p>
           <p>
             <strong>Needs:</strong> {card.needs}
           </p>
-
           {showContactInfo && (
             <ServiceDetails>
               <p>
@@ -203,21 +189,20 @@ const [showReviewForm, setShowReviewForm] = useState(false);
           <ServiceButton type="button" onClick={toggleContactInfo}>
             {showContactInfo ? "Hide Contact" : "Show Contact"}
           </ServiceButton>
-          <br></br>
+          <br />
           {!isOnFavoritesPage && (
             <>
               <ServiceButton onClick={() => handleEdit(card)}>
                 Edit
               </ServiceButton>
-              <DeleteButton type="button" onClick={() => handleDelete(card.id)}>
+              <DeleteButton type="button" onClick={handleDelete}>
                 Delete
               </DeleteButton>
             </>
           )}
-            <ReviewButton onClick={toggleReviewForm}>
+          <ReviewButton onClick={toggleReviewForm}>
             {showReviewForm ? "Hide Review Form" : "Add Review"}
           </ReviewButton>
-
           {showReviewForm && (
             <ReviewForm
               cardId={card.id}
@@ -225,14 +210,12 @@ const [showReviewForm, setShowReviewForm] = useState(false);
               reviewButtonColor={card.reviewButtonColor}
             />
           )}
-
           {reviews[card.id] && (
             <article>
               <h3>Reviews:</h3>
               <p>{reviews[card.id]}</p>
             </article>
           )}
-
         </div>
       )}
     </ServiceProviderWrapper>

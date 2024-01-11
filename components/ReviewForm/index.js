@@ -23,11 +23,12 @@ export default function ReviewForm({ cardId, onAddReview, reviewButtonColor }) {
 
   return (
     <form onSubmit={handleSubmit}>
-    <input
-      value={review}
-      onChange={(e) => setReview(e.target.value)}
-      placeholder='Write your review here...'
-    />
+    <label htmlFor="review">Write your review here:</label>
+<input
+  id="review"
+  value={review}
+  onChange={(e) => setReview(e.target.value)}
+/>
     <SubmitReviewButton type="submit" reviewButtonColor={reviewButtonColor}>
       Submit Review
     </SubmitReviewButton>
