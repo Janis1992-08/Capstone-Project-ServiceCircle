@@ -47,6 +47,14 @@ const ShowContactButton = styled.button`
   margin: 10px;
 `;
 
+const InputField = styled.input`
+  display: flex;
+  flex-direction: column; 
+  margin-bottom: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+`;
+
 export default function ServiceProvider({
   card,
   isOnFavoritesPage,
@@ -80,7 +88,7 @@ export default function ServiceProvider({
       {editedCard?.id === card.id ? (
         <form onSubmit={handleSave}>
           <label htmlFor="firstName"> First Name: </label>
-          <input
+          <InputField
             type="text"
             id="firstName"
             name="firstName"
@@ -91,7 +99,7 @@ export default function ServiceProvider({
             }
           />
           <label htmlFor="lastName">Last Name: </label>
-          <input
+          <InputField
             type="text"
             id="lastName"
             name="lastName"
@@ -102,7 +110,7 @@ export default function ServiceProvider({
             }
           />
           <label htmlFor="skills">Skills: </label>
-          <input
+          <InputField
             type="text"
             id="skills"
             name="skills"
@@ -113,7 +121,7 @@ export default function ServiceProvider({
             }
           />
           <label htmlFor="needs">Needs: </label>
-          <input
+          <InputField
             type="text"
             id="needs"
             name="needs"
@@ -124,7 +132,7 @@ export default function ServiceProvider({
             }
           />
           <label htmlFor="email">email: </label>
-          <input
+          <InputField
             type="email"
             id="email"
             name="email"
@@ -135,7 +143,7 @@ export default function ServiceProvider({
             }
           />
           <label htmlFor="phone">phone: </label>
-          <input
+          <InputField
             type="tel"
             id="phone"
             name="phone"

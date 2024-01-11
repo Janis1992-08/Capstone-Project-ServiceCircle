@@ -8,7 +8,8 @@ import diversImage from "../public/assets/images/divers.jpg";
 const HeaderWrapper = styled.div`
   position: relative;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 80px;
+  color: black;
 `;
 
 const HeaderImage = styled(Image)`
@@ -19,7 +20,6 @@ const HeaderImage = styled(Image)`
   width: 100%;
   height: 100%;
 `;
-
 
 const buttonStyle = {
   backgroundColor: "#3498db",
@@ -100,10 +100,10 @@ const Homepage = () => {
     <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
       <HeaderWrapper>
       <HeaderImage src={diversImage} alt="divers group of people" layout="fill" objectFit="cover" />
-      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+      <h1>
         Service Circle
       </h1>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+      <h2>
         Find your perfect Service-Match
       </h2>
       </HeaderWrapper>

@@ -13,6 +13,8 @@ const FormWrapper = styled.form`
 `;
 
 const InputField = styled.input`
+  display: flex;
+  flex-direction: column;
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #ccc;
