@@ -6,7 +6,7 @@ const ServiceProviderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
-  padding: 20px;
+  padding: 10px;
   margin: 10px;
   border-radius: 8px;
 `;
@@ -18,11 +18,7 @@ const EditButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin: 10px;
-`;
-
-const ServiceDetails = styled.div`
-  margin-top: 10px;
+  margin: 15px;
 `;
 
 const DeleteButton = styled.button`
@@ -32,7 +28,7 @@ const DeleteButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin: 10px;
+  margin: 15px;
 `;
 
 const ShowContactButton = styled.button`
@@ -160,15 +156,15 @@ export default function ServiceProvider({
           </p>
 
           {showContactInfo && (
-            <ServiceDetails>
-              <p>
-                <strong>Email:</strong> {card.email}
-              </p>
-              <p>
-                <strong>Phone:</strong> {card.phone}
-              </p>
-            </ServiceDetails>
-          )}
+            <>
+           <p>
+             <strong>Email:</strong> {card.email}
+          </p>
+          <p>
+          <strong>Phone:</strong> {card.phone}
+          </p>
+          </>
+            )}
           <ShowContactButton type="button" onClick={toggleContactInfo}>
             {showContactInfo ? "Hide Contact" : "Show Contact"}
           </ShowContactButton>
