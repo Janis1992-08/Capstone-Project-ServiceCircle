@@ -8,7 +8,7 @@ import diversImage from "../public/assets/images/divers.jpg";
 const HeaderWrapper = styled.div`
   position: relative;
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
   color: black;
 `;
 
