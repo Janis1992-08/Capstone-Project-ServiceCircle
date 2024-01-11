@@ -4,11 +4,16 @@ import FavoriteButton from "@/components/FavoriteButton";
 import Link from "next/link";
 
 const Headline = styled.h1`
-  color: #333;
+  display: inline-block; // 
+  background-color: #007bff; //
+  color: #fff;  
   text-decoration: none;
   font-weight: bold;
+  padding: 0px 10px; // 
+  border-radius: 5px;  
+
   &:hover {
-    opacity: 0.8;
+    opacity: 0.8;  
   }
 `;
 
@@ -49,7 +54,7 @@ const FavoritesPage = ({ favorites, serviceCards, setServiceCards, onToggleFavor
         <CardWrapper>
           {favoriteCards.map((card) => (
             <Card key={card.id}>
-              <FavoriteButton
+        <FavoriteButton
                 onClick={() => onToggleFavorite(card.id)}
                 isFavorite={favorites.includes(card.id)}
               />
