@@ -18,6 +18,7 @@ const InputField = styled.input`
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  overflow: hidden;
 `;
 
 const SelectField = styled.select`

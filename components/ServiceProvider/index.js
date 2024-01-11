@@ -49,10 +49,11 @@ const ShowContactButton = styled.button`
 
 const InputField = styled.input`
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   margin-bottom: 8px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  overflow: hidden;
 `;
 
 export default function ServiceProvider({
