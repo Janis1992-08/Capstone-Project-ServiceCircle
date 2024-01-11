@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 
 const StarWrapper = styled.label`
-  display: inline-block;
+  position: relative;
   font-size: 20px;
   cursor: pointer;
 

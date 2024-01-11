@@ -3,20 +3,23 @@ import styled from "styled-components";
 import StarRating from "../StarRating";
 
 const ServiceProviderWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; 
   border: 1px solid #ccc;
   padding: 20px;
   margin: 10px;
   border-radius: 8px;
 `;
 
-const ServiceButton = styled.button`
+const EditButton = styled.button`
   background-color: #3498db;
   color: white;
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin: 15px;
+  margin: 13px;
 `;
 
 const ServiceDetails = styled.div`
@@ -30,7 +33,17 @@ const DeleteButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin: 15px;
+  margin: 13px;
+`;
+
+const ShowContactButton = styled.button`
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
 `;
 
 export default function ServiceProvider({
@@ -132,7 +145,7 @@ export default function ServiceProvider({
             }
           />
 
-          <ServiceButton type="submit">Save</ServiceButton>
+          <EditButton type="submit">Save</EditButton>
         </form>
       ) : (
         <div>
@@ -157,15 +170,15 @@ export default function ServiceProvider({
               </p>
             </ServiceDetails>
           )}
-          <ServiceButton type="button" onClick={toggleContactInfo}>
+          <ShowContactButton type="button" onClick={toggleContactInfo}>
             {showContactInfo ? "Hide Contact" : "Show Contact"}
-          </ServiceButton>
-          <br></br>
+          </ShowContactButton>
+          
           {!isOnFavoritesPage && (
             <>
-              <ServiceButton type="button" onClick={() => handleEdit(card)}>
+              <EditButton type="button" onClick={() => handleEdit(card)}>
                 Edit
-              </ServiceButton>
+              </EditButton>
               <DeleteButton type="button" onClick={() => onDeleteServiceCard(card)}>
                 Delete
               </DeleteButton>
