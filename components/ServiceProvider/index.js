@@ -4,7 +4,7 @@ import StarRating from "../StarRating";
 
 const ServiceProviderWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   border: 1px solid #ccc;
   padding: 20px;
   margin: 10px;
