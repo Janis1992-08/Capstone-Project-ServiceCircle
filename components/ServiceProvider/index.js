@@ -18,7 +18,7 @@ const EditButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin: 13px;
+  margin: 10px;
 `;
 
 const ServiceDetails = styled.div`
@@ -32,7 +32,7 @@ const DeleteButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
- 
+  margin: 10px;
 `;
 
 const ShowContactButton = styled.button`
