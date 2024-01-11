@@ -32,7 +32,7 @@ const DeleteButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin: 13px;
+ 
 `;
 
 const ShowContactButton = styled.button`
