@@ -11,6 +11,12 @@ const ServiceProviderWrapper = styled.div`
   border-radius: 8px;
 `;
 
+const EditDeleteWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
+
 const EditButton = styled.button`
   background-color: #3498db;
   color: white;
@@ -18,7 +24,7 @@ const EditButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin: 7px;
+  margin: 10px;
 `;
 
 const DeleteButton = styled.button`
@@ -28,7 +34,7 @@ const DeleteButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin: 7px;
+  margin: 10px;
 `;
 
 const ShowContactButton = styled.button`
@@ -170,14 +176,14 @@ export default function ServiceProvider({
           </ShowContactButton>
           
           {!isOnFavoritesPage && (
-            <>
+            <EditDeleteWrapper>
               <EditButton type="button" onClick={() => handleEdit(card)}>
                 Edit
               </EditButton>
               <DeleteButton type="button" onClick={() => onDeleteServiceCard(card)}>
                 Delete
               </DeleteButton>
-            </>
+            </EditDeleteWrapper>
           )}
           <div> 
           <StarRating card={card} onRating={onRating} />
