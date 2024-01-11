@@ -5,7 +5,6 @@ import StarRating from "../StarRating";
 const ServiceProviderWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start; 
   border: 1px solid #ccc;
   padding: 20px;
   margin: 10px;
@@ -184,7 +183,9 @@ export default function ServiceProvider({
               </DeleteButton>
             </>
           )}
+          <div> 
           <StarRating card={card} onRating={onRating} />
+          </div>
         </div>
       )}
     </ServiceProviderWrapper>
