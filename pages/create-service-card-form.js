@@ -124,7 +124,7 @@ export default function CreateServiceCardForm({ onAddServiceCard }) {
           onChange={(event) => handleChange(event)}
           required
           minLength={3}
-          maxLength={15}
+          maxLength={50}
         />
 
         <label htmlFor="needs">Needs: </label>
@@ -136,7 +136,7 @@ export default function CreateServiceCardForm({ onAddServiceCard }) {
           onChange={(event) => handleChange(event)}
           required
           minLength={3}
-          maxLength={15}
+          maxLength={50}
         />
 
         <label htmlFor="email">Email: </label>

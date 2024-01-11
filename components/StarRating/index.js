@@ -12,6 +12,20 @@ const StarWrapper = styled.label`
   }
 `;
 
+const StyledButton = styled.button`
+  background-color: gold; 
+  color: white; 
+  padding: 8px;
+  border: none; 
+  border-radius: 4px;
+  cursor: pointer; 
+  font-size: 14px; 
+
+  &:hover {
+    background-color: goldenrod;
+  }
+`;
+
 const stars = Array.from({ length: 5 }, (_, index) => index + 1);
 
 const StarRating = ({ card, onRating }) => {
@@ -57,7 +71,7 @@ const StarRating = ({ card, onRating }) => {
         </StarWrapper>
       ))}
       {!card.rating && tempRating > 0 && (
-        <button type="button" onClick={() => onRating(card.id, tempRating)}>Rate</button>
+        <StyledButton type="button" onClick={() => onRating(card.id, tempRating)}>Rate</StyledButton>
       )}
     </>
   );

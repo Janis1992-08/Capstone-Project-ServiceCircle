@@ -121,7 +121,7 @@ export default function ServiceProvider({
             name="skills"
             required
             minLength={3}
-          maxLength={15}
+          maxLength={50}
             value={editedCard.skills}
             onChange={(event) =>
               setEditedCard({ ...editedCard, skills: event.target.value })
@@ -134,7 +134,7 @@ export default function ServiceProvider({
             name="needs"
             required
             minLength={3}
-          maxLength={15}
+          maxLength={50}
             value={editedCard.needs}
             onChange={(event) =>
               setEditedCard({ ...editedCard, needs: event.target.value })
