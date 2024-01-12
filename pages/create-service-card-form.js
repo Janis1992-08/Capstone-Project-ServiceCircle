@@ -13,9 +13,12 @@ const FormWrapper = styled.form`
 `;
 
 const InputField = styled.input`
+  display: flex;
+  flex-direction: column;
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  overflow: hidden;
 `;
 
 const SelectField = styled.select`
@@ -48,7 +51,7 @@ const Headline = styled.a`
   }
 `;
 
-export default function CreateServiceCardForm({ handleAddServiceCards }) {
+export default function CreateServiceCardForm({ onAddServiceCard }) {
   const initialFormData = {
     firstName: "",
     lastName: "",
@@ -71,7 +74,7 @@ export default function CreateServiceCardForm({ handleAddServiceCards }) {
     event.preventDefault();
 
     const newServiceCard = { ...formData, id: uuidv4() };
-    handleAddServiceCards(newServiceCard);
+    onAddServiceCard(newServiceCard);
 
     const toastMessage = `The Service Card is created and you can find it in the assigned subcategory: ${formData.subcategory}`;
     alert(toastMessage);
@@ -98,6 +101,8 @@ export default function CreateServiceCardForm({ handleAddServiceCards }) {
           value={formData.firstName}
           onChange={(event) => handleChange(event)}
           required
+          minLength={3}
+          maxLength={15}
         />
         <label htmlFor="lastName">Last Name: </label>
         <InputField
@@ -107,6 +112,8 @@ export default function CreateServiceCardForm({ handleAddServiceCards }) {
           value={formData.lastName}
           onChange={(event) => handleChange(event)}
           required
+          minLength={3}
+          maxLength={15}
         />
         <label htmlFor="skills">Skills: </label>
         <InputField
@@ -116,6 +123,8 @@ export default function CreateServiceCardForm({ handleAddServiceCards }) {
           value={formData.skills}
           onChange={(event) => handleChange(event)}
           required
+          minLength={3}
+          maxLength={50}
         />
 
         <label htmlFor="needs">Needs: </label>
@@ -126,6 +135,8 @@ export default function CreateServiceCardForm({ handleAddServiceCards }) {
           value={formData.needs}
           onChange={(event) => handleChange(event)}
           required
+          minLength={3}
+          maxLength={50}
         />
 
         <label htmlFor="email">Email: </label>

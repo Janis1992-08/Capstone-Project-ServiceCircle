@@ -1,6 +1,7 @@
 import GlobalStyle from "../styles";
 import useLocalStorageState from "use-local-storage-state";
 
+
 export default function MyApp({ Component, pageProps }) {
   const [serviceCards, setServiceCards] = useLocalStorageState("serviceCards", {
     defaultValue: [],
@@ -13,12 +14,31 @@ export default function MyApp({ Component, pageProps }) {
   
   
 
+  function handleRating(id, rating) {
+    setServiceCards(
+      serviceCards.map((service) =>
+        service.id === id ? { ...service, rating } : service
+      )
+    );
+  }
+
   function handleEditServiceCard(updatedServiceCard) {
     const updatedCards = serviceCards.map(card =>
       card.id === updatedServiceCard.id ? updatedServiceCard : card
     );
     setServiceCards(updatedCards);
   }
+
+  const handleDelete = (deletedCard) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this service provider?"
+    );
+
+    if (isConfirmed) {
+      const deletedServiceCards = serviceCards.filter((card) => card.id !== deletedCard.id);
+      setServiceCards(deletedServiceCards);
+    }
+  };
 
   function handleAddServiceCards(newServiceCard) {
     setServiceCards((prevServiceCards) => [
@@ -43,8 +63,10 @@ export default function MyApp({ Component, pageProps }) {
         {...pageProps}
         serviceCards={serviceCards}
         setServiceCards={setServiceCards}
-        handleEditServiceCard={handleEditServiceCard}
-        handleAddServiceCards={handleAddServiceCards}
+        onRating={handleRating}
+        onDeleteServiceCard={handleDelete}
+        onEditServiceCard={handleEditServiceCard}
+        onAddServiceCard={handleAddServiceCards}
         favorites={favorites}
         onToggleFavorite={handleToggleFavorite}
       />
