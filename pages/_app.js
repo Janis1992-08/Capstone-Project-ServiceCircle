@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { FiSun, FiMoon } from "react-icons/fi"; 
 import useLocalStorageState from "use-local-storage-state";
 
+
 const SwitchLabel = styled.label`
   position: fixed;
   top: 10px;
@@ -37,6 +38,7 @@ const SwitchInput = styled.input`
   }
 `;
 
+
 export default function MyApp({ Component, pageProps }) {
 
   const [theme, setTheme] = useState("light");
@@ -58,6 +60,18 @@ export default function MyApp({ Component, pageProps }) {
   const [favorites, setFavorites] = useLocalStorageState("favorites", {
     defaultValue: [],
   });
+  
+
+  
+  
+
+  function handleRating(id, rating) {
+    setServiceCards(
+      serviceCards.map((service) =>
+        service.id === id ? { ...service, rating } : service
+      )
+    );
+  }
 
   function handleEditServiceCard(updatedServiceCard) {
     const updatedCards = serviceCards.map(card =>
@@ -65,6 +79,17 @@ export default function MyApp({ Component, pageProps }) {
     );
     setServiceCards(updatedCards);
   }
+
+  const handleDelete = (deletedCard) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this service provider?"
+    );
+
+    if (isConfirmed) {
+      const deletedServiceCards = serviceCards.filter((card) => card.id !== deletedCard.id);
+      setServiceCards(deletedServiceCards);
+    }
+  };
 
   function handleAddServiceCards(newServiceCard) {
     setServiceCards((prevServiceCards) => [
@@ -91,8 +116,10 @@ export default function MyApp({ Component, pageProps }) {
         theme={theme} 
         serviceCards={serviceCards}
         setServiceCards={setServiceCards}
-        handleEditServiceCard={handleEditServiceCard}
-        handleAddServiceCards={handleAddServiceCards}
+        onRating={handleRating}
+        onDeleteServiceCard={handleDelete}
+        onEditServiceCard={handleEditServiceCard}
+        onAddServiceCard={handleAddServiceCards}
         favorites={favorites}
         onToggleFavorite={handleToggleFavorite}
       />
