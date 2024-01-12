@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
 import ReviewForm from "@/components/ReviewForm";
@@ -74,7 +74,7 @@ export default function ServiceProvider({
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const [reviews, setReviews] = useState({});
+  const [reviews, setReviews] = useLocalStorageState("reviews", {});
 
   const onAddReview = (cardId, review) => {
     const updatedReviews = { ...reviews, [cardId]: review };
@@ -92,10 +92,6 @@ export default function ServiceProvider({
   const handleOpenEditForm = () => {
     setEditedCard(card);
   };
-
-  if (!editedCard) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <ServiceProviderWrapper key={card._id}>
