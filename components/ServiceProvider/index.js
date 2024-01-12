@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ReviewForm from "@/components/ReviewForm";
 import useLocalStorageState from "use-local-storage-state";
 import StarRating from "../StarRating";
-import router from "next/router";
+import useSWR from "swr";
 
 const ServiceProviderWrapper = styled.div`
   display: flex;
@@ -84,6 +84,8 @@ export default function ServiceProvider({
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [reviews, setReviews] = useLocalStorageState(`reviews_${card.id}`, {});
 
+  const { mutate } = useSWR("/api/providers");
+
   const onAddReview = (cardId, review) => {
     const updatedReviews = { ...reviews, [cardId]: review };
     setReviews(updatedReviews);
@@ -117,7 +119,7 @@ export default function ServiceProvider({
       if (response.ok) {
         await response.json();
 
-        router.reload();
+        mutate();
       } else {
         console.error(`Error: ${response.status}`);
       }

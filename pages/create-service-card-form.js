@@ -36,7 +36,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const Headline = styled.a`
+const Headline = styled.h3`
   display: inline-block;
   padding: 5px 10px;
   border-radius: 5px;
