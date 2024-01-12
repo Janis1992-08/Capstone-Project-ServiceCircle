@@ -1,10 +1,9 @@
-
 import { SWRConfig } from "swr";
 import { useState, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../styles/GlobalStyles";
 import styled from "styled-components";
-import { FiSun, FiMoon } from "react-icons/fi"; 
+import { FiSun, FiMoon } from "react-icons/fi";
 import useLocalStorageState from "use-local-storage-state";
 
 const fetcher = (url) => fetch(url).then((response) => response.json());
@@ -41,9 +40,7 @@ const SwitchInput = styled.input`
   }
 `;
 
-
 export default function MyApp({ Component, pageProps }) {
-
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
@@ -63,10 +60,6 @@ export default function MyApp({ Component, pageProps }) {
   const [favorites, setFavorites] = useLocalStorageState("favorites", {
     defaultValue: [],
   });
-  
-
-  
-  
 
   function handleRating(id, rating) {
     setServiceCards(
@@ -89,7 +82,9 @@ export default function MyApp({ Component, pageProps }) {
     );
 
     if (isConfirmed) {
-      const deletedServiceCards = serviceCards.filter((card) => card.id !== deletedCard.id);
+      const deletedServiceCards = serviceCards.filter(
+        (card) => card.id !== deletedCard.id
+      );
       setServiceCards(deletedServiceCards);
     }
   };
@@ -111,34 +106,31 @@ export default function MyApp({ Component, pageProps }) {
   }
 
   return (
-
-
-
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyles />
       <SWRConfig value={{ fetcher }}>
-      <Component 
-        {...pageProps} 
-        toggleTheme={toggleTheme} 
-        theme={theme} 
-        serviceCards={serviceCards}
-        setServiceCards={setServiceCards}
-        onRating={handleRating}
-        onDeleteServiceCard={handleDelete}
-        onEditServiceCard={handleEditServiceCard}
-        onAddServiceCard={handleAddServiceCards}
-        favorites={favorites}
-        onToggleFavorite={handleToggleFavorite}
-      />
-      <SwitchLabel onClick={toggleTheme}>
-        {theme === "light" ? <FiSun /> : <FiMoon />}
-        <SwitchInput
-          type="checkbox"
-          checked={theme === "dark"}
-          onChange={toggleTheme}
+        <Component
+          {...pageProps}
+          toggleTheme={toggleTheme}
+          theme={theme}
+          serviceCards={serviceCards}
+          setServiceCards={setServiceCards}
+          onRating={handleRating}
+          onDeleteServiceCard={handleDelete}
+          onEditServiceCard={handleEditServiceCard}
+          onAddServiceCard={handleAddServiceCards}
+          favorites={favorites}
+          onToggleFavorite={handleToggleFavorite}
         />
-             </SWRConfig>
-      </SwitchLabel>
+        <SwitchLabel onClick={toggleTheme}>
+          {theme === "light" ? <FiSun /> : <FiMoon />}
+          <SwitchInput
+            type="checkbox"
+            checked={theme === "dark"}
+            onChange={toggleTheme}
+          />
+        </SwitchLabel>
+      </SWRConfig>
     </ThemeProvider>
-  );};
-
+  );
+}

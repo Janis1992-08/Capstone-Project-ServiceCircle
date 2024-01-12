@@ -109,13 +109,9 @@ export default function ServiceProvider({
     setEditedCard(null);
   };
 
-
-
-
   return (
     <ServiceProviderWrapper key={card.id}>
-      {editedCard?.id === card.id ? (
-
+      {editedCard && editedCard.id === card.id ? (
         <form onSubmit={handleSave}>
           <label htmlFor="firstName"> First Name: </label>
           <InputField
@@ -227,14 +223,10 @@ export default function ServiceProvider({
             <EditDeleteWrapper>
               <EditButton type="button" onClick={() => handleEdit(card)}>
                 Edit
-
-        
-
               </EditButton>
               <DeleteButton
                 type="button"
                 onClick={() => onDeleteServiceCard(card)}
-
               >
                 Delete
               </DeleteButton>
