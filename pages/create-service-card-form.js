@@ -82,9 +82,7 @@ export default function CreateServiceCardForm({}) {
       },
       body: JSON.stringify(formData),
     });
-
     if (response.ok) {
-      await response.json();
       mutate();
     } else {
       throw new Error(`Error: ${response.statusText}`);
