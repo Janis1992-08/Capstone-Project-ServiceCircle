@@ -21,6 +21,7 @@ const InputField = styled.input`
 `;
 
 export default function EditForm({ editedCard, setEditedCard, card: { _id } }) {
+  const { mutate } = useSWR("/api/providers");
   async function handleEditServiceCard() {
     try {
       const url = `/api/providers/${_id}`;
@@ -36,7 +37,7 @@ export default function EditForm({ editedCard, setEditedCard, card: { _id } }) {
         const updatedData = await response.json();
 
         mutate();
-        return updatedData; // Return the updated data
+        return updatedData;
       } else {
         console.error("Error updating provider:", response.statusText);
       }
