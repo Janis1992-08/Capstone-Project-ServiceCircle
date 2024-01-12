@@ -1,8 +1,25 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { categories } from "@/lib/data";
 import styled from "styled-components";
+import Image from "next/image";
+import diversImage from "../public/assets/images/divers.jpg";
 
+const HeaderWrapper = styled.div`
+  position: relative;
+  text-align: center;
+  margin-bottom: 40px;
+  color: black;
+`;
+
+const HeaderImage = styled(Image)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+`;
 
 const buttonStyle = {
   backgroundColor: "#3498db",
@@ -81,12 +98,18 @@ const Homepage = () => {
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
-      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+      <HeaderWrapper>
+      <HeaderImage src={diversImage} alt="divers group of people" layout="fill" objectFit="cover" />
+      <h1>
         Service Circle
       </h1>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+
+      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
         Find your perfect Service-Match
-      </h2>
+      </h1>
+
+      </HeaderWrapper>
+
       <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
         {categories.map((category) => (
           <li key={category.id} style={{ marginBottom: "10px" }}>

@@ -5,7 +5,7 @@ const Button = styled.button`
   background-color: none;
   border: 0;
   border-radius: 25px;
-  padding: 5px 10px;
+  padding: 12px;
 `;
 
 export default function FavoriteButton({ isFavorite, onClick }) {

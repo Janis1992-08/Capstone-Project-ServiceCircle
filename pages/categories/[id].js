@@ -57,16 +57,13 @@ const FilterControls = styled.div`
 
 const FilterLabel = styled.label`
   margin-right: 10px;
+  color: black;
 `;
 
-const SubcategoryPage = ({
-  fetcher,
-  serviceCards,
-  setServiceCards,
-  favorites,
-  onToggleFavorite,
-  handleEditServiceCard,
-}) => {
+
+const SubcategoryPage = ({fetcher, serviceCards, favorites, onToggleFavorite, onEditServiceCard, onDeleteServiceCard, onRating }) => {
+
+
   const [filterType, setFilterType] = useState("all");
   const [filterValue, setFilterValue] = useState("");
   const router = useRouter();
@@ -147,11 +144,13 @@ const SubcategoryPage = ({
                 isFavorite={favorites.includes(provider._id)}
               />
               <ServiceProvider
-                key={provider._id}
-                card={provider}
-                serviceCards={serviceCards}
-                setServiceCards={setServiceCards}
-                handleEditServiceCard={handleEditServiceCard}
+
+                 key={provider._id}
+                 card={provider}
+                 onEditServiceCard={onEditServiceCard}
+                 onDeleteServiceCard={onDeleteServiceCard}
+                 onRating={onRating}
+
               />
             </Card>
           ))}
