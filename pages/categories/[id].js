@@ -62,7 +62,7 @@ const FilterLabel = styled.label`
 
 const SubcategoryPage = ({
   fetcher,
-  serviceCards,
+
   favorites,
   onToggleFavorite,
   onEditServiceCard,
@@ -151,7 +151,6 @@ const SubcategoryPage = ({
               <ServiceProvider
                 key={provider._id}
                 card={provider}
-                onEditServiceCard={onEditServiceCard}
                 onDeleteServiceCard={onDeleteServiceCard}
                 onRating={onRating}
               />
