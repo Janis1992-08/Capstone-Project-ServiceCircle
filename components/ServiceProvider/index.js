@@ -1,25 +1,30 @@
 import { useState } from "react";
 import styled from "styled-components";
+import StarRating from "../StarRating";
 
 const ServiceProviderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ccc;
-  padding: 20px;
+  padding: 10px;
   margin: 10px;
   border-radius: 8px;
 `;
 
-const ServiceButton = styled.button`
+const EditDeleteWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
+
+const EditButton = styled.button`
   background-color: #3498db;
   color: white;
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 10px;
-`;
-
-const ServiceDetails = styled.div`
-  margin-top: 10px;
+  margin: 10px;
 `;
 
 const DeleteButton = styled.button`
@@ -29,19 +34,39 @@ const DeleteButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 10px;
+  margin: 10px;
+`;
+
+const ShowContactButton = styled.button`
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
+`;
+
+const InputField = styled.input`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  overflow: hidden;
 `;
 
 export default function ServiceProvider({
   card,
   isOnFavoritesPage,
-  handleEditServiceCard,
-  serviceCards,
-  setServiceCards,
+  onEditServiceCard,
+  onDeleteServiceCard,
+  onRating
 }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
 
+  
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
   };
@@ -53,71 +78,70 @@ export default function ServiceProvider({
   const handleSave = (event) => {
     event.preventDefault();
 
-    handleEditServiceCard(editedCard);
+    onEditServiceCard(editedCard);
     setEditedCard(null);
   };
 
-  const handleDelete = () => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this service provider?"
-    );
 
-    if (isConfirmed) {
-      const updatedCards = serviceCards.filter((cards) => cards.id !== card.id);
-      setServiceCards(updatedCards);
-    }
-  };
 
   return (
     <ServiceProviderWrapper key={card.id}>
-      {editedCard && editedCard.id === card.id ? (
+      {editedCard?.id === card.id ? (
         <form onSubmit={handleSave}>
           <label htmlFor="firstName"> First Name: </label>
-          <input
+          <InputField
             type="text"
             id="firstName"
             name="firstName"
             required
+            minLength={3}
+          maxLength={15}
             value={editedCard.firstName}
             onChange={(event) =>
               setEditedCard({ ...editedCard, firstName: event.target.value })
             }
           />
           <label htmlFor="lastName">Last Name: </label>
-          <input
+          <InputField
             type="text"
             id="lastName"
             name="lastName"
             required
+            minLength={3}
+          maxLength={15}
             value={editedCard.lastName}
             onChange={(event) =>
               setEditedCard({ ...editedCard, lastName: event.target.value })
             }
           />
           <label htmlFor="skills">Skills: </label>
-          <input
+          <InputField
             type="text"
             id="skills"
             name="skills"
             required
+            minLength={3}
+          maxLength={50}
             value={editedCard.skills}
             onChange={(event) =>
               setEditedCard({ ...editedCard, skills: event.target.value })
             }
           />
           <label htmlFor="needs">Needs: </label>
-          <input
+          <InputField
             type="text"
             id="needs"
             name="needs"
             required
+            minLength={3}
+          maxLength={50}
             value={editedCard.needs}
             onChange={(event) =>
               setEditedCard({ ...editedCard, needs: event.target.value })
             }
           />
           <label htmlFor="email">email: </label>
-          <input
+          <InputField
             type="email"
             id="email"
             name="email"
@@ -128,7 +152,7 @@ export default function ServiceProvider({
             }
           />
           <label htmlFor="phone">phone: </label>
-          <input
+          <InputField
             type="tel"
             id="phone"
             name="phone"
@@ -139,7 +163,7 @@ export default function ServiceProvider({
             }
           />
 
-          <ServiceButton type="submit">Save</ServiceButton>
+          <EditButton type="submit">Save</EditButton>
         </form>
       ) : (
         <div>
@@ -155,29 +179,32 @@ export default function ServiceProvider({
           </p>
 
           {showContactInfo && (
-            <ServiceDetails>
-              <p>
-                <strong>Email:</strong> {card.email}
-              </p>
-              <p>
-                <strong>Phone:</strong> {card.phone}
-              </p>
-            </ServiceDetails>
-          )}
-          <ServiceButton type="button" onClick={toggleContactInfo}>
-            {showContactInfo ? "Hide Contact" : "Show Contact"}
-          </ServiceButton>
-          <br></br>
-          {!isOnFavoritesPage && (
             <>
-              <ServiceButton onClick={() => handleEdit(card)}>
+           <p>
+             <strong>Email:</strong> {card.email}
+          </p>
+          <p>
+          <strong>Phone:</strong> {card.phone}
+          </p>
+          </>
+            )}
+          <ShowContactButton type="button" onClick={toggleContactInfo}>
+            {showContactInfo ? "Hide Contact" : "Show Contact"}
+          </ShowContactButton>
+          
+          {!isOnFavoritesPage && (
+            <EditDeleteWrapper>
+              <EditButton type="button" onClick={() => handleEdit(card)}>
                 Edit
-              </ServiceButton>
-              <DeleteButton type="button" onClick={() => handleDelete(card.id)}>
+              </EditButton>
+              <DeleteButton type="button" onClick={() => onDeleteServiceCard(card)}>
                 Delete
               </DeleteButton>
-            </>
+            </EditDeleteWrapper>
           )}
+          <div> 
+          <StarRating card={card} onRating={onRating} />
+          </div>
         </div>
       )}
     </ServiceProviderWrapper>
