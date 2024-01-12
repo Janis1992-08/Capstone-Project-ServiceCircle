@@ -103,10 +103,13 @@ const Homepage = () => {
       <h1>
         Service Circle
       </h1>
-      <h2>
+
+      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
         Find your perfect Service-Match
-      </h2>
+      </h1>
+
       </HeaderWrapper>
+
       <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
         {categories.map((category) => (
           <li key={category.id} style={{ marginBottom: "10px" }}>

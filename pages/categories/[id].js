@@ -56,6 +56,7 @@ const FilterControls = styled.div`
 
 const FilterLabel = styled.label`
   margin-right: 10px;
+  color: black;
 `;
 
 const SubcategoryPage = ({ serviceCards, favorites, onToggleFavorite, onEditServiceCard, onDeleteServiceCard, onRating }) => {

@@ -199,21 +199,37 @@ export default function ServiceProvider({
           <h2>
             {card.firstName} {card.lastName}
           </h2>
-          <p>
+
+
+          <h2>
+
+         
+
             <strong>Skills:</strong> {card.skills}
-          </p>
-          <p>
+          </h2>
+          <h2>
             <strong>Needs:</strong> {card.needs}
-          </p>
+
+          </h2>
+
           {showContactInfo && (
-            <>
-              <p>
+            <ServiceDetails>
+              <h2>
+
+        
+             
+
                 <strong>Email:</strong> {card.email}
-              </p>
-              <p>
+              </h2>
+              <h2>
                 <strong>Phone:</strong> {card.phone}
-              </p>
-            </>
+
+              </h2>
+            </ServiceDetails>
+
+             
+           
+
           )}
           <ShowContactButton type="button" onClick={toggleContactInfo}>
             {showContactInfo ? "Hide Contact" : "Show Contact"}
