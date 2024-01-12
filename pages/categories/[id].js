@@ -62,11 +62,9 @@ const FilterLabel = styled.label`
 
 const SubcategoryPage = ({
   fetcher,
-  serviceCards,
   favorites,
   onToggleFavorite,
   onEditServiceCard,
-  onDeleteServiceCard,
   onRating,
 }) => {
   const [filterType, setFilterType] = useState("all");
@@ -74,7 +72,7 @@ const SubcategoryPage = ({
   const router = useRouter();
   const { id } = router.query;
   const { isReady } = router;
-  const { data, mutate } = useSWR("/api/providers", fetcher);
+  const { data } = useSWR("/api/providers", fetcher);
 
   if (!data || !isReady) return <div>Loading...</div>;
 
@@ -152,7 +150,6 @@ const SubcategoryPage = ({
                 key={provider._id}
                 card={provider}
                 onEditServiceCard={onEditServiceCard}
-                onDeleteServiceCard={onDeleteServiceCard}
                 onRating={onRating}
               />
             </Card>

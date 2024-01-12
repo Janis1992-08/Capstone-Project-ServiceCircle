@@ -1,10 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-
 import ReviewForm from "@/components/ReviewForm";
 import useLocalStorageState from "use-local-storage-state";
-
 import StarRating from "../StarRating";
+import router from "next/router";
 
 const ServiceProviderWrapper = styled.div`
   display: flex;
@@ -78,7 +77,6 @@ export default function ServiceProvider({
   card,
   isOnFavoritesPage,
   onEditServiceCard,
-  onDeleteServiceCard,
   onRating,
 }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
@@ -108,6 +106,25 @@ export default function ServiceProvider({
     onEditServiceCard(editedCard);
     setEditedCard(null);
   };
+
+  async function handleDelete(id) {
+    const url = `/api/providers/${id}`;
+    try {
+      const response = await fetch(url, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        await response.json();
+
+        router.reload();
+      } else {
+        console.error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("An error occurred during the delete request:", error);
+    }
+  }
 
   return (
     <ServiceProviderWrapper key={card.id}>
@@ -226,7 +243,7 @@ export default function ServiceProvider({
               </EditButton>
               <DeleteButton
                 type="button"
-                onClick={() => onDeleteServiceCard(card)}
+                onClick={() => handleDelete(card._id)}
               >
                 Delete
               </DeleteButton>
