@@ -89,13 +89,6 @@ export default function MyApp({ Component, pageProps }) {
     }
   };
 
-  function handleAddServiceCards(newServiceCard) {
-    setServiceCards((prevServiceCards) => [
-      ...prevServiceCards,
-      newServiceCard,
-    ]);
-  }
-
   function handleToggleFavorite(serviceCardId) {
     const isFavorite = favorites.includes(serviceCardId);
     if (isFavorite) {
@@ -118,7 +111,6 @@ export default function MyApp({ Component, pageProps }) {
           onRating={handleRating}
           onDeleteServiceCard={handleDelete}
           onEditServiceCard={handleEditServiceCard}
-          onAddServiceCard={handleAddServiceCards}
           favorites={favorites}
           onToggleFavorite={handleToggleFavorite}
         />
