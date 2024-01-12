@@ -1,3 +1,5 @@
+
+import { SWRConfig } from "swr";
 import { useState, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../styles/GlobalStyles";
@@ -5,6 +7,7 @@ import styled from "styled-components";
 import { FiSun, FiMoon } from "react-icons/fi"; 
 import useLocalStorageState from "use-local-storage-state";
 
+const fetcher = (url) => fetch(url).then((response) => response.json());
 
 const SwitchLabel = styled.label`
   position: fixed;
@@ -74,7 +77,7 @@ export default function MyApp({ Component, pageProps }) {
   }
 
   function handleEditServiceCard(updatedServiceCard) {
-    const updatedCards = serviceCards.map(card =>
+    const updatedCards = serviceCards.map((card) =>
       card.id === updatedServiceCard.id ? updatedServiceCard : card
     );
     setServiceCards(updatedCards);
@@ -108,8 +111,12 @@ export default function MyApp({ Component, pageProps }) {
   }
 
   return (
+
+
+
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyles />
+      <SWRConfig value={{ fetcher }}>
       <Component 
         {...pageProps} 
         toggleTheme={toggleTheme} 
@@ -130,6 +137,8 @@ export default function MyApp({ Component, pageProps }) {
           checked={theme === "dark"}
           onChange={toggleTheme}
         />
+             </SWRConfig>
       </SwitchLabel>
     </ThemeProvider>
   );};
+
