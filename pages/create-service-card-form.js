@@ -51,17 +51,19 @@ const Headline = styled.h3`
   }
 `;
 
+const initialFormData = {
+  firstName: "",
+  lastName: "",
+  skills: "",
+  needs: "",
+  email: "",
+  phone: "",
+  category: "",
+  subcategory: "",
+};
+
 export default function CreateServiceCardForm({}) {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    skills: "",
-    needs: "",
-    email: "",
-    phone: "",
-    category: "",
-    subcategory: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
 
   const { mutate } = useSWR("/api/providers/");
 
@@ -82,7 +84,7 @@ export default function CreateServiceCardForm({}) {
     });
 
     if (response.ok) {
-      const newServiceCard = await response.json();
+      await response.json();
       mutate();
     } else {
       throw new Error(`Error: ${response.statusText}`);
@@ -93,16 +95,7 @@ export default function CreateServiceCardForm({}) {
     event.preventDefault();
     try {
       await handleAddServiceCards(formData);
-      setFormData({
-        firstName: "",
-        lastName: "",
-        skills: "",
-        needs: "",
-        email: "",
-        phone: "",
-        category: "",
-        subcategory: "",
-      }); // reset form data
+      setFormData(initialFormData); // reset form data
     } catch (error) {
       console.error("Error:", error.message);
     }
