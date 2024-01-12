@@ -3,6 +3,7 @@ import { categories } from "@/lib/data";
 import Link from "next/link";
 import { useState } from "react";
 import useSWR from "swr";
+import Router from "next/router";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -84,6 +85,7 @@ export default function CreateServiceCardForm({}) {
     });
     if (response.ok) {
       mutate();
+      Router.push("/");
     } else {
       throw new Error(`Error: ${response.statusText}`);
     }
