@@ -9,6 +9,10 @@ export default function MyApp({ Component, pageProps }) {
   const [favorites, setFavorites] = useLocalStorageState("favorites", {
     defaultValue: [],
   });
+  
+
+  
+  
 
   function handleRating(id, rating) {
     setServiceCards(
