@@ -1,5 +1,5 @@
 const subcategoryColors = {
-    "Web Development": "#8a2be2", // أحمر
+    "Web Development": "#ff6666", // أحمر
     "Graphic Design": "#3498db", // أخضر
     "Coding-Assistance": "#2ecc71", // أزرق
     "Plumbing": "#9b59b6", // مغنتا
@@ -16,7 +16,6 @@ const subcategoryColors = {
   "Photography Services": "#c0392b",
   };
   
-  // تعريف دالة للحصول على اللون بناءً على معرّف الفئة الفرعية
   export const getColorForSubcategory = (subcategory) => {
-    return subcategoryColors[subcategory] || "#cccccc"; // اللون الرمادي كقيمة افتراضية إذا لم يتم العثور على الفئة
+    return subcategoryColors[subcategory] || "#cccccc";
   };
