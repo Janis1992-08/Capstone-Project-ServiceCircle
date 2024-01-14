@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { getColorForSubcategory } from "../ColorCoding";
 
 const ServiceProviderWrapper = styled.div`
   border: 1px solid #ccc;
@@ -39,8 +40,11 @@ export default function ServiceProvider({
   serviceCards,
   setServiceCards,
 }) {
+
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
+
+  const backgroundColor = getColorForSubcategory(card.subcategory);
 
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
@@ -69,7 +73,7 @@ export default function ServiceProvider({
   };
 
   return (
-    <ServiceProviderWrapper key={card.id}>
+    <ServiceProviderWrapper style={{backgroundColor}} key={card.id}>
       {editedCard && editedCard.id === card.id ? (
         <form onSubmit={handleSave}>
           <label htmlFor="firstName"> First Name: </label>
