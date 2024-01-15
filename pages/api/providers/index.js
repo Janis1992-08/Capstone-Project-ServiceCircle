@@ -1,7 +1,7 @@
 import dbConnect from "@/db/connect.js";
 import Provider from "@/db/models/Provider.js";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/pages/api/providers/auth/[...nextauth]";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default async function handler(request, response) {
   await dbConnect();
