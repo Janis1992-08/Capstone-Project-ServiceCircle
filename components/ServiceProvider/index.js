@@ -1,8 +1,7 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
 import ReviewForm from "@/components/ReviewForm";
-import useLocalStorageState from "use-local-storage-state";
 import EditForm from "@/components/EditForm";
 import StarRating from "../StarRating";
 
@@ -65,18 +64,13 @@ const ShowContactButton = styled.button`
   margin: 10px;
 `;
 
-export default function ServiceProvider({ card, isOnFavoritesPage, onRating }) {
+export default function ServiceProvider({ card, isOnFavoritesPage }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const [reviews, setReviews] = useLocalStorageState("reviews", {});
+  const [showReviews, setShowReviews] = useState(false);
 
   const { mutate } = useSWR("/api/providers");
-
-  const onAddReview = (cardId, review) => {
-    const updatedReviews = { ...reviews, [cardId]: review };
-    setReviews(updatedReviews);
-  };
 
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
@@ -84,6 +78,10 @@ export default function ServiceProvider({ card, isOnFavoritesPage, onRating }) {
 
   const toggleReviewForm = () => {
     setShowReviewForm(!showReviewForm);
+  };
+
+  const toggleReviews = () => {
+    setShowReviews(!showReviews);
   };
 
   const handleOpenEditForm = () => {
@@ -101,6 +99,7 @@ export default function ServiceProvider({ card, isOnFavoritesPage, onRating }) {
         await response.json();
 
         mutate();
+        alert("You have successfully Deleted!");
       } else {
         console.error(`Error: ${response.status}`);
       }
@@ -129,14 +128,14 @@ export default function ServiceProvider({ card, isOnFavoritesPage, onRating }) {
             <strong>Needs:</strong> {card.needs}
           </h3>
           {showContactInfo && (
-            <p>
+            <div>
               <h3>
                 <strong>Email:</strong> {card.email}
               </h3>
               <h3>
                 <strong>Phone:</strong> {card.phone}
               </h3>
-            </p>
+            </div>
           )}
           <ShowContactButton type="button" onClick={toggleContactInfo}>
             {showContactInfo ? "Hide Contact" : "Show Contact"}
@@ -160,22 +159,22 @@ export default function ServiceProvider({ card, isOnFavoritesPage, onRating }) {
             {showReviewForm ? "Hide Review Form" : "Add Review"}
           </ReviewButton>
 
-          {showReviewForm && (
-            <ReviewForm
-              cardId={card.id}
-              onAddReview={onAddReview}
-              reviewButtonColor={card.reviewButtonColor}
-            />
-          )}
+          {showReviewForm && <ReviewForm card={card} />}
 
-          {reviews && reviews[card.id] && (
+          <ActionButton onClick={toggleReviews}>
+            {showReviews ? "Hide Reviews" : "Show Reviews"}
+          </ActionButton>
+
+          {showReviews && card.reviews && (
             <article>
               <h2>Reviews:</h2>
-              <h3>{reviews[card.id]}</h3>
+              {card.reviews.map((review, id) => (
+                <h3 key={id}>{review}</h3>
+              ))}
             </article>
           )}
           <div>
-            <StarRating card={card} onRating={onRating} />
+            <StarRating card={card} />
           </div>
         </div>
       )}

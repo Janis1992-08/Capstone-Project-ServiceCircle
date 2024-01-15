@@ -3,7 +3,6 @@ import { categories } from "@/lib/data";
 import Link from "next/link";
 import { useState } from "react";
 import useSWR from "swr";
-import Router from "next/router";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -85,7 +84,10 @@ export default function CreateServiceCardForm({}) {
     });
     if (response.ok) {
       mutate();
-      Router.push("/");
+
+      alert(
+        `The Service Card is created and you can find it in the assigned subcategory: ${formData.subcategory}`
+      ); // Use alert to show a pop-up message
     } else {
       throw new Error(`Error: ${response.statusText}`);
     }

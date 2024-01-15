@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
+import styled from "styled-components";
+import useSWR from "swr";
 
 const SubmitReviewButton = styled.button`
   background-color: ${(props) => props.reviewButtonColor || "#2ecc71"};
@@ -12,26 +11,47 @@ const SubmitReviewButton = styled.button`
   margin-top: 10px;
 `;
 
-export default function ReviewForm({ cardId, onAddReview, reviewButtonColor }) {
-  const [review, setReview] = useState('');
+export default function ReviewForm({ card }) {
+  const { mutate } = useSWR("/api/providers");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onAddReview(cardId, review);
-    setReview('');
+    onAddReview(card._id, event.target.review.value);
+    event.target.review.value = "";
   };
+
+  async function onAddReview(providerId, review) {
+    try {
+      const url = `/api/providers/${providerId}`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ review }),
+      });
+
+      if (response.ok) {
+        const updatedData = await response.json();
+
+        mutate();
+        alert("You have successfully made a Review!");
+        return updatedData;
+      } else {
+        console.error("Error updating provider:", response.statusText);
+        const errorMessage = await response.text();
+        console.error("Detailed Error Message:", errorMessage);
+      }
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    }
+  }
 
   return (
     <form onSubmit={handleSubmit}>
-    <label htmlFor="review">Write your review here:</label>
-<input
-  id="review"
-  value={review}
-  onChange={(e) => setReview(e.target.value)}
-/>
-    <SubmitReviewButton type="submit" reviewButtonColor={reviewButtonColor}>
-      Submit Review
-    </SubmitReviewButton>
-  </form>
+      <label htmlFor="review">Write your review here:</label>
+      <input id="review" minLength={3} />
+      <SubmitReviewButton type="submit">Submit Review</SubmitReviewButton>
+    </form>
   );
 }

@@ -1,10 +1,11 @@
 import { SWRConfig } from "swr";
+import GlobalStyle from "../styles";
+import useLocalStorageState from "use-local-storage-state";
+import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
-import { lightTheme, darkTheme, GlobalStyles } from "../styles/GlobalStyles";
-import styled from "styled-components";
 import { FiSun, FiMoon } from "react-icons/fi";
-import useLocalStorageState from "use-local-storage-state";
+import { lightTheme, darkTheme } from "../styles";
 
 const fetcher = (url) => fetch(url).then((response) => response.json());
 
@@ -41,6 +42,9 @@ const SwitchInput = styled.input`
 `;
 
 export default function MyApp({ Component, pageProps }) {
+  const [favorites, setFavorites] = useLocalStorageState("favorites", {
+    defaultValue: [],
+  });
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
@@ -54,22 +58,6 @@ export default function MyApp({ Component, pageProps }) {
     setTheme(newTheme);
   };
 
-  const [serviceCards, setServiceCards] = useLocalStorageState("serviceCards", {
-    defaultValue: [],
-  });
-  const [favorites, setFavorites] = useLocalStorageState("favorites", {
-    defaultValue: [],
-  });
-
-  function handleRating(id, rating) {
-    setServiceCards(
-      serviceCards.map((service) =>
-        service.id === id ? { ...service, rating } : service
-      )
-    );
-  }
-
-
   function handleToggleFavorite(serviceCardId) {
     const isFavorite = favorites.includes(serviceCardId);
     if (isFavorite) {
@@ -81,15 +69,12 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-      <GlobalStyles />
+      <GlobalStyle />
       <SWRConfig value={{ fetcher }}>
         <Component
           {...pageProps}
           toggleTheme={toggleTheme}
           theme={theme}
-          serviceCards={serviceCards}
-          setServiceCards={setServiceCards}
-          onRating={handleRating}
           favorites={favorites}
           onToggleFavorite={handleToggleFavorite}
         />
