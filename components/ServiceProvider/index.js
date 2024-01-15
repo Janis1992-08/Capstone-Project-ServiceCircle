@@ -1,8 +1,6 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { useState, useContext } from "react";
+import styled, { ThemeContext }  from "styled-components";
 import { getColorForSubcategory } from "../ColorCoding";
-import { useContext } from 'react';
-import { ThemeContext } from 'styled-components';
 
 const ServiceProviderWrapper = styled.div`
   border: 1px solid #ccc;
