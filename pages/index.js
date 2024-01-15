@@ -5,20 +5,19 @@ import styled from "styled-components";
 import Image from "next/image";
 import diversImage from "../public/assets/images/divers.jpg";
 
-const HeaderWrapper = styled.div`
-  position: relative;
+const HeaderContainer = styled.div`
   text-align: center;
-  margin-bottom: 40px;
-  color: black;
+  margin-top: 5px;
 `;
 
 const HeaderImage = styled(Image)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
+  margin-top: 5px;
+  object-fit: cover;
+  height: 150px;
+`;
+
+const HeaderTitle = styled.h1`
+  margin-top: 5px;
 `;
 
 const buttonStyle = {
@@ -98,18 +97,12 @@ const Homepage = () => {
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
-      <HeaderWrapper>
-      <HeaderImage src={diversImage} alt="divers group of people" layout="fill" objectFit="cover" />
-      <h1>
-        Service Circle
-      </h1>
-
-      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-        Find your perfect Service-Match
-      </h1>
-
-      </HeaderWrapper>
-
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />   
+      <HeaderContainer>
+        <HeaderTitle>Service Circle</HeaderTitle>
+        <HeaderImage src={diversImage} alt="a group of people with divers professions" width={1000} height={400} />
+        <HeaderTitle>Find your perfect Service-Match</HeaderTitle>
+      </HeaderContainer>
       <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
         {categories.map((category) => (
           <li key={category.id} style={{ marginBottom: "10px" }}>

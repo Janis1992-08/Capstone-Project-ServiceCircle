@@ -48,8 +48,11 @@ export default function MyApp({ Component, pageProps }) {
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme") || "light";
-    setTheme(storedTheme);
+    const storedTheme = localStorage.getItem("theme");
+    const isValidTheme = ["light", "dark"].includes(storedTheme);
+    const defaultTheme = isValidTheme ? storedTheme : "light";
+    
+    setTheme(defaultTheme);
   }, []);
 
   const toggleTheme = () => {

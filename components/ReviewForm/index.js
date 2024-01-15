@@ -2,7 +2,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 
 const SubmitReviewButton = styled.button`
-  background-color: ${(props) => props.reviewButtonColor || "#2ecc71"};
+  background-color: #FF5733;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -49,8 +49,8 @@ export default function ReviewForm({ card }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="review">Write your review here:</label>
-      <input id="review" minLength={3} />
+      <h5 htmlFor="review">Write your review here:</h5>
+      <input id="review" minLength={4} maxLength={100} required />
       <SubmitReviewButton type="submit">Submit Review</SubmitReviewButton>
     </form>
   );

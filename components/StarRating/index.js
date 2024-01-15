@@ -83,6 +83,7 @@ const StarRating = ({ card }) => {
       {stars.map((star) => (
         <StarWrapper
           key={star}
+          className="star-rating"
           onMouseEnter={() => handleStarHover(star)}
           onMouseLeave={handleMouseLeave}
           onClick={() => handleStarClick(star)}
