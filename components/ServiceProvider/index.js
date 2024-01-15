@@ -143,25 +143,31 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
             {showContactInfo ? "Hide Contact" : "Show Contact"}
           </ShowContactButton>
 
-          {!isOnFavoritesPage && session && (
-            <EditDeleteWrapper>
-              <EditButton type="button" onClick={handleOpenEditForm}>
-                Edit
-              </EditButton>
-              <DeleteButton
-                type="button"
-                onClick={() => handleDelete(card._id)}
-              >
-                Delete
-              </DeleteButton>
-            </EditDeleteWrapper>
+          {!isOnFavoritesPage &&
+            session &&
+            session.user.email === card.author && (
+              <EditDeleteWrapper>
+                <EditButton type="button" onClick={handleOpenEditForm}>
+                  Edit
+                </EditButton>
+                <DeleteButton
+                  type="button"
+                  onClick={() => handleDelete(card._id)}
+                >
+                  Delete
+                </DeleteButton>
+              </EditDeleteWrapper>
+            )}
+
+          {session && session.user.email !== card.author && (
+            <ReviewButton onClick={toggleReviewForm}>
+              {showReviewForm ? "Hide Review Form" : "Add Review"}
+            </ReviewButton>
           )}
 
-          <ReviewButton onClick={toggleReviewForm}>
-            {showReviewForm ? "Hide Review Form" : "Add Review"}
-          </ReviewButton>
-
-          {showReviewForm && <ReviewForm card={card} />}
+          {showReviewForm && session.user.email !== card.author && (
+            <ReviewForm card={card} />
+          )}
 
           <ActionButton onClick={toggleReviews}>
             {showReviews ? "Hide Reviews" : "Show Reviews"}
@@ -176,7 +182,9 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
             </article>
           )}
           <div>
-            <StarRating card={card} />
+            {session && session.user.email !== card.author && (
+              <StarRating card={card} />
+            )}
           </div>
         </div>
       )}

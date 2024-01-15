@@ -8,13 +8,8 @@ export default async function handler(request, response) {
   const session = await getServerSession(request, response, authOptions);
 
   if (request.method === "GET") {
-    if (session) {
-      const providers = await Provider.find({ author: session.user.email });
-      return response.status(200).json(providers);
-    } else {
-      const providers = await Provider.find();
-      return response.status(200).json(providers);
-    }
+    const providers = await Provider.find();
+    return response.status(200).json(providers);
   } else if (request.method === "POST") {
     try {
       if (session) {

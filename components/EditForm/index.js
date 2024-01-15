@@ -21,12 +21,15 @@ const InputField = styled.input`
   overflow: hidden;
 `;
 
-export default function EditForm({ editedCard, setEditedCard, card: { _id } }) {
+export default function EditForm({ editedCard, setEditedCard, card }) {
   const { mutate } = useSWR("/api/providers");
   const { data: session, status } = useSession();
   async function handleEditServiceCard() {
+    if (status !== "authenticated" || session.user.email !== card.author) {
+      return <h1>Access denied</h1>;
+    }
     try {
-      const url = `/api/providers/${_id}`;
+      const url = `/api/providers/${card._id}`;
       const response = await fetch(url, {
         method: "PUT",
         headers: {
