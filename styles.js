@@ -25,7 +25,7 @@ export default createGlobalStyle`
     background-color: ${(props) => props.theme.body};
     color: ${(props) => props.theme.text};
   }
-  h2, h3 {
+  h2, h3, label {
     color: ${(props) => props.theme.headerColor};
   }
   /* mobile iPhone SE */

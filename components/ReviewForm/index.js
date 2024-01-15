@@ -35,6 +35,7 @@ export default function ReviewForm({ card }) {
         const updatedData = await response.json();
 
         mutate();
+        alert("You have successfully made a Review!");
         return updatedData;
       } else {
         console.error("Error updating provider:", response.statusText);

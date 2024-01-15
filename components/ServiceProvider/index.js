@@ -99,6 +99,7 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
         await response.json();
 
         mutate();
+        alert("You have successfully Deleted!");
       } else {
         console.error(`Error: ${response.status}`);
       }
