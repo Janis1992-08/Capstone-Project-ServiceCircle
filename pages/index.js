@@ -4,6 +4,7 @@ import { categories } from "@/lib/data";
 import styled from "styled-components";
 import Image from "next/image";
 import diversImage from "../public/assets/images/divers.jpg";
+import { useSession } from "next-auth/react";
 
 const HeaderWrapper = styled.div`
   position: relative;
@@ -89,6 +90,7 @@ const ShowFavorites = styled.div`
 
 const Homepage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const { data: session } = useSession();
 
   const handleCategoryClick = (categoryId) => {
     setSelectedCategory((prevSelectedCategory) =>
@@ -99,15 +101,17 @@ const Homepage = () => {
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
       <HeaderWrapper>
-      <HeaderImage src={diversImage} alt="divers group of people" layout="fill" objectFit="cover" />
-      <h1>
-        Service Circle
-      </h1>
+        <HeaderImage
+          src={diversImage}
+          alt="divers group of people"
+          layout="fill"
+          objectFit="cover"
+        />
+        <h1>Service Circle</h1>
 
-      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-        Find your perfect Service-Match
-      </h1>
-
+        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+          Find your perfect Service-Match
+        </h1>
       </HeaderWrapper>
 
       <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
@@ -144,9 +148,12 @@ const Homepage = () => {
         ))}
       </ul>
 
-      <Link href="/create-service-card-form">
-        <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
-      </Link>
+      {session && (
+        <Link href="/create-service-card-form">
+          <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
+        </Link>
+      )}
+
       <Link href="/favorites">
         <ShowFavorites>Show my Favorites</ShowFavorites>
       </Link>

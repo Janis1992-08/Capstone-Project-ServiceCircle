@@ -3,6 +3,7 @@ import { categories } from "@/lib/data";
 import Link from "next/link";
 import { useState } from "react";
 import useSWR from "swr";
+import { useSession } from "next-auth/react";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -64,6 +65,7 @@ const initialFormData = {
 
 export default function CreateServiceCardForm({}) {
   const [formData, setFormData] = useState(initialFormData);
+  const { data: session, status } = useSession();
 
   const { mutate } = useSWR("/api/providers/");
 
@@ -92,6 +94,9 @@ export default function CreateServiceCardForm({}) {
       throw new Error(`Error: ${response.statusText}`);
     }
   };
+  if (status !== "authenticated") {
+    return <h1>Access denied</h1>;
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();

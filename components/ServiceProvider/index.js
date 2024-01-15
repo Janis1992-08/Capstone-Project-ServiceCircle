@@ -4,6 +4,7 @@ import useSWR from "swr";
 import ReviewForm from "@/components/ReviewForm";
 import EditForm from "@/components/EditForm";
 import StarRating from "../StarRating";
+import { useSession } from "next-auth/react";
 
 const ServiceProviderWrapper = styled.div`
   display: flex;
@@ -69,6 +70,7 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [showReviews, setShowReviews] = useState(false);
+  const { data: session } = useSession();
 
   const { mutate } = useSWR("/api/providers");
 
@@ -141,7 +143,7 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
             {showContactInfo ? "Hide Contact" : "Show Contact"}
           </ShowContactButton>
 
-          {!isOnFavoritesPage && (
+          {!isOnFavoritesPage && session && (
             <EditDeleteWrapper>
               <EditButton type="button" onClick={handleOpenEditForm}>
                 Edit
