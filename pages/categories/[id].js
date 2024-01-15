@@ -60,12 +60,7 @@ const FilterLabel = styled.label`
   color: black;
 `;
 
-const SubcategoryPage = ({
-  fetcher,
-  favorites,
-  onToggleFavorite,
-  onRating,
-}) => {
+const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
   const [filterType, setFilterType] = useState("all");
   const [filterValue, setFilterValue] = useState("");
   const router = useRouter();
@@ -145,11 +140,7 @@ const SubcategoryPage = ({
                 onClick={() => onToggleFavorite(provider._id)}
                 isFavorite={favorites.includes(provider._id)}
               />
-              <ServiceProvider
-                key={provider._id}
-                card={provider}
-                onRating={onRating}
-              />
+              <ServiceProvider key={provider._id} card={provider} />
             </Card>
           ))}
         </CardWrapper>

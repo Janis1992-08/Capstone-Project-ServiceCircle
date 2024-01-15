@@ -2,18 +2,22 @@ import ServiceProvider from "@/components/ServiceProvider";
 import styled from "styled-components";
 import FavoriteButton from "@/components/FavoriteButton";
 import Link from "next/link";
+import useSWR from "swr";
+import { useRouter } from "next/router";
+
+const Header = styled.header`
+  background-color: #f0f0f0;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+`;
 
 const Headline = styled.h1`
-  display: inline-block; // 
-  background-color: #007bff; //
-  color: #fff;  
+  color: #333;
   text-decoration: none;
   font-weight: bold;
-  padding: 0px 10px; // 
-  border-radius: 5px;  
-
   &:hover {
-    opacity: 0.8;  
+    opacity: 0.8;
   }
 `;
 
@@ -28,42 +32,54 @@ const CardWrapper = styled.ul`
 const Card = styled.li`
   background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 5px;
   list-style: none;
-  padding: 20px;
+  border-radius: 5px;
+  padding: 10px;
   width: 300px;
+  text-align: center;
   transition: box-shadow 0.3s ease;
 
   &:hover {
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
   }
 `;
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
-const FavoritesPage = ({ favorites, serviceCards, setServiceCards, onToggleFavorite }) => {
-  const favoriteCards = serviceCards.filter((card) =>
-    favorites.includes(card.id)
-  );
+const FavoritesPage = ({ favorites, onToggleFavorite }) => {
+  const router = useRouter();
+  const { isReady } = router;
+  const { data } = useSWR("/api/providers");
+  if (!data || !isReady) return <div>Loading...</div>;
+
+  const favoriteCards = data
+    ? data.filter((card) => favorites.includes(card._id))
+    : [];
 
   return (
     <>
-      <Link href="/">
-        <Headline> &larr; Favorites</Headline>
-      </Link>
+      <Header>
+        <HeaderWrapper>
+          <Link href="/">
+            <Headline> &larr; Favorites</Headline>
+          </Link>
+        </HeaderWrapper>
+      </Header>
 
       <main>
         <CardWrapper>
           {favoriteCards.map((card) => (
-            <Card key={card.id}>
-        <FavoriteButton
-                onClick={() => onToggleFavorite(card.id)}
-                isFavorite={favorites.includes(card.id)}
+            <Card key={card._id}>
+              <FavoriteButton
+                onClick={() => onToggleFavorite(card._id)}
+                isFavorite={favorites.includes(card._id)}
               />
               <ServiceProvider
-                 key={card.id}
-                 card={card}
-                 serviceCards={serviceCards}
-                 setServiceCards={setServiceCards}
-                 isOnFavoritesPage={true}
+                key={card._id}
+                card={card}
+                isOnFavoritesPage={true}
               />
             </Card>
           ))}

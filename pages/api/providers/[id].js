@@ -9,33 +9,51 @@ export default async function handler(request, response) {
   if (request.method === "GET") {
     try {
       const providers = await Provider.findById(id).populate("reviews");
+      console.log("providers", providers);
       response.status(200).json(providers);
     } catch (error) {
       console.error("Error fetching providers:", error);
       response.status(500).json({ error: "Internal Server Error" });
-      return;
     }
-  } else if (request.method === "DELETE") {
+  }
+
+  if (request.method === "PUT") {
     try {
-      await Provider.findByIdAndDelete(id);
+      const updatedProvider = request.body;
+      await Provider.findByIdAndUpdate(id, updatedProvider, {
+        useFindAndModify: false,
+      });
+      console.log("updatedProvider", updatedProvider);
+      response.status(200).json({ status: `Provider successfully updated.` });
+    } catch (error) {
+      console.error("Error updating provider:", error);
+      response.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+
+  if (request.method === "DELETE") {
+    try {
+      await Provider.findByIdAndDelete(id, { useFindAndModify: false });
       response
         .status(200)
         .json({ status: `Provider ${id} successfully deleted.` });
     } catch (error) {
       console.error("Error deleting provider:", error);
       response.status(500).json({ error: "Internal Server Error" });
-      return;
     }
-  } else if (request.method === "PUT") {
+  }
+  if (request.method === "POST") {
     try {
-      const updatedProvider = request.body;
-      await Provider.findByIdAndUpdate(id, updatedProvider);
-      response.status(200).json({ status: `Provider successfully updated.` });
+      const { review } = request.body;
+      const provider = await Provider.findById(id);
+
+      provider.reviews.push(review);
+
+      await provider.save();
+      response.status(201).json({ status: "Review added successfully." });
     } catch (error) {
-      console.error("Error updating provider:", error);
+      console.error("Error adding review:", error);
       response.status(500).json({ error: "Internal Server Error" });
     }
-  } else {
-    response.status(405).json({ error: "Method Not Allowed" });
   }
 }
