@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const providerSchema = new Schema({
+  author: { type: String },
   firstName: {
     type: String,
     required: true,
