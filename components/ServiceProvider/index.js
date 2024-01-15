@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { getColorForSubcategory } from "../ColorCoding";
+import { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 
 const ServiceProviderWrapper = styled.div`
   border: 1px solid #ccc;
@@ -44,7 +46,8 @@ export default function ServiceProvider({
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
 
-  const backgroundColor = getColorForSubcategory(card.subcategory);
+  const theme = useContext(ThemeContext);
+  const backgroundColor = getColorForSubcategory(card.subcategory, theme);
 
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
