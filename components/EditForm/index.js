@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import styled from "styled-components";
+import { useSession } from "next-auth/react";
 
 const ServiceButton = styled.button`
   background-color: #3498db;
@@ -22,6 +23,7 @@ const InputField = styled.input`
 
 export default function EditForm({ editedCard, setEditedCard, card: { _id } }) {
   const { mutate } = useSWR("/api/providers");
+  const { data: session, status } = useSession();
   async function handleEditServiceCard() {
     try {
       const url = `/api/providers/${_id}`;
@@ -52,6 +54,10 @@ export default function EditForm({ editedCard, setEditedCard, card: { _id } }) {
     const updatedData = await handleEditServiceCard();
     setEditedCard(updatedData);
   };
+
+  if (status !== "authenticated") {
+    return <h1>Access denied</h1>;
+  }
 
   if (!editedCard) {
     return <div>Loading...</div>;
