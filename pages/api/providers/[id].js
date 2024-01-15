@@ -34,8 +34,8 @@ export default async function handler(request, response) {
     } catch (error) {
       console.error("Error updating provider:", error);
       response.status(500).json({ error: "Internal Server Error" });
-    } else {
+    }
+  } else {
     response.status(405).json({ error: "Method Not Allowed" });
-
   }
 }

@@ -1,13 +1,10 @@
 import { use, useState } from "react";
 import styled from "styled-components";
-
-
 import useSWR from "swr";
 import ReviewForm from "@/components/ReviewForm";
 import useLocalStorageState from "use-local-storage-state";
 import EditForm from "@/components/EditForm";
 import StarRating from "../StarRating";
-import useSWR from "swr";
 
 const ServiceProviderWrapper = styled.div`
   display: flex;
@@ -68,11 +65,7 @@ const ShowContactButton = styled.button`
   margin: 10px;
 `;
 
-export default function ServiceProvider({
-  card,
-  isOnFavoritesPage,
-  onRating,
-}) {
+export default function ServiceProvider({ card, isOnFavoritesPage, onRating }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
