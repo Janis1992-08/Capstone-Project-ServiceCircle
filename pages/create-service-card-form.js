@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { categories } from "@/lib/data";
 import Link from "next/link";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import useSWR from "swr";
+import Router from "next/router";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -36,7 +37,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const Headline = styled.a`
+const Headline = styled.h3`
   display: inline-block;
   padding: 5px 10px;
   border-radius: 5px;
@@ -51,39 +52,53 @@ const Headline = styled.a`
   }
 `;
 
-export default function CreateServiceCardForm({ onAddServiceCard }) {
-  const initialFormData = {
-    firstName: "",
-    lastName: "",
-    skills: "",
-    needs: "",
-    email: "",
-    phone: "",
-    category: "",
-    subcategory: "",
-  };
+const initialFormData = {
+  firstName: "",
+  lastName: "",
+  skills: "",
+  needs: "",
+  email: "",
+  phone: "",
+  category: "",
+  subcategory: "",
+};
 
-  const [formData, setFormData] = useState({ ...initialFormData });
+export default function CreateServiceCardForm({}) {
+  const [formData, setFormData] = useState(initialFormData);
+
+  const { mutate } = useSWR("/api/providers/");
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
   };
 
-  const handleSubmit = (event) => {
+  const handleAddServiceCards = async (formData) => {
+    const response = await fetch("/api/providers/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    if (response.ok) {
+      mutate();
+      Router.push("/");
+    } else {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const newServiceCard = { ...formData, id: uuidv4() };
-    onAddServiceCard(newServiceCard);
-
-    const toastMessage = `The Service Card is created and you can find it in the assigned subcategory: ${formData.subcategory}`;
-    alert(toastMessage);
-
-    resetForm();
-  };
-
-  const resetForm = () => {
-    setFormData({ ...initialFormData });
+    try {
+      await handleAddServiceCards(formData);
+      setFormData(initialFormData); // reset form data
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
   };
 
   return (

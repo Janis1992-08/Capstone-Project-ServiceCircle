@@ -62,7 +62,6 @@ const FilterLabel = styled.label`
 
 const SubcategoryPage = ({
   fetcher,
-  serviceCards,
   favorites,
   onToggleFavorite,
   onEditServiceCard,
