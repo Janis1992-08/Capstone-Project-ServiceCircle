@@ -69,13 +69,6 @@ export default function MyApp({ Component, pageProps }) {
     );
   }
 
-  function handleEditServiceCard(updatedServiceCard) {
-    const updatedCards = serviceCards.map((card) =>
-      card.id === updatedServiceCard.id ? updatedServiceCard : card
-    );
-    setServiceCards(updatedCards);
-  }
-
   const handleDelete = (deletedCard) => {
     const isConfirmed = window.confirm(
       "Are you sure you want to delete this service provider?"
@@ -110,7 +103,6 @@ export default function MyApp({ Component, pageProps }) {
           setServiceCards={setServiceCards}
           onRating={handleRating}
           onDeleteServiceCard={handleDelete}
-          onEditServiceCard={handleEditServiceCard}
           favorites={favorites}
           onToggleFavorite={handleToggleFavorite}
         />
