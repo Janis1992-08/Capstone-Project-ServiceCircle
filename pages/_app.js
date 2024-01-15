@@ -69,18 +69,6 @@ export default function MyApp({ Component, pageProps }) {
     );
   }
 
-  const handleDelete = (deletedCard) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this service provider?"
-    );
-
-    if (isConfirmed) {
-      const deletedServiceCards = serviceCards.filter(
-        (card) => card.id !== deletedCard.id
-      );
-      setServiceCards(deletedServiceCards);
-    }
-  };
 
   function handleToggleFavorite(serviceCardId) {
     const isFavorite = favorites.includes(serviceCardId);
@@ -102,7 +90,6 @@ export default function MyApp({ Component, pageProps }) {
           serviceCards={serviceCards}
           setServiceCards={setServiceCards}
           onRating={handleRating}
-          onDeleteServiceCard={handleDelete}
           favorites={favorites}
           onToggleFavorite={handleToggleFavorite}
         />

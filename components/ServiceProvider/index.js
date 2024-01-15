@@ -1,10 +1,13 @@
 import { use, useState } from "react";
 import styled from "styled-components";
+
+
 import useSWR from "swr";
 import ReviewForm from "@/components/ReviewForm";
 import useLocalStorageState from "use-local-storage-state";
 import EditForm from "@/components/EditForm";
 import StarRating from "../StarRating";
+import useSWR from "swr";
 
 const ServiceProviderWrapper = styled.div`
   display: flex;
@@ -68,13 +71,14 @@ const ShowContactButton = styled.button`
 export default function ServiceProvider({
   card,
   isOnFavoritesPage,
-  onDeleteServiceCard,
   onRating,
 }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [reviews, setReviews] = useLocalStorageState("reviews", {});
+
+  const { mutate } = useSWR("/api/providers");
 
   const onAddReview = (cardId, review) => {
     const updatedReviews = { ...reviews, [cardId]: review };
@@ -92,6 +96,25 @@ export default function ServiceProvider({
   const handleOpenEditForm = () => {
     setEditedCard(card);
   };
+
+  async function handleDelete(id) {
+    const url = `/api/providers/${id}`;
+    try {
+      const response = await fetch(url, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        await response.json();
+
+        mutate();
+      } else {
+        console.error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("An error occurred during the delete request:", error);
+    }
+  }
 
   return (
     <ServiceProviderWrapper key={card._id}>
@@ -133,7 +156,7 @@ export default function ServiceProvider({
               </EditButton>
               <DeleteButton
                 type="button"
-                onClick={() => onDeleteServiceCard(card)}
+                onClick={() => handleDelete(card._id)}
               >
                 Delete
               </DeleteButton>
