@@ -29,7 +29,7 @@ const providerSchema = new Schema({
     required: true,
   },
   rating: {
-    type: Number,
+    type: [Number],
   },
   reviews: {
     type: [String],

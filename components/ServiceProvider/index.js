@@ -5,6 +5,7 @@ import ReviewForm from "@/components/ReviewForm";
 import EditForm from "@/components/EditForm";
 import StarRating from "../StarRating";
 import { useSession } from "next-auth/react";
+import AverageRating from "../AverageRating";
 
 const ServiceProviderWrapper = styled.div`
   display: flex;
@@ -183,9 +184,14 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
           )}
           <div>
             {session && session.user.email !== card.author && (
-              <StarRating card={card} />
+              <>
+                <p>Rate the Service</p>
+                <StarRating card={card} />
+              </>
             )}
           </div>
+
+          <AverageRating card={card} />
         </div>
       )}
     </ServiceProviderWrapper>

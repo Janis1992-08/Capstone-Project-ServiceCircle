@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const StarWrapper = styled.label`
   position: relative;
@@ -38,14 +39,12 @@ const StarRating = ({ card }) => {
     try {
       const url = `/api/providers/${providerId}`;
       const response = await fetch(url, {
-        method: "PUT",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ rating }),
       });
-
-      console.log("Server Response:", response);
 
       if (response.ok) {
         const updatedData = await response.json();
@@ -61,21 +60,15 @@ const StarRating = ({ card }) => {
   }
 
   const handleStarHover = (selectedRating) => {
-    if (!card.rating) {
-      setHoverRating(selectedRating);
-    }
+    setHoverRating(selectedRating);
   };
 
   const handleMouseLeave = () => {
-    if (!card.rating) {
-      setHoverRating(0);
-    }
+    setHoverRating(0);
   };
 
   const handleStarClick = (selectedRating) => {
-    if (!card.rating) {
-      setTempRating(selectedRating);
-    }
+    setTempRating(selectedRating);
   };
 
   return (
@@ -93,12 +86,15 @@ const StarRating = ({ card }) => {
             value={star}
             checked={star === (tempRating || hoverRating || card.rating)}
             onChange={() => handleStarClick(star)}
-            disabled={card.isRated || card.rating > 0}
           />
-          {star <= (tempRating || hoverRating || card.rating) ? "⭐️" : "☆"}
+          {star <= (tempRating || hoverRating || card.rating) ? (
+            <AiFillStar color="gold" size="1.3em" />
+          ) : (
+            <AiOutlineStar color="black" size="1.3em" />
+          )}
         </StarWrapper>
       ))}
-      {!card.rating && tempRating > 0 && (
+      {tempRating > 0 && (
         <StyledButton
           type="button"
           onClick={() => handleRating(card._id, tempRating)}

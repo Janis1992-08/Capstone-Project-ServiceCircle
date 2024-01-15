@@ -23,7 +23,7 @@ export default async function handler(request, response) {
       await Provider.findByIdAndUpdate(id, updatedProvider, {
         useFindAndModify: false,
       });
-      console.log("updatedProvider", updatedProvider);
+
       response.status(200).json({ status: `Provider successfully updated.` });
     } catch (error) {
       console.error("Error updating provider:", error);
@@ -44,10 +44,11 @@ export default async function handler(request, response) {
   }
   if (request.method === "POST") {
     try {
-      const { review } = request.body;
+      const { review, rating } = request.body;
       const provider = await Provider.findById(id);
 
       provider.reviews.push(review);
+      provider.rating.push(rating);
 
       await provider.save();
       response.status(201).json({ status: "Review added successfully." });
