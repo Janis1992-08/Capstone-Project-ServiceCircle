@@ -26,7 +26,16 @@ export default async function handler(request, response) {
       response.status(500).json({ error: "Internal Server Error" });
       return;
     }
-  } else {
+  } else if (request.method === "PUT") {
+    try {
+      const updatedProvider = request.body;
+      await Provider.findByIdAndUpdate(id, updatedProvider);
+      response.status(200).json({ status: `Provider successfully updated.` });
+    } catch (error) {
+      console.error("Error updating provider:", error);
+      response.status(500).json({ error: "Internal Server Error" });
+    } else {
     response.status(405).json({ error: "Method Not Allowed" });
+
   }
 }

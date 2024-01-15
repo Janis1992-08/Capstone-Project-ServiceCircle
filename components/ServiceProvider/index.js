@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import styled from "styled-components";
+
+
+import useSWR from "swr";
 import ReviewForm from "@/components/ReviewForm";
 import useLocalStorageState from "use-local-storage-state";
+import EditForm from "@/components/EditForm";
 import StarRating from "../StarRating";
 import useSWR from "swr";
 
@@ -64,25 +68,15 @@ const ShowContactButton = styled.button`
   margin: 10px;
 `;
 
-const InputField = styled.input`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  overflow: hidden;
-`;
-
 export default function ServiceProvider({
   card,
   isOnFavoritesPage,
-  onEditServiceCard,
   onRating,
 }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const [reviews, setReviews] = useLocalStorageState(`reviews_${card.id}`, {});
+  const [reviews, setReviews] = useLocalStorageState("reviews", {});
 
   const { mutate } = useSWR("/api/providers");
 
@@ -99,14 +93,8 @@ export default function ServiceProvider({
     setShowReviewForm(!showReviewForm);
   };
 
-  const handleEdit = (updatedServiceCard) => {
-    setEditedCard(updatedServiceCard);
-  };
-
-  const handleSave = (event) => {
-    event.preventDefault();
-    onEditServiceCard(editedCard);
-    setEditedCard(null);
+  const handleOpenEditForm = () => {
+    setEditedCard(card);
   };
 
   async function handleDelete(id) {
@@ -129,90 +117,13 @@ export default function ServiceProvider({
   }
 
   return (
-    <ServiceProviderWrapper key={card.id}>
-      {editedCard && editedCard.id === card.id ? (
-        <form onSubmit={handleSave}>
-          <label htmlFor="firstName"> First Name: </label>
-          <InputField
-            type="text"
-            id="firstName"
-            name="firstName"
-            required
-            minLength={3}
-            maxLength={15}
-            value={editedCard.firstName}
-            onChange={(event) =>
-              setEditedCard({ ...editedCard, firstName: event.target.value })
-            }
-          />
-
-          <label htmlFor="lastName">Last Name: </label>
-          <InputField
-            type="text"
-            id="lastName"
-            name="lastName"
-            required
-            minLength={3}
-            maxLength={15}
-            value={editedCard.lastName}
-            onChange={(event) =>
-              setEditedCard({ ...editedCard, lastName: event.target.value })
-            }
-          />
-
-          <label htmlFor="skills">Skills: </label>
-          <InputField
-            type="text"
-            id="skills"
-            name="skills"
-            required
-            minLength={3}
-            maxLength={50}
-            value={editedCard.skills}
-            onChange={(event) =>
-              setEditedCard({ ...editedCard, skills: event.target.value })
-            }
-          />
-
-          <label htmlFor="needs">Needs: </label>
-          <InputField
-            type="text"
-            id="needs"
-            name="needs"
-            required
-            minLength={3}
-            maxLength={50}
-            value={editedCard.needs}
-            onChange={(event) =>
-              setEditedCard({ ...editedCard, needs: event.target.value })
-            }
-          />
-
-          <label htmlFor="email">email: </label>
-          <InputField
-            type="email"
-            id="email"
-            name="email"
-            required
-            value={editedCard.email}
-            onChange={(event) =>
-              setEditedCard({ ...editedCard, email: event.target.value })
-            }
-          />
-          <label htmlFor="phone">phone: </label>
-          <InputField
-            type="tel"
-            id="phone"
-            name="phone"
-            required
-            value={editedCard.phone}
-            onChange={(event) =>
-              setEditedCard({ ...editedCard, phone: event.target.value })
-            }
-          />
-
-          <EditButton type="submit">Save</EditButton>
-        </form>
+    <ServiceProviderWrapper key={card._id}>
+      {editedCard?._id === card._id ? (
+        <EditForm
+          editedCard={editedCard}
+          setEditedCard={setEditedCard}
+          card={card}
+        />
       ) : (
         <div>
           <h2>
@@ -240,7 +151,7 @@ export default function ServiceProvider({
 
           {!isOnFavoritesPage && (
             <EditDeleteWrapper>
-              <EditButton type="button" onClick={() => handleEdit(card)}>
+              <EditButton type="button" onClick={handleOpenEditForm}>
                 Edit
               </EditButton>
               <DeleteButton

@@ -64,7 +64,6 @@ const SubcategoryPage = ({
   fetcher,
   favorites,
   onToggleFavorite,
-  onEditServiceCard,
   onRating,
 }) => {
   const [filterType, setFilterType] = useState("all");
@@ -149,7 +148,6 @@ const SubcategoryPage = ({
               <ServiceProvider
                 key={provider._id}
                 card={provider}
-                onEditServiceCard={onEditServiceCard}
                 onRating={onRating}
               />
             </Card>
