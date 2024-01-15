@@ -1,5 +1,6 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { useState, useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
+import { getColorForSubcategory } from "../ColorCoding";
 import useSWR from "swr";
 import ReviewForm from "@/components/ReviewForm";
 import EditForm from "@/components/EditForm";
@@ -72,6 +73,9 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
 
   const { mutate } = useSWR("/api/providers");
 
+  const theme = useContext(ThemeContext);
+  const backgroundColor = getColorForSubcategory(card.subcategory, theme);
+
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
   };
@@ -109,7 +113,7 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
   }
 
   return (
-    <ServiceProviderWrapper key={card._id}>
+    <ServiceProviderWrapper key={card._id} style={{ backgroundColor }}>
       {editedCard?._id === card._id ? (
         <EditForm
           editedCard={editedCard}
