@@ -150,25 +150,27 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
               </h3>
             </div>
           )}
-          <ShowContactButton type="button" onClick={toggleContactInfo}>
-            {showContactInfo ? "Hide Contact" : "Show Contact"}
-          </ShowContactButton>
+          {session ? (
+            <ShowContactButton type="button" onClick={toggleContactInfo}>
+              {showContactInfo ? "Hide Contact" : "Show Contact"}
+            </ShowContactButton>
+          ) : (
+            <p>Please log in to see the contact information.</p>
+          )}
 
-          {!isOnFavoritesPage &&
-            session &&
-            session.user.email === card.author && (
-              <EditDeleteWrapper>
-                <EditButton type="button" onClick={handleOpenEditForm}>
-                  Edit
-                </EditButton>
-                <DeleteButton
-                  type="button"
-                  onClick={() => handleDelete(card._id)}
-                >
-                  Delete
-                </DeleteButton>
-              </EditDeleteWrapper>
-            )}
+          {session && session.user.email === card.author && (
+            <EditDeleteWrapper>
+              <EditButton type="button" onClick={handleOpenEditForm}>
+                Edit
+              </EditButton>
+              <DeleteButton
+                type="button"
+                onClick={() => handleDelete(card._id)}
+              >
+                Delete
+              </DeleteButton>
+            </EditDeleteWrapper>
+          )}
 
           {session && session.user.email !== card.author && (
             <ReviewButton onClick={toggleReviewForm}>
@@ -200,12 +202,9 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
               </>
             )}
           </div>
-          {session && session.user.email === card.author && (
-            <>
-              <p>Your Average Rating:</p>
-              <AverageRating card={card} />
-            </>
-          )}
+
+          <p>Average Rating:</p>
+          <AverageRating card={card} />
         </div>
       )}
     </ServiceProviderWrapper>
