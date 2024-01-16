@@ -190,8 +190,12 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
               </>
             )}
           </div>
-
-          <AverageRating card={card} />
+          {session && session.user.email === card.author && (
+            <>
+              <p>Your Average Rating:</p>
+              <AverageRating card={card} />
+            </>
+          )}
         </div>
       )}
     </ServiceProviderWrapper>

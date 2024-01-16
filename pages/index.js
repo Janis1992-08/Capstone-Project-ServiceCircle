@@ -149,14 +149,16 @@ const Homepage = () => {
       </ul>
 
       {session && (
-        <Link href="/create-service-card-form">
-          <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
-        </Link>
-      )}
+        <>
+          <Link href="/create-service-card-form">
+            <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
+          </Link>
 
-      <Link href="/favorites">
-        <ShowFavorites>Show my Favorites</ShowFavorites>
-      </Link>
+          <Link href="/favorites">
+            <ShowFavorites>Show my Favorites</ShowFavorites>
+          </Link>
+        </>
+      )}
     </div>
   );
 };
