@@ -4,6 +4,7 @@ import FavoriteButton from "@/components/FavoriteButton";
 import Link from "next/link";
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 const Header = styled.header`
   background-color: #f0f0f0;
@@ -52,7 +53,19 @@ const FavoritesPage = ({ favorites, onToggleFavorite }) => {
   const router = useRouter();
   const { isReady } = router;
   const { data } = useSWR("/api/providers");
+  const { data: session, status } = useSession();
   if (!data || !isReady) return <div>Loading...</div>;
+
+  if (status !== "authenticated") {
+    return (
+      <>
+        <Link href="/">
+          <Headline>&larr; Back to Categories</Headline>
+        </Link>
+        <p>Access denied without login</p>
+      </>
+    );
+  }
 
   const favoriteCards = data
     ? data.filter((card) => favorites.includes(card._id))

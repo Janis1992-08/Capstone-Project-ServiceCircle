@@ -95,7 +95,14 @@ export default function CreateServiceCardForm({}) {
     }
   };
   if (status !== "authenticated") {
-    return <h1>Access denied</h1>;
+    return (
+      <>
+        <Link href="/">
+          <Headline>&larr; Back to Categories</Headline>
+        </Link>
+        <p>Access denied without login</p>
+      </>
+    );
   }
 
   const handleSubmit = async (event) => {
