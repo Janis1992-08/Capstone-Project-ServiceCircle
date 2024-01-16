@@ -87,7 +87,7 @@ export default function CreateServiceCardForm({}) {
 
       alert(
         `The Service Card is created and you can find it in the assigned subcategory: ${formData.subcategory}`
-      ); // Use alert to show a pop-up message
+      );
     } else {
       throw new Error(`Error: ${response.statusText}`);
     }

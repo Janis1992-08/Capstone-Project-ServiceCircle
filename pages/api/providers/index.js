@@ -15,7 +15,7 @@ export default async function handler(request, response) {
   } else if (request.method === "POST") {
     try {
       // Log the raw request body
-      console.log("Raw request body:", request.body);
+      //console.log("Raw request body:", request.body);
 
       // Parse the incoming JSON data from the request body
       const data = request.body;

@@ -6,18 +6,22 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 
 const Header = styled.header`
-  background-color: #f0f0f0;
   padding: 20px;
   text-align: center;
-  border-bottom: 1px solid #ccc;
 `;
 
-const Headline = styled.h1`
-  color: #333;
+const Headline = styled.p`
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
   text-decoration: none;
-  font-weight: bold;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+
   &:hover {
-    opacity: 0.8;
+    background-color: #0056b3;
   }
 `;
 
