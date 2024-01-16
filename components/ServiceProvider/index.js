@@ -66,6 +66,13 @@ const ShowContactButton = styled.button`
   margin: 10px;
 `;
 
+const OwnerMessage = styled.p`
+  color: red;
+  position: relative;
+  margin-top: 0px;
+  background-color: #f0f0f0;
+`;
+
 export default function ServiceProvider({ card, isOnFavoritesPage }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
@@ -113,6 +120,9 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
 
   return (
     <ServiceProviderWrapper key={card._id}>
+      {session && session.user.email === card.author && (
+        <OwnerMessage>This is your service card.</OwnerMessage>
+      )}
       {editedCard?._id === card._id ? (
         <EditForm
           editedCard={editedCard}
