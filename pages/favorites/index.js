@@ -74,19 +74,23 @@ const FavoritesPage = ({ favorites, onToggleFavorite }) => {
 
       <main>
         <CardWrapper>
-          {favoriteCards.map((card) => (
-            <Card key={card._id}>
-              <FavoriteButton
-                onClick={() => onToggleFavorite(card._id)}
-                isFavorite={favorites.includes(card._id)}
-              />
-              <ServiceProvider
-                key={card._id}
-                card={card}
-                isOnFavoritesPage={true}
-              />
-            </Card>
-          ))}
+          {favoriteCards.length > 0 ? (
+            favoriteCards.map((card) => (
+              <Card key={card._id}>
+                <FavoriteButton
+                  onClick={() => onToggleFavorite(card._id)}
+                  isFavorite={favorites.includes(card._id)}
+                />
+                <ServiceProvider
+                  key={card._id}
+                  card={card}
+                  isOnFavoritesPage={true}
+                />
+              </Card>
+            ))
+          ) : (
+            <div>No favorite cards to display</div>
+          )}
         </CardWrapper>
       </main>
     </>

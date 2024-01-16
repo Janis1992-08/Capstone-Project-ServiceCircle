@@ -8,10 +8,8 @@ import FavoriteButton from "@/components/FavoriteButton/index.js";
 import useSWR from "swr";
 
 const Header = styled.header`
-  //background-color: #f0f0f0;
   padding: 20px;
   text-align: center;
-  //border-bottom: 1px solid #ccc;
 `;
 
 const Headline = styled.p`
@@ -63,7 +61,6 @@ const FilterControls = styled.div`
 
 const FilterLabel = styled.label`
   margin-right: 10px;
-  
 `;
 
 const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
@@ -140,15 +137,19 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
 
       <main>
         <CardWrapper>
-          {filteredProviders.map((provider) => (
-            <Card key={provider._id}>
-              <FavoriteButton
-                onClick={() => onToggleFavorite(provider._id)}
-                isFavorite={favorites.includes(provider._id)}
-              />
-              <ServiceProvider key={provider._id} card={provider} />
-            </Card>
-          ))}
+          {filteredProviders.length > 0 ? (
+            filteredProviders.map((provider) => (
+              <Card key={provider._id}>
+                <FavoriteButton
+                  onClick={() => onToggleFavorite(provider._id)}
+                  isFavorite={favorites.includes(provider._id)}
+                />
+                <ServiceProvider key={provider._id} card={provider} />
+              </Card>
+            ))
+          ) : (
+            <div>No cards to display</div>
+          )}
         </CardWrapper>
       </main>
     </>
