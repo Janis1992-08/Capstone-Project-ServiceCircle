@@ -37,6 +37,7 @@ const ShowReviewButton = styled.button`
   cursor: pointer;
   margin-top: 10px;
   margin-right: 10px;
+  margin-bottom: 10px;
   background-color: black;
   color: white;
 `;
@@ -130,20 +131,20 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
           <h2>
             {card.firstName} {card.lastName}
           </h2>
-          <h3>
+          <p>
             <strong>Skills:</strong> {card.skills}
-          </h3>
-          <h3>
+          </p>
+          <p>
             <strong>Needs:</strong> {card.needs}
-          </h3>
+          </p>
           {showContactInfo && (
             <div>
-              <h3>
+              <p>
                 <strong>Email:</strong> {card.email}
-              </h3>
-              <h3>
+              </p>
+              <p>
                 <strong>Phone:</strong> {card.phone}
-              </h3>
+              </p>
             </div>
           )}
           <ShowContactButton type="button" onClick={toggleContactInfo}>

@@ -41,8 +41,12 @@ export default createGlobalStyle`
     margin: 10px;
   }
   img {
-    max-width: 100%;
-    height: auto; 
+    width: 100%;
+    object-fit: cover;
+  }
+  h1 {
+    font-size: 30px;
+    padding: 0;
   }
 }
 `;

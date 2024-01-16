@@ -70,7 +70,7 @@ const ShowFavorites = styled.div`
   margin: 20px auto;
   padding: 15px 30px;
   border-radius: 25px;
-  background-color: gray;
+  background-color: darkgreen;
   color: white;
   border: none;
   cursor: pointer;
@@ -79,11 +79,10 @@ const ShowFavorites = styled.div`
   outline: none;
   width: 60%;
   transition: background-color 0.3s ease;
+`;
 
-  &:hover {
-    background-color: green;
-    text-decoration: none;
-  }
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const Homepage = () => {
@@ -126,9 +125,9 @@ const Homepage = () => {
               >
                 {category.subcategories.map((subcategory) => (
                   <li key={subcategory.id} style={subcategoryStyle}>
-                    <Link href={`/categories/${subcategory.id}`}>
+                    <StyledLink href={`/categories/${subcategory.id}`}>
                       {subcategory.name}
-                    </Link>{" "}
+                    </StyledLink>{" "}
                   </li>
                 ))}
               </ul>
@@ -137,12 +136,12 @@ const Homepage = () => {
         ))}
       </ul>
 
-      <Link href="/create-service-card-form">
+      <StyledLink href="/create-service-card-form">
         <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
-      </Link>
-      <Link href="/favorites">
+      </StyledLink>
+      <StyledLink href="/favorites">
         <ShowFavorites>Show my Favorites</ShowFavorites>
-      </Link>
+      </StyledLink>
     </div>
   );
 };
