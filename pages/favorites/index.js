@@ -56,15 +56,9 @@ const FavoritesPage = ({ favorites, onToggleFavorite }) => {
   const { data: session, status } = useSession();
   if (!data || !isReady) return <div>Loading...</div>;
 
-  if (status !== "authenticated") {
-    return (
-      <>
-        <Link href="/">
-          <Headline>&larr; Back to Categories</Headline>
-        </Link>
-        <p>Access denied without login</p>
-      </>
-    );
+  if (status === "unauthenticated") {
+    router.push("/");
+    return null;
   }
 
   const favoriteCards = data

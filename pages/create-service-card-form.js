@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -65,9 +66,15 @@ const initialFormData = {
 
 export default function CreateServiceCardForm({}) {
   const [formData, setFormData] = useState(initialFormData);
+  const router = useRouter();
   const { data: session, status } = useSession();
 
   const { mutate } = useSWR("/api/providers/");
+
+  if (status === "unauthenticated") {
+    router.push("/");
+    return null;
+  }
 
   const handleChange = (event) => {
     setFormData({
@@ -89,27 +96,17 @@ export default function CreateServiceCardForm({}) {
 
       alert(
         `The Service Card is created and you can find it in the assigned subcategory: ${formData.subcategory}`
-      ); // Use alert to show a pop-up message
+      );
     } else {
       throw new Error(`Error: ${response.statusText}`);
     }
   };
-  if (status !== "authenticated") {
-    return (
-      <>
-        <Link href="/">
-          <Headline>&larr; Back to Categories</Headline>
-        </Link>
-        <p>Access denied without login</p>
-      </>
-    );
-  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       await handleAddServiceCards(formData);
-      setFormData(initialFormData); // reset form data
+      setFormData(initialFormData);
     } catch (error) {
       console.error("Error:", error.message);
     }

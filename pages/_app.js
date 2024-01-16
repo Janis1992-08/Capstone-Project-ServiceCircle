@@ -83,7 +83,7 @@ export default function MyApp({ Component, pageProps }) {
             favorites={favorites}
             onToggleFavorite={handleToggleFavorite}
           />
-          <SwitchLabel onClick={toggleTheme}>
+          <SwitchLabel>
             {theme === "light" ? <FiSun /> : <FiMoon />}
             <SwitchInput
               type="checkbox"

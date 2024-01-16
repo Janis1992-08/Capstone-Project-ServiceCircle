@@ -25,9 +25,6 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
   const { mutate } = useSWR("/api/providers");
   const { data: session, status } = useSession();
   async function handleEditServiceCard() {
-    if (status !== "authenticated" || session.user.email !== card.author) {
-      return <h1>Access denied</h1>;
-    }
     try {
       const url = `/api/providers/${card._id}`;
       const response = await fetch(url, {
@@ -57,10 +54,6 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
     const updatedData = await handleEditServiceCard();
     setEditedCard(updatedData);
   };
-
-  if (status !== "authenticated") {
-    return <h1>Access denied</h1>;
-  }
 
   if (!editedCard) {
     return <div>Loading...</div>;
