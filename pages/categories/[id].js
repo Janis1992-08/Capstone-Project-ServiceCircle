@@ -7,6 +7,7 @@ import ServiceProvider from "@/components/ServiceProvider/index.js";
 import FavoriteButton from "@/components/FavoriteButton/index.js";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
+import Map from "@/components/Map/index.js";
 
 const Header = styled.header`
   padding: 20px;
@@ -137,6 +138,8 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
         </FilterControls>
       </Header>
 
+      <Map />
+      
       <main>
         <CardWrapper>
 
