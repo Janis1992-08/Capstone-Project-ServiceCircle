@@ -18,7 +18,8 @@ export default async function handler(request, response) {
 
   if (request.method === "PUT") {
     try {
-      const { updatedProvider, rating, userId } = request.body;
+      const updatedProvider = request.body;
+      const { rating, userId } = request.body;
       const provider = await Provider.findByIdAndUpdate(id, updatedProvider, {
         useFindAndModify: false,
         new: true,
