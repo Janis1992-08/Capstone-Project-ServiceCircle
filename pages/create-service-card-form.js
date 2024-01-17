@@ -60,6 +60,9 @@ const initialFormData = {
   needs: "",
   email: "",
   phone: "",
+  city: "",
+  district: "",
+  postalCode: "",
   category: "",
   subcategory: "",
 };
@@ -75,14 +78,14 @@ export default function CreateServiceCardForm({}) {
     router.push("/");
     return null;
   }
-
+  console.log(status);
   const handleChange = (event) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
   };
-
+console.log(initialFormData);
   const handleAddServiceCards = async (formData) => {
     const response = await fetch("/api/providers/", {
       method: "POST",
