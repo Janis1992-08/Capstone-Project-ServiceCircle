@@ -18,14 +18,20 @@ export default async function handler(request, response) {
 
   if (request.method === "PUT") {
     try {
-      const updatedProvider = request.body;
-      await Provider.findByIdAndUpdate(id, updatedProvider, {
+      const { updatedProvider, rating, userId } = request.body;
+      const provider = await Provider.findByIdAndUpdate(id, updatedProvider, {
         useFindAndModify: false,
+        new: true,
       });
+
+      if (rating && userId) {
+        provider.ratings.push({ userId, rating });
+        await provider.save();
+      }
 
       response.status(200).json({ status: `Provider successfully updated.` });
     } catch (error) {
-      console.error("Error updating provider:", error);
+      console.error("Error updating card:", error);
       response.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -43,11 +49,10 @@ export default async function handler(request, response) {
   }
   if (request.method === "POST") {
     try {
-      const { review, rating } = request.body;
+      const { review } = request.body;
       const provider = await Provider.findById(id);
 
       provider.reviews.push(review);
-      provider.rating.push(rating);
 
       await provider.save();
       response.status(201).json({ status: "Review added successfully." });
