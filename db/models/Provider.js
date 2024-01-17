@@ -28,9 +28,18 @@ const providerSchema = new Schema({
     type: String,
     required: true,
   },
-  rating: {
-    type: [Number],
-  },
+  ratings: [
+    {
+      userId: {
+        type: String,
+        required: true,
+      },
+      rating: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
   reviews: {
     type: [String],
   },

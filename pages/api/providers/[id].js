@@ -8,7 +8,7 @@ export default async function handler(request, response) {
 
   if (request.method === "GET") {
     try {
-      const providers = await Provider.findById(id).populate("reviews");
+      const providers = await Provider.findById(id).populate("rating.userId");
       console.log("providers", providers);
       response.status(200).json(providers);
     } catch (error) {
@@ -19,14 +19,20 @@ export default async function handler(request, response) {
 
   if (request.method === "PUT") {
     try {
-      const updatedProvider = request.body;
-      await Provider.findByIdAndUpdate(id, updatedProvider, {
+      const { updatedProvider, rating, userId } = request.body;
+      const provider = await Provider.findByIdAndUpdate(id, updatedProvider, {
         useFindAndModify: false,
+        new: true,
       });
+
+      if (rating && userId) {
+        provider.ratings.push({ userId, rating });
+        await provider.save();
+      }
 
       response.status(200).json({ status: `Provider successfully updated.` });
     } catch (error) {
-      console.error("Error updating provider:", error);
+      console.error("Error updating card:", error);
       response.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -44,16 +50,34 @@ export default async function handler(request, response) {
   }
   if (request.method === "POST") {
     try {
-      const { review, rating } = request.body;
+      const { review, rating, userId } = request.body;
+
+      // Validate request body
+      if (!review || !rating || !userId) {
+        return response
+          .status(400)
+          .json({ error: "Missing review, rating, or userId in request body" });
+      }
+
       const provider = await Provider.findById(id);
 
+      // Check if provider exists
+      if (!provider) {
+        return response.status(404).json({ error: "Provider not found" });
+      }
+
+      if (rating && userId) {
+        provider.ratings.push({ userId, rating });
+      }
+
       provider.reviews.push(review);
-      provider.rating.push(rating);
 
       await provider.save();
-      response.status(201).json({ status: "Review added successfully." });
+      response
+        .status(201)
+        .json({ status: "Review and rating added successfully." });
     } catch (error) {
-      console.error("Error adding review:", error);
+      console.error("Error adding review and rating:", error);
       response.status(500).json({ error: "Internal Server Error" });
     }
   }
