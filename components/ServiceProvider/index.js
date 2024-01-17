@@ -180,10 +180,10 @@ export default function ServiceProvider({
             <strong>Needs:</strong> {card.needs}
           </h2>
           <h2>
-            <strong>city:</strong> {card.city}
+            <strong>City:</strong> {card.city}
           </h2>
           <h2>
-            <strong>district:</strong> {card.district}
+            <strong>District:</strong> {card.district}
           </h2>
 
           {showContactInfo && (

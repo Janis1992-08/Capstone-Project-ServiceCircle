@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import ServiceProvider from "@/components/ServiceProvider/index.js";
 import FavoriteButton from "@/components/FavoriteButton/index.js";
-import  MapComponent  from "@/components/Map/index.js";
+import Map from "@/components/Map/index.js";
+
 
 const Header = styled.header`
   background-color: #f0f0f0;
@@ -83,32 +84,26 @@ const FilterLabel = styled.label`
       setFilterValue("");
     };
   
-    const filteredServiceCards = serviceCards.filter(
-      (card) => {
-        const matchesCategory = card.subcategory === foundSubcategory.name;
-        const matchesCity = card.city ? card.city.toLowerCase().includes(filterCity.toLowerCase()) : false;
-        const matchesDistrict = card.district ? card.district.toLowerCase().includes(filterDistrict.toLowerCase()) : false;
-  
-        if (filterType === "all") {
-          return matchesCategory && 
-                 (matchesCity || filterCity === "") && 
-                 (matchesDistrict || filterDistrict === "") &&
-                 (card.skills.toLowerCase().includes(filterValue.toLowerCase()) ||
-                  card.needs.toLowerCase().includes(filterValue.toLowerCase()));
-        }
-  
-        if (filterType === "city" || filterType === "district") {
-          return matchesCategory &&
-                 (filterType === "city" ? matchesCity : matchesDistrict);
-        }
-  
+    const filteredServiceCards = serviceCards.filter((card) => {
+      const matchesCategory = card.subcategory === foundSubcategory.name;
+      const matchesCity = filterCity === "" || card.city?.toLowerCase().includes(filterCity.toLowerCase());
+      const matchesDistrict = filterDistrict === "" || card.district?.toLowerCase().includes(filterDistrict.toLowerCase());
+    
+      if (filterType === "all") {
         return matchesCategory &&
-               card[filterType].toLowerCase().includes(filterValue.toLowerCase());
+               matchesCity &&
+               matchesDistrict &&
+               (filterValue === "" || 
+                card.skills.toLowerCase().includes(filterValue.toLowerCase()) ||
+                card.needs.toLowerCase().includes(filterValue.toLowerCase()) ||
+                card.city.toLowerCase().includes(filterValue.toLowerCase()) ||
+                card.district.toLowerCase().includes(filterValue.toLowerCase()));
       }
-    );
-  
-    const locationsFromFilteredUsers = filteredServiceCards.map(card => {
-      return { lat: card.latitude,lng: card.longitude }; });
+    
+      return matchesCategory && 
+             (filterType === "city" ? matchesCity : matchesDistrict) &&
+             card[filterType]?.toLowerCase().includes(filterValue.toLowerCase());
+    });
 
   return (
     <>
@@ -145,7 +140,7 @@ const FilterLabel = styled.label`
         </FilterControls>
       </Header>
 
-      <MapComponent locations={locationsFromFilteredUsers} />
+      <Map/>
       <main>
   <CardWrapper>
     {filteredServiceCards.map((card) => (
