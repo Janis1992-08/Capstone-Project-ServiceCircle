@@ -19,7 +19,7 @@ export default async function handler(request, response) {
   if (request.method === "PUT") {
     try {
       const updatedProvider = request.body;
-      const { rating, userId } = request.body;
+      const { rating, userId, review } = request.body;
       const provider = await Provider.findByIdAndUpdate(id, updatedProvider, {
         useFindAndModify: false,
         new: true,
@@ -27,6 +27,13 @@ export default async function handler(request, response) {
 
       if (rating && userId) {
         provider.ratings.push({ userId, rating });
+      }
+
+      if (review && userId) {
+        provider.reviews.push({ userId, review });
+      }
+
+      if ((rating && userId) || (review && userId)) {
         await provider.save();
       }
 
@@ -45,20 +52,6 @@ export default async function handler(request, response) {
         .json({ status: `Provider ${id} successfully deleted.` });
     } catch (error) {
       console.error("Error deleting provider:", error);
-      response.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-  if (request.method === "POST") {
-    try {
-      const { review } = request.body;
-      const provider = await Provider.findById(id);
-
-      provider.reviews.push(review);
-
-      await provider.save();
-      response.status(201).json({ status: "Review added successfully." });
-    } catch (error) {
-      console.error("Error adding review:", error);
       response.status(500).json({ error: "Internal Server Error" });
     }
   }

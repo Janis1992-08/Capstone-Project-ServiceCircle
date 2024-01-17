@@ -40,9 +40,18 @@ const providerSchema = new Schema({
       },
     },
   ],
-  reviews: {
-    type: [String],
-  },
+  reviews: [
+    {
+      userId: {
+        type: String,
+        required: true,
+      },
+      review: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   category: {
     type: String,
     required: true,
