@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import ServiceProvider from "@/components/ServiceProvider/index.js";
 import FavoriteButton from "@/components/FavoriteButton/index.js";
+import  MapComponent  from "@/components/Map/index.js";
 
 const Header = styled.header`
   background-color: #f0f0f0;
@@ -59,41 +60,55 @@ const FilterLabel = styled.label`
   color: black;
 `;
 
-const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFavorite, handleEditServiceCard }) => {
 
-  const [filterType, setFilterType] = useState("all");
-  const [filterValue, setFilterValue] = useState("");
-  const router = useRouter();
-  const { id } = router.query;
-
-  const foundSubcategory = categories
-    .flatMap((category) => category.subcategories)
-    .find((sub) => sub.id === id);
-
-  if (!foundSubcategory) {
-    return <div>Unterkategorie nicht gefunden</div>;
-  }
-
-  const handleFilterTypeChange = (newFilterType) => {
-    setFilterType(newFilterType);
-    setFilterValue("");
-  };
-
-  const filteredServiceCards = serviceCards.filter(
-    (card) => card.subcategory === foundSubcategory.name
-  );
-
-  const filteredProviders = filteredServiceCards.filter((provider) => {
-    if (filterType === "all") {
-      return (
-        provider.skills.toLowerCase().includes(filterValue.toLowerCase()) ||
-        provider.needs.toLowerCase().includes(filterValue.toLowerCase())
-      );
+  const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFavorite, handleEditServiceCard }) => {
+    const [filterType, setFilterType] = useState("all");
+    const [filterValue, setFilterValue] = useState("");
+    const [filterCity, setFilterCity] = useState("");
+    const [filterDistrict, setFilterDistrict] = useState("");
+  
+    const router = useRouter();
+    const { id } = router.query;
+  
+    const foundSubcategory = categories
+      .flatMap((category) => category.subcategories)
+      .find((sub) => sub.id === id);
+  
+    if (!foundSubcategory) {
+      return <div>Unterkategorie nicht gefunden</div>;
     }
-    return provider[filterType]
-      .toLowerCase()
-      .includes(filterValue.toLowerCase());
-  });
+  
+    const handleFilterTypeChange = (newFilterType) => {
+      setFilterType(newFilterType);
+      setFilterValue("");
+    };
+  
+    const filteredServiceCards = serviceCards.filter(
+      (card) => {
+        const matchesCategory = card.subcategory === foundSubcategory.name;
+        const matchesCity = card.city ? card.city.toLowerCase().includes(filterCity.toLowerCase()) : false;
+        const matchesDistrict = card.district ? card.district.toLowerCase().includes(filterDistrict.toLowerCase()) : false;
+  
+        if (filterType === "all") {
+          return matchesCategory && 
+                 (matchesCity || filterCity === "") && 
+                 (matchesDistrict || filterDistrict === "") &&
+                 (card.skills.toLowerCase().includes(filterValue.toLowerCase()) ||
+                  card.needs.toLowerCase().includes(filterValue.toLowerCase()));
+        }
+  
+        if (filterType === "city" || filterType === "district") {
+          return matchesCategory &&
+                 (filterType === "city" ? matchesCity : matchesDistrict);
+        }
+  
+        return matchesCategory &&
+               card[filterType].toLowerCase().includes(filterValue.toLowerCase());
+      }
+    );
+  
+    const locationsFromFilteredUsers = filteredServiceCards.map(card => {
+      return { lat: card.latitude,lng: card.longitude }; });
 
   return (
     <>
@@ -113,13 +128,15 @@ const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFav
               <option value="all"> All</option>
               <option value="skills"> Skills</option>
               <option value="needs"> Needs</option>
+              <option value="city"> City</option>
+              <option value="district"> District</option>
             </select>
           </FilterLabel>
           <input
             type="text"
             placeholder={`Enter ${
               filterType === "all"
-                ? "skills or needs"
+                ? "skills or needs or city or district"
                 : filterType.toLowerCase()
             }...`}
             value={filterValue}
@@ -128,25 +145,26 @@ const SubcategoryPage = ({ serviceCards, setServiceCards, favorites, onToggleFav
         </FilterControls>
       </Header>
 
+      <MapComponent locations={locationsFromFilteredUsers} />
       <main>
-        <CardWrapper>
-          {filteredProviders.map((card) => (
-            <Card key={card.id}>
-              <FavoriteButton
-                onClick={() => onToggleFavorite(card.id)}
-                isFavorite={favorites.includes(card.id)}
-              />
-              <ServiceProvider
-                 key={card.id}
-                 card={card}
-                 serviceCards={serviceCards}
-                 setServiceCards={setServiceCards}
-                 handleEditServiceCard={handleEditServiceCard}
-              />
-            </Card>
-          ))}
-        </CardWrapper>
-      </main>
+  <CardWrapper>
+    {filteredServiceCards.map((card) => (
+      <Card key={card.id}>
+        <FavoriteButton
+          onClick={() => onToggleFavorite(card.id)}
+          isFavorite={favorites.includes(card.id)}
+        />
+        <ServiceProvider
+           key={card.id}
+           card={card}
+           serviceCards={serviceCards}
+           setServiceCards={setServiceCards}
+           handleEditServiceCard={handleEditServiceCard}
+        />
+      </Card>
+    ))}
+  </CardWrapper>
+</main>
     </>
   );
 };

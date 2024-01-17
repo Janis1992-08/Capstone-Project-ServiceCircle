@@ -120,6 +120,28 @@ export default function ServiceProvider({
               setEditedCard({ ...editedCard, needs: event.target.value })
             }
           />
+          <label htmlFor="city">City: </label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            required
+            value={editedCard.city}
+            onChange={(event) =>
+              setEditedCard({ ...editedCard, city: event.target.value })
+            }
+          />
+          <label htmlFor="district">District: </label>
+          <input
+            type="text"
+            id="district"
+            name="district"
+            required
+            value={editedCard.district}
+            onChange={(event) =>
+              setEditedCard({ ...editedCard, district: event.target.value })
+            }
+          />
           <label htmlFor="email">email: </label>
           <input
             type="email"
@@ -156,6 +178,12 @@ export default function ServiceProvider({
           </h2>
           <h2>
             <strong>Needs:</strong> {card.needs}
+          </h2>
+          <h2>
+            <strong>city:</strong> {card.city}
+          </h2>
+          <h2>
+            <strong>district:</strong> {card.district}
           </h2>
 
           {showContactInfo && (

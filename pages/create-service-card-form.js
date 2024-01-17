@@ -54,6 +54,8 @@ export default function CreateServiceCardForm({ handleAddServiceCards }) {
     lastName: "",
     skills: "",
     needs: "",
+    city: "",
+    district: "",
     email: "",
     phone: "",
     category: "",
@@ -124,6 +126,26 @@ export default function CreateServiceCardForm({ handleAddServiceCards }) {
           id="needs"
           name="needs"
           value={formData.needs}
+          onChange={(event) => handleChange(event)}
+          required
+        />
+
+        <label htmlFor="city">City: </label>
+        <InputField
+          type="text"
+          id="city"
+          name="city"
+          value={formData.city}
+          onChange={(event) => handleChange(event)}
+          required
+        />
+
+<label htmlFor="district">District: </label>
+        <InputField
+          type="text"
+          id="district"
+          name="district"
+          value={formData.district}
           onChange={(event) => handleChange(event)}
           required
         />
