@@ -3,6 +3,8 @@ import { categories } from "@/lib/data";
 import Link from "next/link";
 import { useState } from "react";
 import useSWR from "swr";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -64,8 +66,15 @@ const initialFormData = {
 
 export default function CreateServiceCardForm({}) {
   const [formData, setFormData] = useState(initialFormData);
+  const router = useRouter();
+  const { data: session, status } = useSession();
 
   const { mutate } = useSWR("/api/providers/");
+
+  if (status === "unauthenticated") {
+    router.push("/");
+    return null;
+  }
 
   const handleChange = (event) => {
     setFormData({
@@ -97,7 +106,7 @@ export default function CreateServiceCardForm({}) {
     event.preventDefault();
     try {
       await handleAddServiceCards(formData);
-      setFormData(initialFormData); // reset form data
+      setFormData(initialFormData);
     } catch (error) {
       console.error("Error:", error.message);
     }

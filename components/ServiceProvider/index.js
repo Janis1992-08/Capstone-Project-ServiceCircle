@@ -4,6 +4,8 @@ import useSWR from "swr";
 import ReviewForm from "@/components/ReviewForm";
 import EditForm from "@/components/EditForm";
 import StarRating from "../StarRating";
+import { useSession } from "next-auth/react";
+import AverageRating from "../AverageRating";
 
 const ServiceProviderWrapper = styled.div`
   display: flex;
@@ -67,11 +69,19 @@ const ShowContactButton = styled.button`
   margin: 10px;
 `;
 
+const OwnerMessage = styled.p`
+  color: red;
+  position: relative;
+  margin-top: 0px;
+  background-color: #f0f0f0;
+`;
+
 export default function ServiceProvider({ card, isOnFavoritesPage }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [showReviews, setShowReviews] = useState(false);
+  const { data: session } = useSession();
 
   const { mutate } = useSWR("/api/providers");
 
@@ -120,6 +130,9 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
 
   return (
     <ServiceProviderWrapper key={card._id}>
+      {session && session.user.email === card.author && (
+        <OwnerMessage>This is your service card.</OwnerMessage>
+      )}
       {editedCard?._id === card._id ? (
         <EditForm
           editedCard={editedCard}
@@ -147,22 +160,34 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
               </p>
             </div>
           )}
-          <ShowContactButton type="button" onClick={toggleContactInfo}>
-            {showContactInfo ? "Hide Contact" : "Show Contact"}
-          </ShowContactButton>
+
+
+           {session ? (
+            <ShowContactButton type="button" onClick={toggleContactInfo}>
+              {showContactInfo ? "Hide Contact" : "Show Contact"}
+            </ShowContactButton>
+          ) : (
+            <p>Please log in to see the contact information.</p>
+          )}
             <hr></hr>
             <details>
               <summary>Give me a Review</summary> 
-          <ReviewButton onClick={toggleReviewForm}>
-            {showReviewForm ? "Hide Review Form" : "Add Review"}
-          </ReviewButton>
+          {session && session.user.email !== card.author && (
+            <ReviewButton onClick={toggleReviewForm}>
+              {showReviewForm ? "Hide Review Form" : "Add Review"}
+            </ReviewButton>
+          )}
 
-          {showReviewForm && <ReviewForm card={card} />}
+
+          {showReviewForm && session.user.email !== card.author && (
+            <ReviewForm card={card} />
+          )}
 
           <ShowReviewButton onClick={toggleReviews}>
             {showReviews ? "Hide Reviews" : "Show Reviews"}
           </ShowReviewButton>
           </details>
+
           {showReviews && card.reviews && (
             <article>
               <h2>Reviews:</h2>
@@ -171,14 +196,24 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
               ))}
             </article>
           )}
+
              <hr></hr>
+ {session && session.user.email !== card.author && (
+           <>
           <details>
             <summary>Give me a Rating</summary>
             <p>You are welcome to rate my service here. Thank you very much!</p> 
             <StarRating card={card} />
           </details>
+            </>
+            )}
+
+     <p>Average Rating:</p>
+          <AverageRating card={card} />
+
+
           <hr></hr>  
-          {!isOnFavoritesPage && (
+           {session && session.user.email === card.author && (
             <EditDeleteWrapper>
               <EditButton type="button" onClick={handleOpenEditForm}>
                 Edit

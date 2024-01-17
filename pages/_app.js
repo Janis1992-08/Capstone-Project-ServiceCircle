@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { FiSun, FiMoon } from "react-icons/fi";
 import { lightTheme, darkTheme } from "../styles";
+import { SessionProvider } from "next-auth/react";
+import Login from "@/components/Login";
 
 const fetcher = (url) => fetch(url).then((response) => response.json());
 
@@ -73,23 +75,27 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
-      <SWRConfig value={{ fetcher }}>
-        <Component
-          {...pageProps}
-          toggleTheme={toggleTheme}
-          theme={theme}
-          favorites={favorites}
-          onToggleFavorite={handleToggleFavorite}
-        />
-        <SwitchLabel onClick={toggleTheme}>
-          {theme === "light" ? <FiSun /> : <FiMoon />}
-          <SwitchInput
-            type="checkbox"
-            checked={theme === "dark"}
-            onChange={toggleTheme}
+
+      <SessionProvider session={pageProps.session}>
+        <SWRConfig value={{ fetcher }}>
+          <Login />
+          <Component
+            {...pageProps}
+            toggleTheme={toggleTheme}
+            theme={theme}
+            favorites={favorites}
+            onToggleFavorite={handleToggleFavorite}
           />
-        </SwitchLabel>
-      </SWRConfig>
+          <SwitchLabel>
+            {theme === "light" ? <FiSun /> : <FiMoon />}
+            <SwitchInput
+              type="checkbox"
+              checked={theme === "dark"}
+              onChange={toggleTheme}
+            />
+          </SwitchLabel>
+        </SWRConfig>
+      </SessionProvider>
     </ThemeProvider>
   );
 }

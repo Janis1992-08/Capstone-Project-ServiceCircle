@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import styled from "styled-components";
+import { useSession } from "next-auth/react";
 
 const ServiceButton = styled.button`
   background-color: #3498db;
@@ -20,11 +21,12 @@ const InputField = styled.input`
   overflow: hidden;
 `;
 
-export default function EditForm({ editedCard, setEditedCard, card: { _id } }) {
+export default function EditForm({ editedCard, setEditedCard, card }) {
   const { mutate } = useSWR("/api/providers");
+  const { data: session, status } = useSession();
   async function handleEditServiceCard() {
     try {
-      const url = `/api/providers/${_id}`;
+      const url = `/api/providers/${card._id}`;
       const response = await fetch(url, {
         method: "PUT",
         headers: {

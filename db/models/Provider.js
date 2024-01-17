@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const providerSchema = new Schema({
+  author: String,
   firstName: {
     type: String,
     required: true,
@@ -28,7 +29,7 @@ const providerSchema = new Schema({
     required: true,
   },
   rating: {
-    type: Number,
+    type: [Number],
   },
   reviews: {
     type: [String],

@@ -6,6 +6,7 @@ import { useState } from "react";
 import ServiceProvider from "@/components/ServiceProvider/index.js";
 import FavoriteButton from "@/components/FavoriteButton/index.js";
 import useSWR from "swr";
+import { useSession } from "next-auth/react";
 
 const Header = styled.header`
   padding: 20px;
@@ -70,6 +71,7 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
   const { id } = router.query;
   const { isReady } = router;
   const { data } = useSWR("/api/providers", fetcher);
+  const { data: session } = useSession();
 
   if (!data || !isReady) return <div>Loading...</div>;
 
@@ -137,19 +139,28 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
 
       <main>
         <CardWrapper>
-          {filteredProviders.length > 0 ? (
+
+          
+       {filteredProviders.length > 0 ? (
             filteredProviders.map((provider) => (
               <Card key={provider._id}>
+              {session && (
+
                 <FavoriteButton
                   onClick={() => onToggleFavorite(provider._id)}
                   isFavorite={favorites.includes(provider._id)}
                 />
+
+              )}
+
+
                 <ServiceProvider key={provider._id} card={provider} />
               </Card>
             ))
           ) : (
             <div>No cards to display</div>
           )}
+
         </CardWrapper>
       </main>
     </>

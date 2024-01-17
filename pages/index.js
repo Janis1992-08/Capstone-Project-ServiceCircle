@@ -4,6 +4,7 @@ import { categories } from "@/lib/data";
 import styled from "styled-components";
 import Image from "next/image";
 import diversImage from "../public/assets/images/divers.jpg";
+import { useSession } from "next-auth/react";
 
 const HeaderContainer = styled.div`
   text-align: center;
@@ -87,6 +88,7 @@ const StyledLink = styled(Link)`
 
 const Homepage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const { data: session } = useSession();
 
   const handleCategoryClick = (categoryId) => {
     setSelectedCategory((prevSelectedCategory) =>
@@ -96,12 +98,16 @@ const Homepage = () => {
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
+
+
+
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />   
       <HeaderContainer>
         <HeaderTitle>Service Circle</HeaderTitle>
         <HeaderImage src={diversImage} alt="a group of people with divers professions" width={1000} height={400} />
         <HeaderTitle>Find your perfect Service-Match</HeaderTitle>
       </HeaderContainer>
+
       <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
         {categories.map((category) => (
           <li key={category.id} style={{ marginBottom: "10px" }}>
@@ -136,12 +142,18 @@ const Homepage = () => {
         ))}
       </ul>
 
+
+{session && (
+        <>
       <StyledLink href="/create-service-card-form">
         <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
       </StyledLink>
       <StyledLink href="/favorites">
         <ShowFavorites>Show my Favorites</ShowFavorites>
       </StyledLink>
+       </>
+      )}
+
     </div>
   );
 };
