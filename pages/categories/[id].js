@@ -9,6 +9,20 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import Map from "@/components/Map/index.js";
 
+const StyledInput = styled.input`
+  width: 20%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+
+  &:focus {
+    border-color: #007bff;
+  }
+`;
+
 const Header = styled.header`
   padding: 20px;
   text-align: center;
@@ -62,7 +76,7 @@ const FilterControls = styled.div`
 `;
 
 const FilterLabel = styled.label`
-  margin-right: 10px;
+  margin: 10px;
 `;
 
 const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
@@ -96,11 +110,13 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
   const filteredProviders = filteredServiceCards.filter((provider) => {
     if (filterType === "all") {
       return (
-        provider.skills.toLowerCase().includes(filterValue.toLowerCase()) ||
-        provider.needs.toLowerCase().includes(filterValue.toLowerCase())
+        (provider.skills && provider.skills.toLowerCase().includes(filterValue.toLowerCase())) ||
+        (provider.needs && provider.needs.toLowerCase().includes(filterValue.toLowerCase())) ||
+        (provider.city && provider.city.toLowerCase().includes(filterValue.toLowerCase())) ||
+        (provider.district && provider.district.toLowerCase().includes(filterValue.toLowerCase()))
       );
     }
-    return provider[filterType]
+    return provider[filterType] && provider[filterType]
       .toLowerCase()
       .includes(filterValue.toLowerCase());
   });
@@ -116,20 +132,24 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
         <FilterControls>
           <FilterLabel>
             Filter by:
+            </FilterLabel>
+            <FilterLabel> 
             <select
               value={filterType}
               onChange={(event) => handleFilterTypeChange(event.target.value)}
             >
               <option value="all"> All</option>
-              <option value="skills"> Skills</option>
-              <option value="needs"> Needs</option>
+              <option value="skills">Skills</option>
+              <option value="needs">Needs</option>
+              <option value="city">City</option>
+              <option value="district">District</option>
             </select>
-          </FilterLabel>
-          <input
+            </FilterLabel>
+          <StyledInput
             type="text"
             placeholder={`Enter ${
               filterType === "all"
-                ? "skills or needs"
+                ? "skills, needs, city or district"
                 : filterType.toLowerCase()
             }...`}
             value={filterValue}
