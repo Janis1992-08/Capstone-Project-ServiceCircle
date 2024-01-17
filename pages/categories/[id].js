@@ -9,18 +9,22 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 
 const Header = styled.header`
-  background-color: #f0f0f0;
   padding: 20px;
   text-align: center;
-  border-bottom: 1px solid #ccc;
 `;
 
-const Headline = styled.h1`
-  color: #333;
+const Headline = styled.p`
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
   text-decoration: none;
-  font-weight: bold;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+
   &:hover {
-    opacity: 0.8;
+    background-color: #0056b3;
   }
 `;
 
@@ -58,7 +62,6 @@ const FilterControls = styled.div`
 
 const FilterLabel = styled.label`
   margin-right: 10px;
-  color: black;
 `;
 
 const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
@@ -136,18 +139,28 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
 
       <main>
         <CardWrapper>
-          {filteredProviders.map((provider) => (
-            <Card key={provider._id}>
+
+          
+       {filteredProviders.length > 0 ? (
+            filteredProviders.map((provider) => (
+              <Card key={provider._id}>
               {session && (
+
                 <FavoriteButton
                   onClick={() => onToggleFavorite(provider._id)}
                   isFavorite={favorites.includes(provider._id)}
                 />
+
               )}
 
-              <ServiceProvider key={provider._id} card={provider} />
-            </Card>
-          ))}
+
+                <ServiceProvider key={provider._id} card={provider} />
+              </Card>
+            ))
+          ) : (
+            <div>No cards to display</div>
+          )}
+
         </CardWrapper>
       </main>
     </>

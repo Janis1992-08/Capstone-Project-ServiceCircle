@@ -7,18 +7,22 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 const Header = styled.header`
-  background-color: #f0f0f0;
   padding: 20px;
   text-align: center;
-  border-bottom: 1px solid #ccc;
 `;
 
-const Headline = styled.h1`
-  color: #333;
+const Headline = styled.p`
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
   text-decoration: none;
-  font-weight: bold;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+
   &:hover {
-    opacity: 0.8;
+    background-color: #0056b3;
   }
 `;
 
@@ -77,19 +81,23 @@ const FavoritesPage = ({ favorites, onToggleFavorite }) => {
 
       <main>
         <CardWrapper>
-          {favoriteCards.map((card) => (
-            <Card key={card._id}>
-              <FavoriteButton
-                onClick={() => onToggleFavorite(card._id)}
-                isFavorite={favorites.includes(card._id)}
-              />
-              <ServiceProvider
-                key={card._id}
-                card={card}
-                isOnFavoritesPage={true}
-              />
-            </Card>
-          ))}
+          {favoriteCards.length > 0 ? (
+            favoriteCards.map((card) => (
+              <Card key={card._id}>
+                <FavoriteButton
+                  onClick={() => onToggleFavorite(card._id)}
+                  isFavorite={favorites.includes(card._id)}
+                />
+                <ServiceProvider
+                  key={card._id}
+                  card={card}
+                  isOnFavoritesPage={true}
+                />
+              </Card>
+            ))
+          ) : (
+            <div>No favorite cards to display</div>
+          )}
         </CardWrapper>
       </main>
     </>

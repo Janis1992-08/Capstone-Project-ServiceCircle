@@ -61,7 +61,7 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
 
   return (
     <form onSubmit={handleSave}>
-      <label htmlFor="firstName">First Name:</label>
+      <label htmlFor="firstName" className="edit-labels">First Name:</label>
       <InputField
         type="text"
         id="firstName"
@@ -72,7 +72,7 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
         }
       />
 
-      <label htmlFor="lastName">Last Name:</label>
+      <label htmlFor="lastName" className="edit-labels">Last Name:</label>
       <InputField
         type="text"
         id="lastName"
@@ -83,7 +83,7 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
         }
       />
 
-      <label htmlFor="skills">Skills:</label>
+      <label htmlFor="skills" className="edit-labels">Skills:</label>
       <InputField
         type="text"
         id="skills"
@@ -94,7 +94,7 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
         }
       />
 
-      <label htmlFor="needs">Needs:</label>
+      <label htmlFor="needs" className="edit-labels">Needs:</label>
       <InputField
         type="text"
         id="needs"
@@ -105,7 +105,7 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
         }
       />
 
-      <label htmlFor="email">Email:</label>
+      <label htmlFor="email" className="edit-labels">Email:</label>
       <InputField
         type="email"
         id="email"
@@ -116,7 +116,7 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
         }
       />
 
-      <label htmlFor="phone">Phone:</label>
+      <label htmlFor="phone" className="edit-labels">Phone:</label>
       <InputField
         type="tel"
         id="phone"

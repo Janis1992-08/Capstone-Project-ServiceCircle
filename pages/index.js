@@ -6,20 +6,19 @@ import Image from "next/image";
 import diversImage from "../public/assets/images/divers.jpg";
 import { useSession } from "next-auth/react";
 
-const HeaderWrapper = styled.div`
-  position: relative;
+const HeaderContainer = styled.div`
   text-align: center;
-  margin-bottom: 40px;
-  color: black;
+  margin-top: 5px;
 `;
 
 const HeaderImage = styled(Image)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
+  margin-top: 5px;
+  object-fit: cover;
+  height: 150px;
+`;
+
+const HeaderTitle = styled.h1`
+  margin-top: 5px;
 `;
 
 const buttonStyle = {
@@ -72,7 +71,7 @@ const ShowFavorites = styled.div`
   margin: 20px auto;
   padding: 15px 30px;
   border-radius: 25px;
-  background-color: gray;
+  background-color: darkgreen;
   color: white;
   border: none;
   cursor: pointer;
@@ -81,11 +80,10 @@ const ShowFavorites = styled.div`
   outline: none;
   width: 60%;
   transition: background-color 0.3s ease;
+`;
 
-  &:hover {
-    background-color: green;
-    text-decoration: none;
-  }
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const Homepage = () => {
@@ -100,19 +98,15 @@ const Homepage = () => {
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
-      <HeaderWrapper>
-        <HeaderImage
-          src={diversImage}
-          alt="divers group of people"
-          layout="fill"
-          objectFit="cover"
-        />
-        <h1>Service Circle</h1>
 
-        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-          Find your perfect Service-Match
-        </h1>
-      </HeaderWrapper>
+
+
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />   
+      <HeaderContainer>
+        <HeaderTitle>Service Circle</HeaderTitle>
+        <HeaderImage src={diversImage} alt="a group of people with divers professions" width={1000} height={400} />
+        <HeaderTitle>Find your perfect Service-Match</HeaderTitle>
+      </HeaderContainer>
 
       <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
         {categories.map((category) => (
@@ -137,9 +131,9 @@ const Homepage = () => {
               >
                 {category.subcategories.map((subcategory) => (
                   <li key={subcategory.id} style={subcategoryStyle}>
-                    <Link href={`/categories/${subcategory.id}`}>
+                    <StyledLink href={`/categories/${subcategory.id}`}>
                       {subcategory.name}
-                    </Link>{" "}
+                    </StyledLink>{" "}
                   </li>
                 ))}
               </ul>
@@ -148,17 +142,18 @@ const Homepage = () => {
         ))}
       </ul>
 
-      {session && (
-        <>
-          <Link href="/create-service-card-form">
-            <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
-          </Link>
 
-          <Link href="/favorites">
-            <ShowFavorites>Show my Favorites</ShowFavorites>
-          </Link>
-        </>
+{session && (
+        <>
+      <StyledLink href="/create-service-card-form">
+        <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
+      </StyledLink>
+      <StyledLink href="/favorites">
+        <ShowFavorites>Show my Favorites</ShowFavorites>
+      </StyledLink>
+       </>
       )}
+
     </div>
   );
 };

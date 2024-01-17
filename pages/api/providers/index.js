@@ -20,6 +20,7 @@ export default async function handler(request, response) {
         });
         await newProvider.save();
 
+
         response.status(201).json({ status: "Provider created" });
       } else {
         response.status(401).json({ status: "Not authorized" });

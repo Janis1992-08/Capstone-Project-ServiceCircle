@@ -9,7 +9,6 @@ export default async function handler(request, response) {
   if (request.method === "GET") {
     try {
       const providers = await Provider.findById(id).populate("reviews");
-      console.log("providers", providers);
       response.status(200).json(providers);
     } catch (error) {
       console.error("Error fetching providers:", error);
