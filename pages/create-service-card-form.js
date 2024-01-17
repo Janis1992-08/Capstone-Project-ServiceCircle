@@ -185,6 +185,39 @@ export default function CreateServiceCardForm({}) {
           required
         />
 
+        <label htmlFor="city">City: </label>
+        <InputField
+          type="text"
+          id="city"
+          name="city"
+          value={formData.city}
+          onChange={(event) => handleChange(event)}
+          required
+        />
+
+        <label htmlFor="district">District: </label>
+        <InputField
+          type="text"
+          id="district"
+          name="district"
+          value={formData.district}
+          onChange={(event) => handleChange(event)}
+          required
+        />
+
+        <label htmlFor="postalCode">Postal Code: </label>
+        <InputField
+          type="text"
+          id="postalCode"
+          name="postalCode"
+          value={formData.postalCode}
+          onChange={(event) => handleChange(event)}
+          minLength={4}
+          maxLength={5}
+          required
+          />
+
+
         <SelectField
           name="category"
           onChange={(event) => handleChange(event)}
