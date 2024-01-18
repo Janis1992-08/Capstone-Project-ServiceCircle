@@ -164,11 +164,12 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
             onChange={(event) => setFilterValue(event.target.value)}
           />
         </FilterControls>
-      </Header>
+        <details>
+          <summary>Show me the Map</summary>
 
-      <div style={{ height: "100vh", width: "100%" }}>
-        <DynamicMap card={filteredProviders} />
-      </div>
+          <DynamicMap />
+        </details>
+      </Header>
 
       <main>
         <CardWrapper>
