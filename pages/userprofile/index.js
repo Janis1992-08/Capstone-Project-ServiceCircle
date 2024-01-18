@@ -69,30 +69,24 @@ const Main = styled.main`
 
 const Details = styled.details`
   margin-bottom: 20px;
+`;
+const Summary = styled.summary`
+  cursor: pointer;
+  padding: 10px;
+  background-color: grey;
+  color: black;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
 
-  & > summary {
-    cursor: pointer;
-    padding: 10px;
-    background-color: grey;
-    color: black;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #0056b3;
-    }
+  &:hover {
+    background-color: #0056b3;
   }
+`;
 
-  & > h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-
-  & > div {
-    margin-top: 10px;
-    text-align: center;
-  }
+const Div = styled.div`
+  margin-top: 10px;
+  text-align: center;
 `;
 
 const UserDetail = styled.div`
@@ -116,7 +110,7 @@ const UserPage = ({ favorites, onToggleFavorite }) => {
   const { data: session, status } = useSession();
 
   if (!data || !isReady) return <div>Loading...</div>;
-  console.log(session);
+
   if (status === "unauthenticated") {
     router.push("/");
     return null;
@@ -153,33 +147,33 @@ const UserPage = ({ favorites, onToggleFavorite }) => {
           <h3>Welcome {session.user.name}</h3>
         </UserDetail>
         <Details>
-          <summary>Show my Cards</summary>
+          <Summary>Show my Cards</Summary>
           <h2>My Cards</h2>
           <CardWrapper>
             {myCards.length > 0 ? (
               myCards.map((card) => (
                 <Card key={card._id}>
-                  <ServiceProvider key={card._id} card={card} />
+                  <ServiceProvider card={card} />
                 </Card>
               ))
             ) : (
-              <div>No cards to display</div>
+              <Div>No cards to display</Div>
             )}
           </CardWrapper>
         </Details>
 
         <Details>
-          <summary>Show my Favorites</summary>
+          <Summary>Show my Favorites</Summary>
           <h2>Favorite Cards</h2>
           <CardWrapper>
-            {favoriteCards.length > 0 ? (
+            {favoriteCards.length ? (
               favoriteCards.map((card) => (
                 <Card key={card._id}>
                   <FavoriteButton
                     onClick={() => onToggleFavorite(card._id)}
                     isFavorite={favorites.includes(card._id)}
                   />
-                  <ServiceProvider key={card._id} card={card} />
+                  <ServiceProvider card={card} />
                 </Card>
               ))
             ) : (

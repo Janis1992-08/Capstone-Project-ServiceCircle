@@ -155,7 +155,7 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
                 <ServiceProvider
                   key={provider._id}
                   card={provider}
-                  isOnUserPage={true}
+                  isOnUserPage
                 />
               </Card>
             ))
