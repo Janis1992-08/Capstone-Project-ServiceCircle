@@ -166,7 +166,9 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
         </FilterControls>
       </Header>
 
-      <DynamicMap card={filteredProviders} />
+      <div style={{ height: "100vh", width: "100%" }}>
+        <DynamicMap card={filteredProviders} />
+      </div>
 
       <main>
         <CardWrapper>
