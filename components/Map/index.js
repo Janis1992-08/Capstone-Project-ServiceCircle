@@ -59,22 +59,27 @@ export default function Map() {
 
   useEffect(() => {
     if (data) {
-      const updatedLocations = [];
-
-      data.forEach(async (provider) => {
-        const { city, district, postalCode } = provider;
+      const locationPromises = data.map(async (provider) => {
+        const { city, district, postalCode, firstName } = provider;
         const location = await geocodeAddress(city, district, postalCode);
-        updatedLocations.push(location);
+        return { location, name: firstName };
       });
 
-      setLocations(updatedLocations);
+      Promise.all(locationPromises).then((updatedLocations) => {
+        setLocations(updatedLocations);
+      });
     }
 
     // Hier erlauben wir den Standortzugriff im Browser und speichern die eigenen Koordinaten
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
-      setYourLocation({ lat: latitude, lng: longitude });
-    });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setYourLocation({ lat: latitude, lng: longitude });
+      },
+      (error) => {
+        console.error("Error getting location:", error);
+      }
+    );
   }, [data]);
 
   return (
@@ -88,13 +93,13 @@ export default function Map() {
           <Popup>Ich bin hier</Popup>
         </Marker>
       )}
-      {locations.map((location, index) => (
+      {locations.map((provider, index) => (
         <Marker
           key={index}
-          position={[location.lat, location.lng]}
+          position={[provider.location.lat, provider.location.lng]}
           icon={blueIcon}
         >
-          <Popup>Standort eines Servicedienstleisters {index + 1}</Popup>
+          <Popup>Standort von {provider.name}</Popup>
         </Marker>
       ))}
     </MapContainerStyled>
