@@ -59,9 +59,10 @@ export default function Map({ data }) {
   useEffect(() => {
     if (data) {
       const locationPromises = data.map(async (provider) => {
-        const { city, district, postalCode, firstName } = provider;
+        const { city, district, postalCode, firstName, skills, needs } =
+          provider;
         const location = await geocodeAddress(city, district, postalCode);
-        return { location, name: firstName };
+        return { location, name: firstName, skills, needs };
       });
 
       Promise.all(locationPromises).then((updatedLocations) => {
@@ -98,7 +99,11 @@ export default function Map({ data }) {
           position={[provider.location.lat, provider.location.lng]}
           icon={blueIcon}
         >
-          <Popup>Standort von {provider.name}</Popup>
+          <Popup>
+            Standort von {provider.name} <br></br>Skills: {provider.skills}
+            <br></br>
+            Needs: {provider.needs}
+          </Popup>
         </Marker>
       ))}
     </MapContainerStyled>
