@@ -52,8 +52,7 @@ async function geocodeAddress(city, district, postalCode) {
   }
 }
 
-export default function Map() {
-  const { data } = useSWR("/api/providers");
+export default function Map({ data }) {
   const [locations, setLocations] = useState([]);
   const [yourLocation, setYourLocation] = useState(null); // Hier speichern wir deine eigene Position
 

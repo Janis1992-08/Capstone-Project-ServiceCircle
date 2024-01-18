@@ -167,7 +167,7 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
         <details>
           <summary>Show me the Map</summary>
 
-          <DynamicMap />
+          <DynamicMap data={filteredProviders} />
         </details>
       </Header>
 
