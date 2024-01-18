@@ -17,10 +17,14 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (
-          credentials.username === "fisch" &&
-          credentials.password === "fisch"
+          (credentials.username === "fisch" &&
+            credentials.password === "fisch") ||
+          (credentials.username === "test" && credentials.password === "test")
         ) {
-          return { name: "Neuer Fisch", email: "test@example.com" };
+          return {
+            name: credentials.username,
+            email: `${credentials.username}@example.com`,
+          };
         } else {
           return null;
         }
