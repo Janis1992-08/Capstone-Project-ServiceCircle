@@ -7,8 +7,12 @@ import ServiceProvider from "@/components/ServiceProvider/index.js";
 import FavoriteButton from "@/components/FavoriteButton/index.js";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
-import Map from "@/components/Map/index.js";
 
+import dynamic from "next/dynamic";
+
+const DynamicMap = dynamic(() => import("@/components/Map/index.js"), {
+  ssr: false,
+});
 
 const StyledInput = styled.input`
   width: 20%;
@@ -111,15 +115,20 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
   const filteredProviders = filteredServiceCards.filter((provider) => {
     if (filterType === "all") {
       return (
-        (provider.skills && provider.skills.toLowerCase().includes(filterValue.toLowerCase())) ||
-        (provider.needs && provider.needs.toLowerCase().includes(filterValue.toLowerCase())) ||
-        (provider.city && provider.city.toLowerCase().includes(filterValue.toLowerCase())) ||
-        (provider.district && provider.district.toLowerCase().includes(filterValue.toLowerCase()))
+        (provider.skills &&
+          provider.skills.toLowerCase().includes(filterValue.toLowerCase())) ||
+        (provider.needs &&
+          provider.needs.toLowerCase().includes(filterValue.toLowerCase())) ||
+        (provider.city &&
+          provider.city.toLowerCase().includes(filterValue.toLowerCase())) ||
+        (provider.district &&
+          provider.district.toLowerCase().includes(filterValue.toLowerCase()))
       );
     }
-    return provider[filterType] && provider[filterType]
-      .toLowerCase()
-      .includes(filterValue.toLowerCase());
+    return (
+      provider[filterType] &&
+      provider[filterType].toLowerCase().includes(filterValue.toLowerCase())
+    );
   });
 
   return (
@@ -131,10 +140,8 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
           </Link>
         </HeaderWrapper>
         <FilterControls>
+          <FilterLabel>Filter by:</FilterLabel>
           <FilterLabel>
-            Filter by:
-            </FilterLabel>
-            <FilterLabel> 
             <select
               value={filterType}
               onChange={(event) => handleFilterTypeChange(event.target.value)}
@@ -145,7 +152,7 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
               <option value="city">City</option>
               <option value="district">District</option>
             </select>
-            </FilterLabel>
+          </FilterLabel>
           <StyledInput
             type="text"
             placeholder={`Enter ${
@@ -159,24 +166,19 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
         </FilterControls>
       </Header>
 
-     <Map />
-      
+      <DynamicMap card={filteredProviders} />
+
       <main>
         <CardWrapper>
-
-          
-       {filteredProviders.length > 0 ? (
+          {filteredProviders.length > 0 ? (
             filteredProviders.map((provider) => (
               <Card key={provider._id}>
-              {session && (
-
-                <FavoriteButton
-                  onClick={() => onToggleFavorite(provider._id)}
-                  isFavorite={favorites.includes(provider._id)}
-                />
-
-              )}
-
+                {session && (
+                  <FavoriteButton
+                    onClick={() => onToggleFavorite(provider._id)}
+                    isFavorite={favorites.includes(provider._id)}
+                  />
+                )}
 
                 <ServiceProvider key={provider._id} card={provider} />
               </Card>
@@ -184,7 +186,6 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
           ) : (
             <div>No cards to display</div>
           )}
-
         </CardWrapper>
       </main>
     </>
