@@ -133,6 +133,7 @@ export default function ServiceProvider({ card, isOnFavoritesPage }) {
       {session && session.user.email === card.author && (
         <OwnerMessage>This is your service card.</OwnerMessage>
       )}
+      <img src={session.user.image} alt="User" />
       {editedCard?._id === card._id ? (
         <EditForm
           editedCard={editedCard}

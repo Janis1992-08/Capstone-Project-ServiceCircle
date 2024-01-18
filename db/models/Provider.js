@@ -34,6 +34,7 @@ const providerSchema = new Schema({
   reviews: {
     type: [String],
   },
+
   category: {
     type: String,
     required: true,

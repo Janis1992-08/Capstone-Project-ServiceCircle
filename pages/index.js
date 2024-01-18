@@ -98,13 +98,15 @@ const Homepage = () => {
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
-
-
-
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />   
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <HeaderContainer>
         <HeaderTitle>Service Circle</HeaderTitle>
-        <HeaderImage src={diversImage} alt="a group of people with divers professions" width={1000} height={400} />
+        <HeaderImage
+          src={diversImage}
+          alt="a group of people with divers professions"
+          width={1000}
+          height={400}
+        />
         <HeaderTitle>Find your perfect Service-Match</HeaderTitle>
       </HeaderContainer>
 
@@ -142,18 +144,16 @@ const Homepage = () => {
         ))}
       </ul>
 
-
-{session && (
+      {session && (
         <>
-      <StyledLink href="/create-service-card-form">
-        <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
-      </StyledLink>
-      <StyledLink href="/favorites">
-        <ShowFavorites>Show my Favorites</ShowFavorites>
-      </StyledLink>
-       </>
+          <StyledLink href="/create-service-card-form">
+            <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
+          </StyledLink>
+          <StyledLink href="/favorites">
+            <ShowFavorites>Show my User Page</ShowFavorites>
+          </StyledLink>
+        </>
       )}
-
     </div>
   );
 };
