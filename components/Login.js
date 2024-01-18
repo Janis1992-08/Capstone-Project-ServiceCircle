@@ -7,13 +7,15 @@ export default function Login() {
     return (
       <>
         <button onClick={() => signOut()}>Sign out</button>
+        <h5>Welcome {session.user.name}</h5>
       </>
     );
   }
   return (
     <>
-      Not signed in <br />
+      <br />
       <button onClick={() => signIn()}>Sign in</button>
+      <h5>Sign in to make a Service offer</h5>
     </>
   );
 }

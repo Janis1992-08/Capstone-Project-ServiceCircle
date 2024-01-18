@@ -5,20 +5,35 @@ import styled from "styled-components";
 import Image from "next/image";
 import diversImage from "../public/assets/images/divers.jpg";
 import { useSession } from "next-auth/react";
+import Login from "@/components/Login";
 
 const HeaderContainer = styled.div`
   text-align: center;
-  margin-top: 5px;
+  margin-top: 25px;
 `;
 
 const HeaderImage = styled(Image)`
-  margin-top: 5px;
+  margin-top: -10px;
   object-fit: cover;
   height: 150px;
+  margin-bottom: -25px;
 `;
 
 const HeaderTitle = styled.h1`
   margin-top: 5px;
+`;
+
+const LoginWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  top: -10px;
+  left: 0;
+
+  & > * {
+    margin-left: 5px;
+  }
 `;
 
 const buttonStyle = {
@@ -98,6 +113,10 @@ const Homepage = () => {
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
+      <LoginWrapper>
+        <Login />
+      </LoginWrapper>
+
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <HeaderContainer>
         <HeaderTitle>Service Circle</HeaderTitle>
@@ -107,7 +126,7 @@ const Homepage = () => {
           width={1000}
           height={400}
         />
-        <HeaderTitle>Find your perfect Service-Match</HeaderTitle>
+        <h2>Find your perfect Service-Match</h2>
       </HeaderContainer>
 
       <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
@@ -149,7 +168,7 @@ const Homepage = () => {
           <StyledLink href="/create-service-card-form">
             <ServiceOfferElement>Make a Service Offer</ServiceOfferElement>
           </StyledLink>
-          <StyledLink href="/favorites">
+          <StyledLink href="/userprofile">
             <ShowFavorites>Show my User Page</ShowFavorites>
           </StyledLink>
         </>

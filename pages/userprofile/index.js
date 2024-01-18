@@ -13,22 +13,29 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
-  padding: 20px;
-  text-align: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: flex-start;
+  border-bottom: 1px solid #ccc;
+  margin-left: -10px;
+  margin-right: -30px;
+  margin-top: -10px;
 `;
 
 const Headline = styled.p`
   display: inline-block;
-  padding: 5px 10px;
   border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
   text-decoration: none;
+  margin-left: 0;
   margin-bottom: 20px;
+  margin-top: 10px;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #0077dd;
   }
 `;
 
@@ -38,6 +45,7 @@ const CardWrapper = styled.ul`
   justify-content: center;
   gap: 20px;
   padding: 20px;
+  list-style-type: none;
 `;
 
 const Card = styled.li`
@@ -53,12 +61,6 @@ const Card = styled.li`
   &:hover {
     transform: translateY(-5px);
   }
-`;
-
-const HeaderWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 const Main = styled.main`
@@ -93,7 +95,21 @@ const Details = styled.details`
   }
 `;
 
-const FavoritesPage = ({ favorites, onToggleFavorite }) => {
+const UserDetail = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const ImageWrapper = styled.div`
+  border-radius: 50%;
+  width: 150px;
+  height: 100px;
+  overflow: hidden;
+`;
+
+const UserPage = ({ favorites, onToggleFavorite }) => {
   const router = useRouter();
   const { isReady } = router;
   const { data, mutate } = useSWR("/api/providers");
@@ -116,19 +132,15 @@ const FavoritesPage = ({ favorites, onToggleFavorite }) => {
   return (
     <Container>
       <Header>
-        <HeaderWrapper>
-          <Link href="/">
-            <Headline> &larr; Back to Categories</Headline>
-          </Link>
+        <Link href="/">
+          <Headline> &larr; Back to Categories</Headline>
+        </Link>
+      </Header>
+
+      <Main>
+        <UserDetail>
           {session.user.image && (
-            <div
-              style={{
-                borderRadius: "50%",
-                overflow: "hidden",
-                width: "150px",
-                height: "100px",
-              }}
-            >
+            <ImageWrapper>
               <Image
                 src={session.user.image}
                 alt="User profile picture"
@@ -136,12 +148,10 @@ const FavoritesPage = ({ favorites, onToggleFavorite }) => {
                 width={200}
                 height={200}
               />
-            </div>
+            </ImageWrapper>
           )}
-        </HeaderWrapper>
-      </Header>
-
-      <Main>
+          <h3>Welcome {session.user.name}</h3>
+        </UserDetail>
         <Details>
           <summary>Show my Cards</summary>
           <h2>My Cards</h2>
@@ -149,10 +159,6 @@ const FavoritesPage = ({ favorites, onToggleFavorite }) => {
             {myCards.length > 0 ? (
               myCards.map((card) => (
                 <Card key={card._id}>
-                  <FavoriteButton
-                    onClick={() => onToggleFavorite(card._id)}
-                    isFavorite={favorites.includes(card._id)}
-                  />
                   <ServiceProvider key={card._id} card={card} />
                 </Card>
               ))
@@ -186,4 +192,4 @@ const FavoritesPage = ({ favorites, onToggleFavorite }) => {
   );
 };
 
-export default FavoritesPage;
+export default UserPage;
