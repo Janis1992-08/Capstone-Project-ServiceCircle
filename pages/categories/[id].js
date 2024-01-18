@@ -9,6 +9,7 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import Map from "@/components/Map/index.js";
 
+
 const StyledInput = styled.input`
   width: 20%;
   padding: 10px;
@@ -158,7 +159,7 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
         </FilterControls>
       </Header>
 
-      <Map />
+     <Map />
       
       <main>
         <CardWrapper>

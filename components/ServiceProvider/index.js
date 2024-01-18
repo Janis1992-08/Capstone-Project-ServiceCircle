@@ -76,7 +76,7 @@ const OwnerMessage = styled.p`
   background-color: #f0f0f0;
 `;
 
-export default function ServiceProvider({ card, isOnFavoritesPage }) {
+export default function ServiceProvider({ card }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
