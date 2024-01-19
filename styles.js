@@ -2,14 +2,14 @@ import { createGlobalStyle } from "styled-components";
 
 export const lightTheme = {
   body: "#FFF",
-  //text: "#363537",
-  headerColor: "#333"
+
+  headerColor: "#333",
 };
 
 export const darkTheme = {
   body: "#363537",
-  //text: "#FAFAFA",
-  headerColor: "#FAFAFA"
+
+  headerColor: "#FAFAFA",
 };
 
 export default createGlobalStyle`
@@ -25,7 +25,7 @@ export default createGlobalStyle`
     color: ${(props) => props.theme.text};
   
   }
-  h1, label {
+  h1, h3, label {
     color: ${(props) => props.theme.headerColor};
   }
   .star-rating {

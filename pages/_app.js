@@ -7,12 +7,11 @@ import { ThemeProvider } from "styled-components";
 import { FiSun, FiMoon } from "react-icons/fi";
 import { lightTheme, darkTheme } from "../styles";
 import { SessionProvider } from "next-auth/react";
-import Login from "@/components/Login";
 
 const fetcher = (url) => fetch(url).then((response) => response.json());
 
 const SwitchLabel = styled.label`
-  position: fixed;
+  position: absolute;
   top: 10px;
   right: 10px;
   display: flex;
@@ -22,10 +21,11 @@ const SwitchLabel = styled.label`
 const SwitchInput = styled.input`
   margin-left: 10px;
   appearance: none;
-  width: 40px;
-  height: 20px;
-  background-color: #3498db;
-  border-radius: 10px;
+  width: 50px;
+  height: 25px;
+  background-color: ${({ theme }) =>
+    theme === "dark" ? "#3498db" : "#9c9fa1"};
+  border-radius: 15px;
   position: relative;
   cursor: pointer;
   outline: none;
@@ -33,14 +33,22 @@ const SwitchInput = styled.input`
   &:before {
     content: "";
     position: absolute;
-    width: 18px;
-    height: 18px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     background-color: white;
     transition: transform 0.3s ease;
     transform: ${({ checked }) =>
-      checked ? "translateX(20px)" : "translateX(0)"};
+      checked ? "translateX(25px)" : "translateX(0)"};
   }
+`;
+
+const SwitchIcon = styled.div`
+  position: absolute;
+  top: 55%;
+  left: ${({ theme }) => (theme === "dark" ? "75%" : "35%")};
+  transform: translate(-50%, -50%);
+  z-index: ${({ theme }) => (theme === "light" ? 1 : 2)};
 `;
 
 export default function MyApp({ Component, pageProps }) {
@@ -53,7 +61,7 @@ export default function MyApp({ Component, pageProps }) {
     const storedTheme = localStorage.getItem("theme");
     const isValidTheme = ["light", "dark"].includes(storedTheme);
     const defaultTheme = isValidTheme ? storedTheme : "light";
-    
+
     setTheme(defaultTheme);
   }, []);
 
@@ -78,7 +86,6 @@ export default function MyApp({ Component, pageProps }) {
 
       <SessionProvider session={pageProps.session}>
         <SWRConfig value={{ fetcher }}>
-          <Login />
           <Component
             {...pageProps}
             toggleTheme={toggleTheme}
@@ -87,11 +94,18 @@ export default function MyApp({ Component, pageProps }) {
             onToggleFavorite={handleToggleFavorite}
           />
           <SwitchLabel>
-            {theme === "light" ? <FiSun /> : <FiMoon />}
+            <SwitchIcon theme={theme}>
+              {theme === "light" ? (
+                <FiSun color="black" />
+              ) : (
+                <FiMoon color="black" />
+              )}
+            </SwitchIcon>
             <SwitchInput
               type="checkbox"
               checked={theme === "dark"}
               onChange={toggleTheme}
+              theme={theme}
             />
           </SwitchLabel>
         </SWRConfig>

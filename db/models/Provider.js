@@ -28,6 +28,7 @@ const providerSchema = new Schema({
     type: String,
     required: true,
   },
+
   ratings: [
     {
       userId: {
@@ -52,6 +53,7 @@ const providerSchema = new Schema({
       },
     },
   ],
+
   category: {
     type: String,
     required: true,

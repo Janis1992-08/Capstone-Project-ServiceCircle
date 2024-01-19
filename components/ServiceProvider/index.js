@@ -76,7 +76,11 @@ const OwnerMessage = styled.p`
   background-color: #f0f0f0;
 `;
 
-export default function ServiceProvider({ card }) {
+
+export default function ServiceProvider({ card, isOnUserPage }) {
+
+
+
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
@@ -133,6 +137,7 @@ export default function ServiceProvider({ card }) {
       {session && session.user.email === card.author && (
         <OwnerMessage>This is your service card.</OwnerMessage>
       )}
+
       {editedCard?._id === card._id ? (
         <EditForm
           editedCard={editedCard}
@@ -226,7 +231,7 @@ export default function ServiceProvider({ card }) {
             <AverageRating card={card} />
           </details>
           <hr></hr>
-          {session && session.user.email === card.author && (
+          {!isOnUserPage && session && session.user.email === card.author && (
             <EditDeleteWrapper>
               <EditButton type="button" onClick={handleOpenEditForm}>
                 Edit
