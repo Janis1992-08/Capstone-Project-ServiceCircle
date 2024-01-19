@@ -112,24 +112,21 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
     (card) => card.subcategory === foundSubcategory.name
   );
 
-  const filteredProviders = filteredServiceCards.filter((provider) => {
-    if (filterType === "all") {
-      return (
-        (provider.skills &&
-          provider.skills.toLowerCase().includes(filterValue.toLowerCase())) ||
-        (provider.needs &&
-          provider.needs.toLowerCase().includes(filterValue.toLowerCase())) ||
-        (provider.city &&
-          provider.city.toLowerCase().includes(filterValue.toLowerCase())) ||
-        (provider.district &&
-          provider.district.toLowerCase().includes(filterValue.toLowerCase()))
-      );
-    }
-    return (
-      provider[filterType] &&
-      provider[filterType].toLowerCase().includes(filterValue.toLowerCase())
+  const isMatch = (provider, filterType, filterValue) => {
+    const fieldsToCheck =
+      filterType === "all"
+        ? ["skills", "needs", "city", "district"]
+        : [filterType];
+    return fieldsToCheck.some(
+      (field) =>
+        provider[field] &&
+        provider[field].toLowerCase().includes(filterValue.toLowerCase())
     );
-  });
+  };
+
+  const filteredProviders = filteredServiceCards.filter((provider) =>
+    isMatch(provider, filterType, filterValue)
+  );
 
   return (
     <>

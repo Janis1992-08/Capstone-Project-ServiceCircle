@@ -18,7 +18,6 @@
     "mongoose": "^8.0.4",
     "next": "13.4.8",
     "next-auth": "^4.24.5",
-    "node-fetch": "^3.3.2",
     "nominatim": "^0.1.0",
     "nominatim-browser": "^2.1.0",
     "nominatim-client": "^3.2.1",

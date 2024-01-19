@@ -85,7 +85,7 @@ export default function CreateServiceCardForm({}) {
       [event.target.name]: event.target.value,
     });
   };
-console.log(initialFormData);
+
   const handleAddServiceCards = async (formData) => {
     const response = await fetch("/api/providers/", {
       method: "POST",
@@ -218,8 +218,7 @@ console.log(initialFormData);
           minLength={4}
           maxLength={5}
           required
-          />
-
+        />
 
         <SelectField
           name="category"

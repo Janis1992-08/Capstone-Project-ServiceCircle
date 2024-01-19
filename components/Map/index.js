@@ -53,7 +53,7 @@ async function geocodeAddress(city, district, postalCode) {
 
 export default function Map({ data }) {
   const [locations, setLocations] = useState([]);
-  const [yourLocation, setYourLocation] = useState(null); // Hier speichern wir deine eigene Position
+  const [yourLocation, setYourLocation] = useState(null);
 
   useEffect(() => {
     if (data) {
@@ -68,8 +68,9 @@ export default function Map({ data }) {
         setLocations(updatedLocations);
       });
     }
+  }, [data]);
 
-    // Hier erlauben wir den Standortzugriff im Browser und speichern die eigenen Koordinaten
+  useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
@@ -79,7 +80,7 @@ export default function Map({ data }) {
         console.error("Error getting location:", error);
       }
     );
-  }, [data]);
+  }, []);
 
   return (
     <MapContainerStyled center={[51.1657, 10.4515]} zoom={6}>
