@@ -45,7 +45,7 @@ const ShowReviewButton = styled.button`
 `;
 
 const ReviewButton = styled(ShowReviewButton)`
-  background-color:  #FF5733;
+  background-color: #ff5733;
   color: white;
 `;
 
@@ -76,7 +76,13 @@ const OwnerMessage = styled.p`
   background-color: #f0f0f0;
 `;
 
-export default function ServiceProvider({ card }) {
+
+
+export default function ServiceProvider({ card, isOnUserPage }) {
+
+
+
+
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
@@ -133,6 +139,7 @@ export default function ServiceProvider({ card }) {
       {session && session.user.email === card.author && (
         <OwnerMessage>This is your service card.</OwnerMessage>
       )}
+
       {editedCard?._id === card._id ? (
         <EditForm
           editedCard={editedCard}
@@ -170,59 +177,72 @@ export default function ServiceProvider({ card }) {
             </div>
           )}
 
-
-           {session ? (
+          {session ? (
             <ShowContactButton type="button" onClick={toggleContactInfo}>
               {showContactInfo ? "Hide Contact" : "Show Contact"}
             </ShowContactButton>
           ) : (
             <p>Please log in to see the contact information.</p>
           )}
-            <hr></hr>
-            <details>
-              <summary>Give me a Review</summary> 
-          {session && session.user.email !== card.author && (
-            <ReviewButton onClick={toggleReviewForm}>
-              {showReviewForm ? "Hide Review Form" : "Add Review"}
-            </ReviewButton>
-          )}
+          <hr></hr>
+          <details>
+            <summary>
+              {session
+                ? session.user.email === card.author
+                  ? "Go to Reviews"
+                  : "Give me a Review"
+                : "Go to Reviews"}
+            </summary>
+            {session && session.user.email !== card.author && (
+              <ReviewButton onClick={toggleReviewForm}>
+                {showReviewForm ? "Hide Review Form" : "Add Review"}
+              </ReviewButton>
+            )}
 
+            {showReviewForm && session.user.email !== card.author && (
+              <ReviewForm card={card} />
+            )}
 
-          {showReviewForm && session.user.email !== card.author && (
-            <ReviewForm card={card} />
-          )}
-
-          <ShowReviewButton onClick={toggleReviews}>
-            {showReviews ? "Hide Reviews" : "Show Reviews"}
-          </ShowReviewButton>
+            <ShowReviewButton onClick={toggleReviews}>
+              {showReviews ? "Hide Reviews" : "Show Reviews"}
+            </ShowReviewButton>
           </details>
 
           {showReviews && card.reviews && (
             <article>
               <h2>Reviews:</h2>
-              {card.reviews.map((review, id) => (
-                <h3 key={id}>{review}</h3>
+              {card.reviews.map((review, index) => (
+                <div key={index}>
+                  <p>{review.review}</p>
+                </div>
               ))}
             </article>
           )}
 
-             <hr></hr>
- {session && session.user.email !== card.author && (
-           <>
+          <hr></hr>
           <details>
-            <summary>Give me a Rating</summary>
-            <p>You are welcome to rate my service here. Thank you very much!</p> 
-            <StarRating card={card} />
-          </details>
-            </>
+            <summary>
+              {session
+                ? session.user.email === card.author
+                  ? "Show my Ratings"
+                  : "Give me a Rating"
+                : "Show Average Rating"}
+            </summary>
+            <p>
+              {session
+                ? session.user.email === card.author
+                  ? "Here is your average rating:"
+                  : "You are welcome to rate my service here. Thank you very much!"
+                : ""}
+            </p>
+            {session && session.user.email !== card.author && (
+              <StarRating card={card} />
             )}
-
-     <p>Average Rating:</p>
-          <AverageRating card={card} />
-
-
-          <hr></hr>  
-           {session && session.user.email === card.author && (
+            <br></br>
+            <AverageRating card={card} />
+          </details>
+          <hr></hr>
+          {!isOnUserPage && session && session.user.email === card.author && (
             <EditDeleteWrapper>
               <EditButton type="button" onClick={handleOpenEditForm}>
                 Edit

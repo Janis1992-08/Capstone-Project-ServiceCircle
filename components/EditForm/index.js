@@ -24,6 +24,7 @@ const InputField = styled.input`
 export default function EditForm({ editedCard, setEditedCard, card }) {
   const { mutate } = useSWR("/api/providers");
   const { data: session, status } = useSession();
+
   async function handleEditServiceCard() {
     try {
       const url = `/api/providers/${card._id}`;
@@ -61,7 +62,9 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
 
   return (
     <form onSubmit={handleSave}>
-      <label htmlFor="firstName" className="edit-labels">First Name:</label>
+      <label htmlFor="firstName" className="edit-labels">
+        First Name:
+      </label>
       <InputField
         type="text"
         id="firstName"
@@ -72,7 +75,9 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
         }
       />
 
-      <label htmlFor="lastName" className="edit-labels">Last Name:</label>
+      <label htmlFor="lastName" className="edit-labels">
+        Last Name:
+      </label>
       <InputField
         type="text"
         id="lastName"
@@ -83,7 +88,9 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
         }
       />
 
-      <label htmlFor="skills" className="edit-labels">Skills:</label>
+      <label htmlFor="skills" className="edit-labels">
+        Skills:
+      </label>
       <InputField
         type="text"
         id="skills"
@@ -94,7 +101,9 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
         }
       />
 
-      <label htmlFor="needs" className="edit-labels">Needs:</label>
+      <label htmlFor="needs" className="edit-labels">
+        Needs:
+      </label>
       <InputField
         type="text"
         id="needs"
@@ -105,7 +114,9 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
         }
       />
 
-      <label htmlFor="email" className="edit-labels">Email:</label>
+      <label htmlFor="email" className="edit-labels">
+        Email:
+      </label>
       <InputField
         type="email"
         id="email"
@@ -116,7 +127,9 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
         }
       />
 
-      <label htmlFor="phone" className="edit-labels">Phone:</label>
+      <label htmlFor="phone" className="edit-labels">
+        Phone:
+      </label>
       <InputField
         type="tel"
         id="phone"

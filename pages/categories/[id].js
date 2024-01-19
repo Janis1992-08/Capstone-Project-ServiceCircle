@@ -29,22 +29,29 @@ const StyledInput = styled.input`
 `;
 
 const Header = styled.header`
-  padding: 20px;
-  text-align: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: flex-start;
+  border-bottom: 1px solid #ccc;
+  margin-left: -10px;
+  margin-right: -30px;
+  margin-top: -10px;
 `;
 
 const Headline = styled.p`
   display: inline-block;
-  padding: 5px 10px;
   border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
   text-decoration: none;
+  margin-left: 0;
   margin-bottom: 20px;
+  margin-top: 10px;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #0077dd;
   }
 `;
 
@@ -70,10 +77,6 @@ const Card = styled.li`
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
   }
 `;
-const HeaderWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
 
 const FilterControls = styled.div`
   display: flex;
@@ -81,7 +84,11 @@ const FilterControls = styled.div`
 `;
 
 const FilterLabel = styled.label`
-  margin: 10px;
+
+  
+  margin-right: 10px;
+  color: black;
+
 `;
 
 const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
@@ -131,11 +138,10 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
   return (
     <>
       <Header>
-        <HeaderWrapper>
-          <Link href="/">
-            <Headline> &larr; {foundSubcategory.name}</Headline>
-          </Link>
-        </HeaderWrapper>
+        <Link href="/">
+          <Headline> &larr; {foundSubcategory.name}</Headline>
+        </Link>
+
         <FilterControls>
           <FilterLabel>Filter by:</FilterLabel>
           <FilterLabel>
@@ -170,14 +176,22 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
           {filteredProviders.length > 0 ? (
             filteredProviders.map((provider) => (
               <Card key={provider._id}>
-                {session && (
+
+
+                {session && session.user.email !== provider.author && (
+
                   <FavoriteButton
                     onClick={() => onToggleFavorite(provider._id)}
                     isFavorite={favorites.includes(provider._id)}
                   />
                 )}
 
-                <ServiceProvider key={provider._id} card={provider} />
+
+                <ServiceProvider
+                  key={provider._id}
+                  card={provider}
+                  isOnUserPage
+                />
               </Card>
             ))
           ) : (

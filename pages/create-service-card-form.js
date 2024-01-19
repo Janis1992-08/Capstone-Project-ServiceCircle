@@ -38,18 +38,30 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const Headline = styled.h3`
+const Header = styled.header`
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: flex-start;
+  border-bottom: 1px solid #ccc;
+  margin-left: -10px;
+  margin-right: -30px;
+  margin-top: -10px;
+`;
+
+const Headline = styled.p`
   display: inline-block;
-  padding: 5px 10px;
   border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
   text-decoration: none;
+  margin-left: 0;
   margin-bottom: 20px;
+  margin-top: 10px;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #0077dd;
   }
 `;
 
@@ -117,9 +129,11 @@ export default function CreateServiceCardForm({}) {
 
   return (
     <>
-      <Link href="/">
-        <Headline>&larr; Back to Categories</Headline>
-      </Link>
+      <Header>
+        <Link href="/">
+          <Headline>&larr; Back to Categories</Headline>
+        </Link>
+      </Header>
 
       <FormWrapper onSubmit={handleSubmit}>
         <label htmlFor="firstName">First Name: </label>
