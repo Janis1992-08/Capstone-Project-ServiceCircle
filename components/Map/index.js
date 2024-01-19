@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useSWR from "swr";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
