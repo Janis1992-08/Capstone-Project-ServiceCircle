@@ -76,13 +76,7 @@ const OwnerMessage = styled.p`
   background-color: #f0f0f0;
 `;
 
-
-
 export default function ServiceProvider({ card, isOnUserPage }) {
-
-
-
-
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
@@ -224,21 +218,16 @@ export default function ServiceProvider({ card, isOnUserPage }) {
             <summary>
               {session
                 ? session.user.email === card.author
-                  ? "Show my Ratings"
+                  ? "Show Average Rating"
                   : "Give me a Rating"
                 : "Show Average Rating"}
             </summary>
-            <p>
-              {session
-                ? session.user.email === card.author
-                  ? "Here is your average rating:"
-                  : "You are welcome to rate my service here. Thank you very much!"
-                : ""}
-            </p>
+
             {session && session.user.email !== card.author && (
               <StarRating card={card} />
             )}
             <br></br>
+
             <AverageRating card={card} />
           </details>
           <hr></hr>

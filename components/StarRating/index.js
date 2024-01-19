@@ -107,7 +107,7 @@ const StarRating = ({ card }) => {
           </StarWrapper>
         ))
       ) : (
-        <p>You have rated</p>
+        <p>You have rated, see Average rating below</p>
       )}
       {!hasRated && tempRating > 0 && (
         <StyledButton
