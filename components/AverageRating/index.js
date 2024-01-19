@@ -1,12 +1,15 @@
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const AverageRating = ({ card }) => {
-  if (!card || !card.rating || card.rating.length === 0) {
+  const ratings = card.ratings
+    .map((data) => data.rating)
+    .filter(Number.isFinite);
+
+  if (ratings.length === 0) {
     return <p>No Rating yet</p>;
   }
 
-  const averageRating =
-    card.rating.reduce((a, b) => a + b, 0) / card.rating.length;
+  const averageRating = ratings.reduce((a, b) => a + b, 0) / ratings.length;
   const filledStars = Math.max(0, Math.floor(averageRating));
   const halfStar = averageRating % 1 >= 0.5;
   const emptyStars = Math.max(

@@ -76,7 +76,11 @@ const OwnerMessage = styled.p`
   background-color: #f0f0f0;
 `;
 
+
 export default function ServiceProvider({ card, isOnUserPage }) {
+
+
+
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
@@ -196,8 +200,10 @@ export default function ServiceProvider({ card, isOnUserPage }) {
           {showReviews && card.reviews && (
             <article>
               <h2>Reviews:</h2>
-              {card.reviews.map((review, id) => (
-                <h3 key={id}>{review}</h3>
+              {card.reviews.map((review, index) => (
+                <div key={index}>
+                  <p>{review.review}</p>
+                </div>
               ))}
             </article>
           )}
