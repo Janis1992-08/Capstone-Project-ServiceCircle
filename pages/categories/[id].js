@@ -8,6 +8,26 @@ import FavoriteButton from "@/components/FavoriteButton/index.js";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
 
+import dynamic from "next/dynamic";
+
+const DynamicMap = dynamic(() => import("@/components/Map/index.js"), {
+  ssr: false,
+});
+
+const StyledInput = styled.input`
+  width: 20%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+
+  &:focus {
+    border-color: #007bff;
+  }
+`;
+
 const Header = styled.header`
   background-color: #f0f0f0;
   padding: 10px;
@@ -64,8 +84,11 @@ const FilterControls = styled.div`
 `;
 
 const FilterLabel = styled.label`
+
+  
   margin-right: 10px;
   color: black;
+
 `;
 
 const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
@@ -96,17 +119,21 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
     (card) => card.subcategory === foundSubcategory.name
   );
 
-  const filteredProviders = filteredServiceCards.filter((provider) => {
-    if (filterType === "all") {
-      return (
-        provider.skills.toLowerCase().includes(filterValue.toLowerCase()) ||
-        provider.needs.toLowerCase().includes(filterValue.toLowerCase())
-      );
-    }
-    return provider[filterType]
-      .toLowerCase()
-      .includes(filterValue.toLowerCase());
-  });
+  const isMatch = (provider, filterType, filterValue) => {
+    const fieldsToCheck =
+      filterType === "all"
+        ? ["skills", "needs", "city", "district"]
+        : [filterType];
+    return fieldsToCheck.some(
+      (field) =>
+        provider[field] &&
+        provider[field].toLowerCase().includes(filterValue.toLowerCase())
+    );
+  };
+
+  const filteredProviders = filteredServiceCards.filter((provider) =>
+    isMatch(provider, filterType, filterValue)
+  );
 
   return (
     <>
@@ -116,28 +143,32 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
         </Link>
 
         <FilterControls>
+          <FilterLabel>Filter by:</FilterLabel>
           <FilterLabel>
-            Filter by:
             <select
               value={filterType}
               onChange={(event) => handleFilterTypeChange(event.target.value)}
             >
               <option value="all"> All</option>
-              <option value="skills"> Skills</option>
-              <option value="needs"> Needs</option>
+              <option value="skills">Skills</option>
+              <option value="needs">Needs</option>
+              <option value="city">City</option>
+              <option value="district">District</option>
             </select>
           </FilterLabel>
-          <input
+          <StyledInput
             type="text"
             placeholder={`Enter ${
               filterType === "all"
-                ? "skills or needs"
+                ? "skills, needs, city or district"
                 : filterType.toLowerCase()
             }...`}
             value={filterValue}
             onChange={(event) => setFilterValue(event.target.value)}
           />
         </FilterControls>
+
+        <DynamicMap data={filteredProviders} />
       </Header>
 
       <main>
@@ -145,12 +176,16 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
           {filteredProviders.length > 0 ? (
             filteredProviders.map((provider) => (
               <Card key={provider._id}>
+
+
                 {session && session.user.email !== provider.author && (
+
                   <FavoriteButton
                     onClick={() => onToggleFavorite(provider._id)}
                     isFavorite={favorites.includes(provider._id)}
                   />
                 )}
+
 
                 <ServiceProvider
                   key={provider._id}

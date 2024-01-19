@@ -77,7 +77,9 @@ const OwnerMessage = styled.p`
 `;
 
 
+
 export default function ServiceProvider({ card, isOnUserPage }) {
+
 
 
 
@@ -162,6 +164,15 @@ export default function ServiceProvider({ card, isOnUserPage }) {
               </p>
               <p>
                 <strong>Phone:</strong> {card.phone}
+              </p>
+              <p>
+                <strong>City:</strong> {card.city}
+              </p>
+              <p>
+                <strong>District:</strong> {card.district}
+              </p>
+              <p>
+                <strong>Postal Code:</strong> {card.postalCode}
               </p>
             </div>
           )}

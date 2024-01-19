@@ -72,6 +72,9 @@ const initialFormData = {
   needs: "",
   email: "",
   phone: "",
+  city: "",
+  district: "",
+  postalCode: "",
   category: "",
   subcategory: "",
 };
@@ -87,7 +90,7 @@ export default function CreateServiceCardForm({}) {
     router.push("/");
     return null;
   }
-
+  console.log(status);
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -196,6 +199,38 @@ export default function CreateServiceCardForm({}) {
           name="phone"
           value={formData.phone}
           onChange={(event) => handleChange(event)}
+          required
+        />
+
+        <label htmlFor="city">City: </label>
+        <InputField
+          type="text"
+          id="city"
+          name="city"
+          value={formData.city}
+          onChange={(event) => handleChange(event)}
+          required
+        />
+
+        <label htmlFor="district">District: </label>
+        <InputField
+          type="text"
+          id="district"
+          name="district"
+          value={formData.district}
+          onChange={(event) => handleChange(event)}
+          required
+        />
+
+        <label htmlFor="postalCode">Postal Code: </label>
+        <InputField
+          type="text"
+          id="postalCode"
+          name="postalCode"
+          value={formData.postalCode}
+          onChange={(event) => handleChange(event)}
+          minLength={4}
+          maxLength={5}
           required
         />
 
