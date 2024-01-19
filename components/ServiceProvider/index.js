@@ -79,22 +79,12 @@ const OwnerMessage = styled.p`
 export default function ServiceProvider({ card, isOnUserPage }) {
   const [showContactInfo, setShowContactInfo] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
-  const [showReviewForm, setShowReviewForm] = useState(false);
-  const [showReviews, setShowReviews] = useState(false);
   const { data: session } = useSession();
 
   const { mutate } = useSWR("/api/providers");
 
   const toggleContactInfo = () => {
     setShowContactInfo(!showContactInfo);
-  };
-
-  const toggleReviewForm = () => {
-    setShowReviewForm(!showReviewForm);
-  };
-
-  const toggleReviews = () => {
-    setShowReviews(!showReviews);
   };
 
   const handleOpenEditForm = () => {
@@ -187,31 +177,24 @@ export default function ServiceProvider({ card, isOnUserPage }) {
                   : "Give me a Review"
                 : "Go to Reviews"}
             </summary>
-            {session && session.user.email !== card.author && (
-              <ReviewButton onClick={toggleReviewForm}>
-                {showReviewForm ? "Hide Review Form" : "Add Review"}
-              </ReviewButton>
-            )}
 
-            {showReviewForm && session.user.email !== card.author && (
+            {session && session.user.email !== card.author && (
               <ReviewForm card={card} />
             )}
 
-            <ShowReviewButton onClick={toggleReviews}>
-              {showReviews ? "Hide Reviews" : "Show Reviews"}
-            </ShowReviewButton>
+            {card.reviews && card.reviews.length > 0 ? (
+              <article>
+                <h2>Reviews:</h2>
+                {card.reviews.map((review, index) => (
+                  <div key={index}>
+                    <p>{review.review}</p>
+                  </div>
+                ))}
+              </article>
+            ) : (
+              <p>No reviews yet.</p>
+            )}
           </details>
-
-          {showReviews && card.reviews && (
-            <article>
-              <h2>Reviews:</h2>
-              {card.reviews.map((review, index) => (
-                <div key={index}>
-                  <p>{review.review}</p>
-                </div>
-              ))}
-            </article>
-          )}
 
           <hr></hr>
           <details>
