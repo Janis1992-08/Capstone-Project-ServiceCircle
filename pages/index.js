@@ -28,12 +28,8 @@ const LoginWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   position: absolute;
-  top: -10px;
-  left: 0;
-
-  & > * {
-    margin-left: 5px;
-  }
+  top: 10px;
+  left: 10px;
 `;
 
 const buttonStyle = {

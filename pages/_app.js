@@ -23,7 +23,8 @@ const SwitchInput = styled.input`
   appearance: none;
   width: 50px;
   height: 25px;
-  background-color: #3498db;
+  background-color: ${({ theme }) =>
+    theme === "dark" ? "#3498db" : "#9c9fa1"};
   border-radius: 15px;
   position: relative;
   cursor: pointer;
