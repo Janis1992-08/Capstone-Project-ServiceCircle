@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 
 const Button = styled.button`
-  background-color: none;
+  background-color: #b9bdbd;
   border: 0;
   border-radius: 25px;
   padding: 12px;

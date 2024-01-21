@@ -100,9 +100,10 @@ export default function Map({ data }) {
           icon={blueIcon}
         >
           <Popup>
-            Standort von {provider.name} <br></br>Skills: {provider.skills}
+            <strong>Standort von:</strong> {provider.name} <br></br>
+            <strong>Skills:</strong> {provider.skills}
             <br></br>
-            Needs: {provider.needs}
+            <strong>Needs:</strong> {provider.needs}
           </Popup>
         </Marker>
       ))}

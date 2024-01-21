@@ -9,14 +9,14 @@ import Login from "@/components/Login";
 
 const HeaderContainer = styled.div`
   text-align: center;
-  margin-top: 25px;
+  margin-top: 35px;
 `;
 
 const HeaderImage = styled(Image)`
   margin-top: -10px;
   object-fit: cover;
   height: 150px;
-  margin-bottom: -25px;
+  margin-bottom: -20px;
 `;
 
 const HeaderTitle = styled.h1`
@@ -28,8 +28,8 @@ const LoginWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: -5px;
+  left: 5px;
 `;
 
 const buttonStyle = {
@@ -60,7 +60,7 @@ const ServiceOfferElement = styled.div`
   margin: 20px auto;
   padding: 15px 30px;
   border-radius: 8px;
-  background-color: darkorange;
+  background-color: #ff9203;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -82,7 +82,7 @@ const ShowFavorites = styled.div`
   margin: 20px auto;
   padding: 15px 30px;
   border-radius: 25px;
-  background-color: darkgreen;
+  background-color: #167004;
   color: white;
   border: none;
   cursor: pointer;
@@ -90,11 +90,11 @@ const ShowFavorites = styled.div`
   text-align: center;
   outline: none;
   width: 60%;
-  transition: background-color 0.3s ease;
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
+  color: black;
 `;
 
 const Homepage = () => {
@@ -122,7 +122,7 @@ const Homepage = () => {
           width={1000}
           height={400}
         />
-        <h2>Find your perfect Service-Match</h2>
+        <h2 className="subtitles">Find your perfect Service-Match</h2>
       </HeaderContainer>
 
       <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>

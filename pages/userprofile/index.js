@@ -17,15 +17,15 @@ const Header = styled.header`
   padding: 10px;
   text-align: flex-start;
   border-bottom: 1px solid #ccc;
-  margin-left: -10px;
-  margin-right: -30px;
-  margin-top: -10px;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-top: 0px;
 `;
 
 const Headline = styled.p`
   display: inline-block;
   border-radius: 5px;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: black;
   text-decoration: none;
@@ -35,7 +35,7 @@ const Headline = styled.p`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0077dd;
+    background-color: #3498db;
   }
 `;
 
@@ -49,17 +49,17 @@ const CardWrapper = styled.ul`
 `;
 
 const Card = styled.li`
-  background-color: #fff;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
+  list-style: none;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f7f6f0;
   padding: 10px;
-  width: 100%;
+  width: 300px;
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: box-shadow 0.3s ease;
 
   &:hover {
-    transform: translateY(-5px);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -73,14 +73,14 @@ const Details = styled.details`
 const Summary = styled.summary`
   cursor: pointer;
   padding: 10px;
-  background-color: grey;
+  background-color: #167004;
   color: black;
   border-radius: 5px;
   margin-bottom: 10px;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #167004;
   }
 `;
 
@@ -148,7 +148,7 @@ const UserPage = ({ favorites, onToggleFavorite }) => {
         </UserDetail>
         <Details>
           <Summary>Show my Cards</Summary>
-          <h2>My Cards</h2>
+          <h2 className="subtitles">My Cards</h2>
           <CardWrapper>
             {myCards.length > 0 ? (
               myCards.map((card) => (
@@ -164,7 +164,7 @@ const UserPage = ({ favorites, onToggleFavorite }) => {
 
         <Details>
           <Summary>Show my Favorites</Summary>
-          <h2>Favorite Cards</h2>
+          <h2 className="subtitles">Favorite Cards</h2>
           <CardWrapper>
             {favoriteCards.length ? (
               favoriteCards.map((card) => (

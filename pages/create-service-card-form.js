@@ -43,15 +43,14 @@ const Header = styled.header`
   padding: 10px;
   text-align: flex-start;
   border-bottom: 1px solid #ccc;
-  margin-left: -10px;
-  margin-right: -30px;
-  margin-top: -10px;
+  margin-left: -20px;
+  margin-right: -20px;
 `;
 
 const Headline = styled.p`
   display: inline-block;
   border-radius: 5px;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: black;
   text-decoration: none;
@@ -61,7 +60,7 @@ const Headline = styled.p`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0077dd;
+    background-color: #3498db;
   }
 `;
 
@@ -135,7 +134,7 @@ export default function CreateServiceCardForm({}) {
         </Link>
       </Header>
 
-      <FormWrapper onSubmit={handleSubmit}>
+      <FormWrapper onSubmit={handleSubmit} autocomplete="off">
         <label htmlFor="firstName">First Name: </label>
         <InputField
           type="text"

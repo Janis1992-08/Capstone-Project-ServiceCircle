@@ -26,18 +26,25 @@ export default createGlobalStyle`
   h1, h3, label {
     color: ${(props) => props.theme.headerColor};
   }
-  .star-rating {
-    color: black;
-  }
+
   .edit-labels {
     color: black;
   }
+  .subtitles {
+  color: ${(props) => props.theme.headerColor};
+  }
+
+  .login{
+  color: ${(props) => props.theme.headerColor};
+  }
+
   /* mobile iPhone SE */
   @media (max-width: 375px) and (max-height: 667px) {
     body {
     width: calc(100% - 40px); 
-    margin: 10px;
+    margin:  auto;
   }
+ 
   img {
     width: 100%;
     object-fit: cover;

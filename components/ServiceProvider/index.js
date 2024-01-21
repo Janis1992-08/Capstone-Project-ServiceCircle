@@ -10,10 +10,11 @@ import AverageRating from "../AverageRating";
 const ServiceProviderWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   padding: 10px;
   margin: 10px;
   border-radius: 8px;
+  background-color: white;
 `;
 
 const EditDeleteWrapper = styled.div`
@@ -32,23 +33,6 @@ const EditButton = styled.button`
   margin: 6px;
 `;
 
-const ShowReviewButton = styled.button`
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  background-color: black;
-  color: white;
-`;
-
-const ReviewButton = styled(ShowReviewButton)`
-  background-color: #ff5733;
-  color: white;
-`;
-
 const DeleteButton = styled.button`
   background-color: #e74c3c;
   color: white;
@@ -60,7 +44,7 @@ const DeleteButton = styled.button`
 `;
 
 const ShowContactButton = styled.button`
-  background-color: #2ecc71;
+  background-color: #029e86;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -135,6 +119,7 @@ export default function ServiceProvider({ card, isOnUserPage }) {
           <h2>
             {card.firstName} {card.lastName}
           </h2>
+
           <p>
             <strong>Skills:</strong> {card.skills}
           </p>
@@ -166,16 +151,22 @@ export default function ServiceProvider({ card, isOnUserPage }) {
               {showContactInfo ? "Hide Contact" : "Show Contact"}
             </ShowContactButton>
           ) : (
-            <p>Please log in to see the contact information.</p>
+            <p style={{ color: "red" }}>
+              Please log in to see the contact information.
+            </p>
           )}
           <hr></hr>
           <details>
             <summary>
-              {session
-                ? session.user.email === card.author
-                  ? "Go to Reviews"
-                  : "Give me a Review"
-                : "Go to Reviews"}
+              {session ? (
+                session.user.email === card.author ? (
+                  <strong>Go to Reviews</strong>
+                ) : (
+                  <strong>Give me a Review</strong>
+                )
+              ) : (
+                <strong>Go to Reviews</strong>
+              )}
             </summary>
 
             {session && session.user.email !== card.author && (
@@ -199,11 +190,15 @@ export default function ServiceProvider({ card, isOnUserPage }) {
           <hr></hr>
           <details>
             <summary>
-              {session
-                ? session.user.email === card.author
-                  ? "Show Average Rating"
-                  : "Give me a Rating"
-                : "Show Average Rating"}
+              {session ? (
+                session.user.email === card.author ? (
+                  <strong>Show Average Rating</strong>
+                ) : (
+                  <strong>Give me a Rating</strong>
+                )
+              ) : (
+                <strong>Show Average Rating</strong>
+              )}
             </summary>
 
             {session && session.user.email !== card.author && (

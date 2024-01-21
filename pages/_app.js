@@ -12,8 +12,8 @@ const fetcher = (url) => fetch(url).then((response) => response.json());
 
 const SwitchLabel = styled.label`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 7px;
+  right: 5px;
   display: flex;
   align-items: center;
 `;

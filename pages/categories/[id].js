@@ -15,12 +15,12 @@ const DynamicMap = dynamic(() => import("@/components/Map/index.js"), {
 });
 
 const StyledInput = styled.input`
-  width: 20%;
+  width: 28%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 13px;
   outline: none;
 
   &:focus {
@@ -30,28 +30,26 @@ const StyledInput = styled.input`
 
 const Header = styled.header`
   background-color: #f0f0f0;
-  padding: 10px;
   text-align: flex-start;
   border-bottom: 1px solid #ccc;
-  margin-left: -10px;
-  margin-right: -30px;
-  margin-top: -10px;
+  margin-left: -20px;
+  margin-right: -20px;
 `;
 
 const Headline = styled.p`
   display: inline-block;
-  border-radius: 5px;
-  font-size: 1.5rem;
+  border-radius: 10px;
+  font-size: 1.6rem;
   font-weight: bold;
   color: black;
   text-decoration: none;
-  margin-left: 0;
-  margin-bottom: 20px;
-  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  margin-top: 18px;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0077dd;
+    background-color: #3498db;
   }
 `;
 
@@ -64,10 +62,10 @@ const CardWrapper = styled.ul`
 `;
 
 const Card = styled.li`
-  background-color: #fff;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   list-style: none;
   border-radius: 5px;
+  background-color: #f7f6f0;
   padding: 10px;
   width: 300px;
   text-align: center;
@@ -81,14 +79,13 @@ const Card = styled.li`
 const FilterControls = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 10px;
 `;
 
 const FilterLabel = styled.label`
-
-  
   margin-right: 10px;
   color: black;
-
+  font-size: 17px;
 `;
 
 const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
@@ -176,16 +173,12 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
           {filteredProviders.length > 0 ? (
             filteredProviders.map((provider) => (
               <Card key={provider._id}>
-
-
                 {session && session.user.email !== provider.author && (
-
                   <FavoriteButton
                     onClick={() => onToggleFavorite(provider._id)}
                     isFavorite={favorites.includes(provider._id)}
                   />
                 )}
-
 
                 <ServiceProvider
                   key={provider._id}

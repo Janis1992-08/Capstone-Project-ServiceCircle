@@ -61,7 +61,7 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
   }
 
   return (
-    <form onSubmit={handleSave}>
+    <form onSubmit={handleSave} autocomplete="off">
       <label htmlFor="firstName" className="edit-labels">
         First Name:
       </label>
@@ -140,43 +140,49 @@ export default function EditForm({ editedCard, setEditedCard, card }) {
         }
       />
 
-      <label htmlFor="city" className="edit-labels">City: </label>
-        <InputField
-          type="text"
-          id="city"
-          name="city"
-          value={editedCard.city}
-          onChange={(event) =>
-            setEditedCard({ ...editedCard, city: event.target.value })
-          }
-          required
-        />
+      <label htmlFor="city" className="edit-labels">
+        City:{" "}
+      </label>
+      <InputField
+        type="text"
+        id="city"
+        name="city"
+        value={editedCard.city}
+        onChange={(event) =>
+          setEditedCard({ ...editedCard, city: event.target.value })
+        }
+        required
+      />
 
-        <label htmlFor="district" className="edit-labels">District: </label>
-        <InputField
-          type="text"
-          id="district"
-          name="district"
-          value={editedCard.district}
-          onChange={(event) =>
-            setEditedCard({ ...editedCard, district: event.target.value })
-          }
-          required
-        />
+      <label htmlFor="district" className="edit-labels">
+        District:{" "}
+      </label>
+      <InputField
+        type="text"
+        id="district"
+        name="district"
+        value={editedCard.district}
+        onChange={(event) =>
+          setEditedCard({ ...editedCard, district: event.target.value })
+        }
+        required
+      />
 
-        <label htmlFor="postalCode" className="edit-labels">Postal Code: </label>
-        <InputField
-          type="text"
-          id="postalCode"
-          name="postalCode"
-          value={editedCard.postalCode}
-          onChange={(event) =>
-            setEditedCard({ ...editedCard, postalCode: event.target.value })
-          }
-          minLength={4}
-          maxLength={5}
-          required
-          />
+      <label htmlFor="postalCode" className="edit-labels">
+        Postal Code:{" "}
+      </label>
+      <InputField
+        type="text"
+        id="postalCode"
+        name="postalCode"
+        value={editedCard.postalCode}
+        onChange={(event) =>
+          setEditedCard({ ...editedCard, postalCode: event.target.value })
+        }
+        minLength={4}
+        maxLength={5}
+        required
+      />
 
       <ServiceButton type="submit">Save</ServiceButton>
     </form>
