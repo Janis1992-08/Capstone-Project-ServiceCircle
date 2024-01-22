@@ -35,6 +35,7 @@ const providerSchema = new Schema({
   },
   district: {
     type: String,
+    required: true,
   },
   postalCode: {
     type: String,

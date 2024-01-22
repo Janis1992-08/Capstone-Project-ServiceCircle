@@ -216,6 +216,7 @@ export default function CreateServiceCardForm({}) {
           name="district"
           value={formData.district}
           onChange={(event) => handleChange(event)}
+          required
         />
 
         <label htmlFor="postalCode">Postal Code: </label>
