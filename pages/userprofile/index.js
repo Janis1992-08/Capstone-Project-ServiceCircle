@@ -98,7 +98,7 @@ const UserDetail = styled.div`
 
 const ImageWrapper = styled.div`
   border-radius: 50%;
-  width: 150px;
+  width: 180px;
   height: 100px;
   overflow: hidden;
 `;
@@ -139,8 +139,8 @@ const UserPage = ({ favorites, onToggleFavorite }) => {
                 src={session.user.image}
                 alt="User profile picture"
                 strategy="responsive"
-                width={200}
-                height={200}
+                width={150}
+                height={160}
               />
             </ImageWrapper>
           )}

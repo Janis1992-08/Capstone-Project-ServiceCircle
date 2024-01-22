@@ -208,19 +208,22 @@ export default function ServiceProvider({ card, isOnUserPage }) {
 
             <AverageRating card={card} />
           </details>
-          <hr></hr>
+
           {!isOnUserPage && session && session.user.email === card.author && (
-            <EditDeleteWrapper>
-              <EditButton type="button" onClick={handleOpenEditForm}>
-                Edit
-              </EditButton>
-              <DeleteButton
-                type="button"
-                onClick={() => handleDelete(card._id)}
-              >
-                Delete
-              </DeleteButton>
-            </EditDeleteWrapper>
+            <>
+              <hr></hr>
+              <EditDeleteWrapper>
+                <EditButton type="button" onClick={handleOpenEditForm}>
+                  Edit
+                </EditButton>
+                <DeleteButton
+                  type="button"
+                  onClick={() => handleDelete(card._id)}
+                >
+                  Delete
+                </DeleteButton>
+              </EditDeleteWrapper>
+            </>
           )}
         </div>
       )}
