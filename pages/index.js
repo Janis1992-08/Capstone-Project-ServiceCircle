@@ -14,6 +14,7 @@ const HeaderContainer = styled.div`
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  margin-bottom: 10px;
 `;
 
 const HeaderImage = styled(Image)`
@@ -22,6 +23,11 @@ const HeaderImage = styled(Image)`
 `;
 
 const HeaderTitle = styled.h1`
+  margin-top: 5px;
+  margin-bottom: 10px;
+`;
+
+const HeaderSubtitle = styled.h2`
   margin-top: 5px;
 `;
 
@@ -118,13 +124,15 @@ const Homepage = () => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <HeaderContainer>
         <HeaderTitle>Service Circle</HeaderTitle>
-        <div> 
-        <HeaderImage
-          src={diversImage}
-          alt="a group of people with divers professions"
-        />
+        <div>
+          <HeaderImage
+            src={diversImage}
+            alt="a group of people with divers professions"
+          />
         </div>
-        <h2 className="subtitles">Find your perfect Service-Match</h2>
+        <HeaderSubtitle className="subtitles">
+          Find your perfect Service-Match
+        </HeaderSubtitle>
       </HeaderContainer>
 
       <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
