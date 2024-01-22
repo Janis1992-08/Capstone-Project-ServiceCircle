@@ -15,7 +15,6 @@ const HeaderContainer = styled.div`
 const HeaderImage = styled(Image)`
   margin-top: -10px;
   object-fit: cover;
-  overflow: hidden;
   height: 150px;
   margin-bottom: -20px;
 `;
