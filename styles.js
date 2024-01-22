@@ -48,7 +48,6 @@ export default createGlobalStyle`
   img {
     width: 100%;
     object-fit: cover;
-    overflow: hidden;
   }
   h1 {
     font-size: 30px;
