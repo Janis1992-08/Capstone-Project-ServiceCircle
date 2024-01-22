@@ -116,12 +116,14 @@ const Homepage = () => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <HeaderContainer>
         <HeaderTitle>Service Circle</HeaderTitle>
+        <div> 
         <HeaderImage
           src={diversImage}
           alt="a group of people with divers professions"
           width={1000}
           height={400}
         />
+        </div>
         <h2 className="subtitles">Find your perfect Service-Match</h2>
       </HeaderContainer>
 
