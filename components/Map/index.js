@@ -32,7 +32,7 @@ const blueIcon = new L.Icon({
 });
 
 async function geocodeAddress(city, district, postalCode) {
-  const apiKey = "c5d6945313184f0da4648a7de1952f2d";
+  const apiKey = "7aeaf7397d0341fa951b6dce55ccef69";
   const address = `${city} ${district} ${postalCode}, Germany`;
   const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
     address
