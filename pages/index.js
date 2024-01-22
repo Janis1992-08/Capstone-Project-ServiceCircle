@@ -10,13 +10,15 @@ import Login from "@/components/Login";
 const HeaderContainer = styled.div`
   text-align: center;
   margin-top: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
 `;
 
 const HeaderImage = styled(Image)`
-  margin-top: -10px;
-  object-fit: cover;
-  height: 150px;
-  margin-bottom: -20px;
+  width: 568px;
+  height: 130px;
 `;
 
 const HeaderTitle = styled.h1`
@@ -120,8 +122,6 @@ const Homepage = () => {
         <HeaderImage
           src={diversImage}
           alt="a group of people with divers professions"
-          width={1000}
-          height={400}
         />
         </div>
         <h2 className="subtitles">Find your perfect Service-Match</h2>

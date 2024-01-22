@@ -18,6 +18,7 @@ export default createGlobalStyle`
   }
   body {
     margin: 0;
+    padding: 0;
     font-family: system-ui;
     background-color: ${(props) => props.theme.body};
     color: ${(props) => props.theme.text};
@@ -39,16 +40,14 @@ export default createGlobalStyle`
   }
 
   /* mobile iPhone SE */
-  @media (max-width: 375px) and (max-height: 667px) {
+  @media (max-width: 375px) and (max-height: 926px) {
     body {
-    width: calc(100% - 40px); 
-    margin:  auto;
+    padding: 0;
   }
  
   img {
     width: 100%;
     object-fit: cover;
-    overflow: hidden;
   }
   h1 {
     font-size: 30px;

@@ -43,8 +43,6 @@ const Header = styled.header`
   padding: 10px;
   text-align: flex-start;
   border-bottom: 1px solid #ccc;
-  margin-left: -20px;
-  margin-right: -20px;
 `;
 
 const Headline = styled.p`

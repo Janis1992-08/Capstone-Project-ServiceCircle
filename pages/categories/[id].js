@@ -32,8 +32,6 @@ const Header = styled.header`
   background-color: #f0f0f0;
   text-align: flex-start;
   border-bottom: 1px solid #ccc;
-  margin-left: -20px;
-  margin-right: -20px;
 `;
 
 const Headline = styled.p`
