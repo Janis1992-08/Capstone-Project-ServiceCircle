@@ -105,9 +105,8 @@ export default function Map({ data }) {
               <strong>Skills:</strong> {provider.skills}
               <br></br>
               <strong>Needs:</strong> {provider.needs}
-              <a href={`#${provider._id}`}>
-                <p>Go to Service Card</p>
-              </a>
+              <br></br>
+              <a href={`#${provider._id}`}>Go to Service Card</a>
             </Popup>
           </Marker>
         );
