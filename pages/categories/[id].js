@@ -170,7 +170,7 @@ const SubcategoryPage = ({ fetcher, favorites, onToggleFavorite }) => {
         <CardWrapper>
           {filteredProviders.length > 0 ? (
             filteredProviders.map((provider) => (
-              <Card key={provider._id}>
+              <Card id={provider._id} key={provider._id}>
                 {session && session.user.email !== provider.author && (
                   <FavoriteButton
                     onClick={() => onToggleFavorite(provider._id)}

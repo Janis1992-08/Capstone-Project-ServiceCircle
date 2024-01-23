@@ -58,10 +58,10 @@ export default function Map({ data }) {
   useEffect(() => {
     if (data) {
       const locationPromises = data.map(async (provider) => {
-        const { city, district, postalCode, firstName, skills, needs } =
+        const { city, district, postalCode, firstName, skills, needs, _id } =
           provider;
         const location = await geocodeAddress(city, district, postalCode);
-        return { location, name: firstName, skills, needs };
+        return { location, name: firstName, skills, needs, _id };
       });
 
       Promise.all(locationPromises).then((updatedLocations) => {
@@ -93,20 +93,25 @@ export default function Map({ data }) {
           <Popup>Ich bin hier</Popup>
         </Marker>
       )}
-      {locations.map((provider, index) => (
-        <Marker
-          key={index}
-          position={[provider.location.lat, provider.location.lng]}
-          icon={blueIcon}
-        >
-          <Popup>
-            <strong>Standort von:</strong> {provider.name} <br></br>
-            <strong>Skills:</strong> {provider.skills}
-            <br></br>
-            <strong>Needs:</strong> {provider.needs}
-          </Popup>
-        </Marker>
-      ))}
+      {locations.map((provider, index) => {
+        return (
+          <Marker
+            key={index}
+            position={[provider.location.lat, provider.location.lng]}
+            icon={blueIcon}
+          >
+            <Popup>
+              <strong>Standort von:</strong> {provider.name} <br></br>
+              <strong>Skills:</strong> {provider.skills}
+              <br></br>
+              <strong>Needs:</strong> {provider.needs}
+              <a href={`#${provider._id}`}>
+                <p>Go to Service Card</p>
+              </a>
+            </Popup>
+          </Marker>
+        );
+      })}
     </MapContainerStyled>
   );
 }
